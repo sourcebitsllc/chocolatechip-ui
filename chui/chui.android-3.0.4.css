@@ -1114,7 +1114,7 @@ stepper > input {
 .popup footer {
 	width: 320px;
 	padding: 0;
-	border-solid 1px red;
+	border: solid 1px red;
 }
 .popup footer > .button {
 	display: block !important;
@@ -1435,7 +1435,7 @@ div.handle::before {
 	line-height: 36pt;
 	height: 40pt;
 	width: 40pt;
-	-webkit-mask-repeat: no-repeat 
+	-webkit-mask-repeat: no-repeat; 
 	-webkit-mask-posiiton: center center;
 	-webkit-mask-size: 100% 100%;
 	-webkit-transform: rotate(90deg);
