@@ -1,6 +1,6 @@
 #ChocolateChip - A Compact JavaScript Framework for Mobile Web Apps
 
-###ChocolateChip-UI has been acquired by [Sourcetbits Inc](http://www.sourcebits.com).
+###ChocolateChip-UI has been acquired by [Sourcebits Inc](http://www.sourcebits.com).
 
 ##ChocolateChip-UI
 
