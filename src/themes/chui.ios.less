@@ -39,16 +39,16 @@
 /* End Colors */
 
 .flexBlock () {
-   /* New syntax */
-   display: -webkit-flex;
-   -wekbit-flex-direction: column;
-   -webkit-justify-content: center;
-   -webkit-align-item: start;
    /* Old syntax */   
    display: -webkit-box;
    -webkit-box-orient: vertical;
    -wekbit-box-align: center;
    -webkit-box-pack: start;
+   /* New syntax */
+   display: -webkit-flex;
+   -wekbit-flex-direction: column;
+   -webkit-justify-content: center;
+   -webkit-align-item: start;
    /* No prefix */
    display: flex;
    flex-direction: column;
@@ -68,16 +68,16 @@
    -webkit-box-align: center;
  }
  .flexBlockCentered () {
-   /* new flex box */
-   display: -webkit-flex;
-   -wekbit-flex-direction: column;
-   -webkit-justify-content: center;
-   -webkit-align-item: center;
    /* old flex box */
    display: -webkit-box;
    -webkit-box-orient: vertical;
    -webkit-box-pack: center;
    -webkit-box-align: center;
+   /* new flex box */
+   display: -webkit-flex;
+   -wekbit-flex-direction: column;
+   -webkit-justify-content: center;
+   -webkit-align-item: center;
  }
 .transition(@prop: all, @duration: .25s, @ease:ease-out) {
   -webkit-transition: @arguments;
