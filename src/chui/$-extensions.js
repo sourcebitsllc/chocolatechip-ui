@@ -244,7 +244,7 @@
                });
                
                if ($.isiOS || $.isSafari) {
-                  $(list).on('swiperight singletap', 'li', function() {
+                  $(list).on('swiperight', 'li', function() {
                      $(this).removeClass('selected');
                   });
                }
