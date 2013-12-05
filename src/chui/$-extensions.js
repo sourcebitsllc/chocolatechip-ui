@@ -213,6 +213,7 @@
                deleteSlide = '140px';
             }
             $(function() {
+               $.body.off('singletap', '.edit');
                $.body.on('singletap', '.edit', function() {
                   var $this = this;
                   setTimeout(function() {
@@ -222,6 +223,7 @@
                      $(list).addClass('showIndicators');
                   });
                });
+               $.body.off('singletap', '.done');
                $.body.on('singletap', '.done', function() {
                   var $this = this;
                   setTimeout(function() {
@@ -232,7 +234,7 @@
                      $(list).find('li').removeClass('selected');
                   });
                });
-               $.body.on('singletap', '.deletion-indicator', function() {
+               $(list).on('singletap', '.deletion-indicator', function() {
                   if ($(this).closest('li')[0].classList.contains('selected')) {
                      $(this).closest('li').removeClass('selected');
                      return;
