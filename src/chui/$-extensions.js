@@ -141,7 +141,7 @@
          var current = $('article.current');
          var currentNav = current.prev();
          destination = $(destination);    
-         var destinationID = destination[0].id;
+         var destinationID = '#'+destination[0].id;
          var destinationNav = destination.prev();
          var currentToolbar;
          var destinationToolbar;
