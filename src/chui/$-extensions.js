@@ -235,7 +235,7 @@
                      $(list).find('li').removeClass('selected');
                   });
                });
-               $.(list).on('singletap', '.deletion-indicator', function() {
+               $(list).on('singletap', '.deletion-indicator', function() {
                   if ($(this).closest('li')[0].classList.contains('selected')) {
                      $(this).closest('li').removeClass('selected');
                      return;
