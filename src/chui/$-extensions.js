@@ -214,6 +214,7 @@
                deleteSlide = '140px';
             }
             $(function() {
+               $.body.off('singletap', '.edit');
                $.body.on('singletap', '.edit', function() {
                   var $this = this;
                   list.addClass('deletable');
@@ -224,6 +225,7 @@
                      $(list).addClass('showIndicators');
                   });
                });
+               $.body.off('singletap', '.done');
                $.body.on('singletap', '.done', function() {
                   var $this = this;
                   list.removeClass('deletable');
