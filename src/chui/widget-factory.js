@@ -193,8 +193,10 @@
             $this.classList.add('selected');
             $(this).siblings('a').removeClass('selected');
             index = $(this).index();
-            $('.previous').removeClass('previous').addClass('next');
-            $('.current').removeClass('current').addClass('next');
+            $('article.previous').removeClass('previous').addClass('next');
+            $('nav.previous').removeClass('previous').addClass('next');
+            $('article.current').removeClass('current').addClass('next');
+            $('nav.current').removeClass('current').addClass('next');
             id = $('article').eq(index)[0].id;
             $.publish('chui/navigate/enter', id);
             if (window && window.jQuery) {
