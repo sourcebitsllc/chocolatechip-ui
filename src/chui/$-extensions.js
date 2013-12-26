@@ -175,7 +175,7 @@
          $.UISetHashOnUrl(destination[0].id);
          setTimeout(function() {
             $.isNavigating = false;
-         }, 500);
+         }, 1);
       },
       
       ////////////////////////////
