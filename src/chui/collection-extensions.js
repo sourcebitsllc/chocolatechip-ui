@@ -84,6 +84,7 @@
             }  
          }
          this.on('singletap', '.button', function(e) {
+            e.stopPropagation();
             var $this = $(this);
             if (this.parentNode.classList.contains('paging')) return;
             $this.siblings('a').removeClass('selected');
