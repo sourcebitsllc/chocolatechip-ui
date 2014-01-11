@@ -83,9 +83,9 @@
       }
       currentToolbar = currentArticle.next().hazClass('toolbar');
       destinationToolbar = destination.next().hazClass('toolbar');
-      destination.removeClass('previous').addClass('current');
-      destination.prev().removeClass('previous').addClass('current');
-      destinationToolbar.removeClass('previous').addClass('current');
+      destination.removeClass('previous next').addClass('current');
+      destination.prev().removeClass('previous next').addClass('current');
+      destinationToolbar.removeClass('previous next').addClass('current');
       currentArticle.removeClass('current').addClass('next');
       currentArticle.prev().removeClass('current').addClass('next');
       currentToolbar.removeClass('current').addClass('next');
@@ -109,9 +109,9 @@
       destination[0].scrollTop = 0;
       currentToolbar = currentArticle.next().hazClass('toolbar');
       destinationToolbar = destination.next().hazClass('toolbar');
-      destination.removeClass('previous').addClass('current');
-      destination.prev().removeClass('previous').addClass('current');
-      destinationToolbar.removeClass('previous').addClass('current');
+      destination.removeClass('previous next').addClass('current');
+      destination.prev().removeClass('previous next').addClass('current');
+      destinationToolbar.removeClass('previous next').addClass('current');
       currentArticle.removeClass('current').addClass('next');
       currentArticle.prev().removeClass('current').addClass('next');
       currentToolbar.removeClass('current').addClass('next');
@@ -146,9 +146,9 @@
       current.removeClass('current').addClass('previous');
       currentNav.removeClass('current').addClass('previous');
       currentToolbar.removeClass('current').addClass('previous');
-      destination.removeClass('next').addClass('current');
-      destinationNav.removeClass('next').addClass('current');
-      destinationToolbar.removeClass('next').addClass('current');
+      destination.removeClass('previous next').addClass('current');
+      destinationNav.removeClass('previous next').addClass('current');
+      destinationToolbar.removeClass('previous next').addClass('current');
     
       $.UISetHashOnUrl(destination[0].id);
       setTimeout(function() {
