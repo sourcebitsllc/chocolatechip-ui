@@ -282,10 +282,6 @@ module.exports = function(grunt) {
         },
         options: {
           replacements: [{
-            pattern: /\r/img,
-            replacement: ''
-          },
-          {
             pattern: /\(function\(\$\) {\n^.*\'use strict\';/img,
             replacement: ''
           },
@@ -300,11 +296,7 @@ module.exports = function(grunt) {
           '<%= pkg.projectPath %>chui/chui-<%= pkg.version %>.js': '<%= pkg.projectPath %>chui/chui-<%= pkg.version %>.js'
         },
         options: {
-          replacements: [{
-            pattern: /\r/img,
-            replacements: ''
-          },
-          {            
+          replacements: [{            
             pattern: /\n\n\n/img,
             replacement: '\n\n'
           }]
