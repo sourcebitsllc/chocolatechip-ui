@@ -91,3 +91,20 @@ body.slide-out-app > nav.show  {
     margin-top: 20px !important;
   }
 }
+
+html[dir=rtl] {
+  & .slide-out {
+    transform: translate3d(100%,0,0);
+    
+    &.open {
+      transform: translate3d(0,0,0);
+    }
+  }
+  & .button.slide-out-button {
+    margin-right: 10px !important;
+
+    &::before {
+      margin: 2px -17px 0 0 !important;;
+    }
+  }
+}

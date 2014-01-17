@@ -29,6 +29,8 @@
       var editButton;
       var deletionIndicator;
       var button;
+      var swipe = 'swiperight';
+      if ($('html').attr('dir') === 'rtl') swipe = 'swipeleft';
       // Windows uses an icon for the delete button:
       if ($.isWin) deleteLabel = '';
       if (list[0].classList.contains('deletable')) return;
@@ -46,9 +48,6 @@
       }
       list.find('li').prepend(deletionIndicator);
       list.find('li').append(deleteButton);
-      $('li').find('.delete').each(function(ctx, idx) {
-        if (window && window.jQuery && $ === window.jQuery) ctx = idx;
-      });
       var setupDeletability = function(callback, list, button) {
         var deleteSlide;
         if ($.isiOS) {
@@ -88,13 +87,15 @@
           });
         
           if ($.isiOS || $.isSafari) {
-            $(list).on('swiperight', 'li', function() {
+            $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
             });
           }
           $(list).on('singletap', '.delete', function() {
             var $this = this;
-            $(this).siblings().css({'-webkit-transform': 'translate3d(-1000%,0,0)', '-webkit-transition': 'all 1s ease-out'});
+            var direction = '-1000%';
+            if ($('html').attr('dir') === 'rtl') direction = '1000%';
+            $(this).siblings().css({'-webkit-transform': 'translate3d(' + direction + ',0,0)', '-webkit-transition': 'all 1s ease-out'});
             setTimeout(function() {
               callback.call(callback, $this);
               $($this).parent().remove();

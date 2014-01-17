@@ -65,3 +65,18 @@
     display: none;
   }
 }
+
+html[dir=rtl] {
+  .switch {
+
+    &.on {
+    
+      & > em {
+        .transform(translate3d(-36px,0,0));
+      }
+    }
+    & > em {
+      .transform(translate3d(2px,0,0));
+    }
+  }
+}

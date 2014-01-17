@@ -109,6 +109,23 @@ p {
   color: @listDetialColor;
 }
 
+html[dir=rtl] {
+  li.comp {
+    & > aside {
+      &:first-child {
+        margin-right: auto;
+        margin-left: 10px;
+      }
+    }
+
+    & > aside > span.counter, & > aside > span.date-time {
+      margin-right: 10px !important;
+      margin-left: 0 !important;
+      display: inline-block !important;
+    }
+  }
+}
+
 @media only screen and (max-device-width : 320px) and (orientation : portrait) {
   li.comp > aside > h4 {
     max-width: 100px;

@@ -133,3 +133,14 @@ section h2 {
     text-transform: none;
   }
 }
+
+html[dir=rtl] {
+  & li {
+    padding: 13px 0 13px 9px;
+  }
+
+  & li.show-detail::after { 
+    left: 16px;
+    right: auto;
+  }
+}

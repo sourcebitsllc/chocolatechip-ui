@@ -67,3 +67,19 @@ body.slide-out-app {
     }
   }
 }
+
+html[dir=rtl] {
+  & .button.slide-out-button {
+    right: 15px;
+    left: auto;
+  }
+  & .slide-out {
+    -webkit-transform: translate3d(100%,0,0);
+    transform: translate3d(100%,0,0);
+    
+    &.open {
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+    }
+  }
+}

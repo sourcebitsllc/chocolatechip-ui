@@ -1,0 +1,104 @@
+  <style>
+    .button.action {
+      min-width: 200px;
+      max-width: 300px;
+      margin: 20px auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>تسجيل</h1>    
+  </nav>
+  <article class='current'>
+    <section>
+      <h2>إضافة تفاصيل إلى حسابك</h2>
+      <ul class='list' ui-implements='form'>
+        <li>
+          <input autocorrect="off" autocapitalize="words" type="text" id="first_name" placeholder="الاسم الأول" required>
+        </li>
+        <li>
+          <input autocorrect="off" autocapitalize="words" type="text" id="last_name" placeholder="اسم العائلة" required>
+        </li>
+        <li>
+          <input autocorrect="off" autocapitalize="off" type="email" id="email_address" placeholder="عنوان البريد الإلكتروني" required>
+        </li>
+        <li>
+          <input autocorrect="off" autocapitalize="off" type="text" id="username" placeholder="اسم المستخدم" required>
+        </li>
+      </ul>
+      <ul class='list' ui-implements='form'>
+        <li id="dateOfBirthCell" class='comp'>
+          <div>
+            <label for='dataofbirth'>تاريخ الميلاد:</label>
+          </div>
+          <aside>
+            <input id='dataofbirth' autocorrect="off" autocapitalize="off" type="date" id="date_of_birth" required>
+          </aside>
+        </li>
+      </ul>
+      <ul id="registerAddressTable" class='list' ui-implements='form'>
+        <li>
+          <input autocorrect="off" autocapitalize="words" type="text" id="city" placeholder="مدينة" required>
+        </li>
+        <li>
+          <input autocorrect="off" autocapitalize="off" type="text" id="address1" placeholder="عنوان" required>
+        </li>
+        <li id="stateOfResidencyCell" class='comp'>
+          <div>
+            <label for='state'>بلد:</label>
+          </div>
+          <aside>
+            <select name="state" size="1" id="state">
+            <option value="1">العربية السعودية</option>
+            <option value="2">الكويت</option>
+            <option value="3">البحرين</option>
+            <option value="4">الأمارات العربية المتحدة</option>
+            <option value="5">يمني</option>
+            <option value="6">العراق</option>
+            <option value="7">سوريا</option>
+            <option value="8">عمان</option>
+            <option value="9">لبنان</option>
+            <option value="10">فلسطين</option>
+            <option value="11">الأردن</option>
+            <option value="12">مصر</option>
+            <option value="13">ليبيا</option>
+            <option value="14">تونس</option>
+            <option value="15">الجزائر</option>
+            <option value="16">مغربي</option>
+          </select>  
+          </aside>          
+        </li>
+        <li>
+          <input autocorrect="off" autocapitalize="off" type="text" id="zip_code" placeholder="الرمز البريدي" required>
+        </li>
+      </ul>
+      <ul class='list' ui-implements='form'>
+        <li>
+          <input type="password" id="password" placeholder="كلمة السر" required>
+        </li>
+        <li>
+          <input type="password" id="password2" placeholder="تكرار كلمة المرور" required>
+        </li>
+      </ul>
+      <ul class='list' ui-implements='form'>
+        <li>
+          <p>"هنا جميع المتطلبات القانونية من شأنه أن يضع الشخص العادي للنوم ولكن الذي نتوقع أن يكون لديك تعاني من خلال القراءة إذا كنت ترغب في المضي قدما.</p>
+        </li>
+        <li id="agreeToTermsCell" class='comp'>
+          <div>
+            <label id='agreeToTermsLabel' for='agreeToTerms'>أنا أوافق على هذه الشروط.</label>
+          </div>
+          <aside>
+            <span class='switch' id="agreeToTerms" class="off"><input type="checkbox"></span>
+          </aside>
+        </li>
+      </ul>
+      <br>
+      <a class='button action' id="submitRegistration">انضم</a>
+      <br><br>
+    </section>
+  </article>
+</body>
+</html>

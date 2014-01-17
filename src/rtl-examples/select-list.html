@@ -1,0 +1,46 @@
+  <script>
+    $(function() {
+      $('.list').UISelectList({
+        selected: 2,
+        callback: function() {
+          $("#response").html($(this).text());
+        }
+      });
+      if (window.jQuery) {
+        $('li').each(function(idx, ctx) {
+          if ($(ctx).hasClass('selected')) {
+            $("#response").html($(ctx).text());
+          }
+        });
+      } else {
+        $("#response").html($('li').hasClass('selected').text());
+      }
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>قائمة الاختيار</h1>
+  </nav>
+  <article id='select-example'>
+    <section>
+      <h2>المهام للقيام</h2>
+      <ul class='list select'>
+        <li>
+          <h3>يذهب يأكل شيئا.</h3>
+        </li>
+        <li>
+          <h3>أخذ غفوة.</h3>
+        </li>
+        <li>
+          <h3>الحصول على بعض العمل المنجز.</h3>
+        </li>
+        <li>
+          <h3>تلعب لعبة.</h3>
+        </li>
+      </ul>
+      <p><strong>أنت ذاهب ل: </strong><span id="response"></span></p>
+    </section>
+  </article>
+</body>
+</html>

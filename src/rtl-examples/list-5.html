@@ -1,0 +1,80 @@
+  <style>
+    .icon {
+      display: block;
+      height: 40px;
+      width: 40px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: auto 70%;
+    }
+    .icon.weather {
+      background-color: #29abe2;
+      background-image: url(../images/app-icons/weather.png);
+      background-size: 70% auto;
+    }
+    .icon.mail {
+      background-color: #52c5d0;
+      background-image: url(../images/app-icons/mail.png);
+      background-size: 70% auto;
+    }
+    .icon.music {
+      background-color: #f38133;
+      background-image: url(../images/app-icons/music.png);
+    }
+    .icon.browser {
+      background-color: #ed453a;
+      background-image: url(../images/app-icons/browser.png);
+    }
+    .icon.app {
+      background-color: #6ec05c;
+      background-image: url(../images/app-icons/app.png);
+    }
+    /* Border Radius for each OS: */
+    .isiOS .icon {
+      border-radius: 10px;
+    }
+    .isAndroid .icon {
+      border-radius: 50%;
+    }
+    .isWin .icon {
+      border-radius: 0;
+    }
+  </style>
+  <script>
+    $(function() {
+      
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>قائمة</h1>
+  </nav>
+  <article id='main'>
+    <section>
+      <ul class='list'>
+        <li data-goto>
+          <span class='icon weather'></span>
+          <h3>حالة الطقس</h3>
+        </li>
+        <li data-goto>
+          <span class='icon music'></span>
+          <h3>موسيقى</h3>
+        </li>
+        <li data-goto>
+          <span class='icon mail'></span>
+          <h3>البريد</h3>
+        </li>
+        <li data-goto>
+          <span class='icon browser'></span>
+          <h3>المتصفح</h3>
+        </li>
+        <li data-goto>
+          <span class='icon app'></span>
+          <h3>تطبيقات</h3>
+        </li>  
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

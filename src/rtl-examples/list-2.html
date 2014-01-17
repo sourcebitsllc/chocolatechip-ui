@@ -1,0 +1,45 @@
+  <style>
+    .list > li:hover {
+      background: #d9d9d9;
+    }
+    .list > li:hover > h3,
+    .list > li:hover > h4 {
+      color: #000;
+    }
+    .list > li.nav:hover::after {
+      border-color: #000;
+    }
+  </style>
+  <script>
+    $(function() {
+
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>قائمة</h1>
+  </nav>
+  <article id='main'>
+    <section>
+      <ul class='list'>
+        <li class='nav' data-goto>
+          <h3>الأشخاص</h3>
+        </li>
+        <li class='nav' data-goto>
+          <h3>مدينة</h3>
+        </li>
+        <li class='nav' data-goto>
+          <h3>الأشياء</h3>
+        </li>
+        <li class='nav' data-goto>
+          <h3>حيوانات</h3>
+        </li>
+        <li class='nav' data-goto>
+          <h3>طعام</h3>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

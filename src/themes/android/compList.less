@@ -124,6 +124,22 @@ p {
   line-height: 16pt;
 }
 
+html[dir=rtl] {
+  li.comp {
+    padding: 13px 0 13px 9px;
+    
+    & > aside:first-child {
+      margin-right: 0;
+      padding: 0 0 10px 10px;
+    }
+    & aside > span.counter, & aside > span.date-time {
+      margin-right: 5px;
+      margin-left: 0px;
+      white-space: nowrap;
+    }
+  }
+}
+
 @media only screen and (max-device-width : 320px) and (orientation : portrait) {
   li.comp > aside > h4 {
     max-width: 100px;

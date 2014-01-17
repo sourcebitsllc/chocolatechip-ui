@@ -124,3 +124,33 @@ article.paging {
     }
   }
 }
+
+html[dir=rtl] {
+  & .segmented.paging.horizontal > .button,
+  & .segmented.paging.vertical > .button {
+
+    &:first-of-type::before, &:last-of-type::before {
+      transform: rotate(-180deg);
+    }
+    &:first-of-type::before {
+      margin-right: -2px;
+    }
+
+    &:last-of-type {
+      margin-right: 10px !important;
+      border: solid 2px @buttonBorder !important;
+    }
+  }
+  article.paging {
+    &.horizontal > section {
+
+      &.previous {
+        transform: translate3d(100%,0,0);
+      }
+
+      &.next {
+        transform: translate3d(-100%,0,0);
+      }
+    }
+  }
+}

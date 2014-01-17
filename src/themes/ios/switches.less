@@ -107,3 +107,15 @@
   50% { width: 27px; }  
   100% { width: 27px; }  
 }
+
+html[dir=rtl] .switch {
+  & > em {
+    -webkit-transform: translate3d(-23px,0,0);
+    transform: translate3d(-23px,0,0);
+  }
+
+  &.on > em {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+  }
+}

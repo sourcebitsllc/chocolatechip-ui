@@ -52,3 +52,21 @@
     }
   }
 }
+
+html[dir=rtl] .stepper > .button {
+  &:first-of-type {
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-right: solid 1px @appTint;
+    border-left: none;
+  }
+
+  &:last-of-type {
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-left: solid 1px @appTint;
+    border-right: none;
+  }  
+}

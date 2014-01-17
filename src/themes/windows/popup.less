@@ -103,6 +103,13 @@
   }
 }
 
+html[dir=rtl] {
+  .popup footer > .button:first-of-type {
+    border-right: solid 2px @popupButtonBorder;
+    border-left:  solid 2px @popupButtonBorder;
+  }
+}
+
 @media only screen and (max-device-width : 240px) and (orientation : portrait) {
   
 }

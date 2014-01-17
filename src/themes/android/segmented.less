@@ -57,3 +57,10 @@ div.horizontal.centered > .segmented {
   margin: 10px 16px;
   width: 100%;
 }
+
+html[dir=rtl] {
+  & .segmented.align-flush {
+    left: 15px;
+    right: auto;
+  }
+}

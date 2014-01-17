@@ -45,3 +45,13 @@ option {
   color: @optionColor;
   padding: 5px;
 }
+
+html[dir=rtl] {
+  select {
+    &::-ms-expand {
+      border: none;
+      border-right: solid 2px @buttonBorder;
+      padding: 0 4px 0 0;
+    }
+  }
+}

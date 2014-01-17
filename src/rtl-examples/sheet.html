@@ -1,0 +1,104 @@
+  <script>
+    $(function() {
+      // Create sheet and populate it:
+      $.UISheet();
+      $('.sheet').find('section').append('<h2>خيارات متاحة</h2>');
+      $('.sheet').find('section').append("<ul class='list'></li>");
+      var list = $('.sheet .list');
+      list.append('<li><a class="button" href="javascript:void(null)">حفظ</a></li>');
+      list.append('<li><a class="button" href="javascript:void(null)">حذف</a></li>');
+      list.append('<li><a class="button" href="javascript:void(null)">إلغاء</a></li>');
+      list.on('singletap', '.button', function() {
+        $.UIHideSheet();
+      });
+      
+      $('.sheet .list').on('singletap', '.button', function() {
+        $.UIHideSheet();
+      });
+      
+      // Initialize button to show sheet:
+      $('#showSheet').on('singletap', function() {
+        $.UIShowSheet();
+      });
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>ورقة</h1>
+    <a class='button align-flush' id='showSheet' href='javascript:void(null)'>عرض</a>
+  </nav>
+  <article id='main'>
+    <section>
+      <h2>موسيقى</h2>
+      <ul class='list'>
+       <li class='comp'>
+          <aside>
+            <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Nancy Ajram'>نانسي عجرم</h3>
+            <h4>أعمل عاقلة</h4>
+            <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Amr Diab'>عمرو دياب</h3>
+            <h4>الليلة</h4>
+            <p>قال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Ykhallili Albak' src="../rtl_images/arabic/Ykhallili_Albak_Najwa.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Nawaj Karam'>نجوى كرم‎</h3>
+            <h4>يخليلي قلبك</h4>
+            <p>نجوى لديها وسيلة فريدة من نوعها في الغناء.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Diana Haddad'>ديانا حداد</h3>
+            <h4>بنت أصول</h4>
+            <p>يانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Rashid Majid'>راشد الماجد‎</h3>
+            <h4>جبار حبك</h4>
+            <p>راشد الماجد هو الموسيقى العربية الكلاسيكية. وهو من أبرز المطربين.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+      </ul>        
+    </section>
+  </article>
+</body>
+</html>

@@ -91,3 +91,28 @@ nav > a.button {
   display: -webkit-box;
   margin-top: 0;
 }
+
+html[dir=rtl] {
+  a.button {
+
+    &.align-flush {
+      right: auto;
+      left: 15px;
+    }
+
+    &.back, &.backTo {
+      padding: 0 20px 0 0 !important;
+
+      &::before {
+        -webkit-transform: rotate(180deg);
+        right: -4px;
+        left: auto;
+      }
+    }
+  }
+
+  & .toolbar > .button.align-flush {
+    right: auto;
+    left: 15px;
+  }
+}

@@ -187,3 +187,34 @@ section {
     }
   }
 }
+
+html[dir=rtl] section h2 {
+  margin: 26px 15px 6px 0;
+}
+
+html[dir=rtl] .list {
+
+  & li {
+    padding: 13px 15px 13px 5px;
+
+    &::before {
+      left: 0px;
+      right: 15px;      
+    }
+    &.nav::after {
+      right: auto; 
+      top: 20px;      
+      left: 15px;  
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);  
+    }
+    &.show-detail::after {    
+      left: 10px; 
+      right: auto;     
+    }
+    &.nav::after {
+      left: 15px;
+      right: auto;
+    }
+  }
+}

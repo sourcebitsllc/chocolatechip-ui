@@ -61,3 +61,15 @@
     }
   }
 }
+
+html[dir=rtl] {
+  & .stepper > .button {
+    &:first-of-type {
+      border-right: solid 2px @buttonBorder;
+    }
+
+    &:last-of-type {
+      border-left: solid 2px @buttonBorder;
+    }
+  }
+}

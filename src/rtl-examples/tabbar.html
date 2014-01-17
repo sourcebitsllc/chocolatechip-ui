@@ -1,0 +1,398 @@
+  <script type="text/javascript">
+    $(function() {
+      var opts = {
+         tabs : 5,
+         imagePath : "../icons-ios/",
+         icons : ["music", "pictures", "docs", "dictionary", "top_rated"],
+         labels : ["موسيقى", "الصور", "مستندات", "قاموس", "المفضلة"],
+         selected : 1
+      };
+      $.UITabbar(opts);
+    });
+  </script>
+  <style>
+    /*
+      Styles for iOS tab bar.
+      By using the .isiOS and .isDesktopSafari classes,
+      we can style the tab bar icons just for Safari
+      without affecting the look of Android and Windows Phone 8.
+    */
+    .isiOS .tabbar > .button > .icon,
+    .isSafari .tabbar > .button > .icon {
+      background-color: #929292;
+      -webkit-mask-position: center center;
+      -webkit-mask-size: 100%;
+      -webkit-mask-repeat: no-repeat;
+    }
+    .isiOS .tabbar > .button.selected > .icon,
+    .isiOS .tabbar > .button:hover > .icon {
+      background-color: #007aff;
+    }
+    .tabbar > .button.music > .icon  {
+      -webkit-mask-image: url('../images/icons/Head_phones.svg');
+    }
+    .tabbar > .button.pictures > .icon  {
+      -webkit-mask-image: url('../images/icons/Camera.svg');
+    }
+    .tabbar > .button.docs > .icon {
+      -webkit-mask-image: url('../images/icons/Documents.svg');
+    }
+    .tabbar > .button.dictionary > .icon  {
+      -webkit-mask-image: url('../images/icons/Download.svg');
+    }
+    .tabbar > .button.top_rated > .icon {
+      -webkit-mask-image: url('../images/icons/Favorite.svg');
+    }
+    .image-grid, .image-grid > li {
+      list-style: none:
+      margin: 0;
+      padding: 0;
+    }
+    .image-grid {
+      margin-right: 10px;
+    }
+    .image-grid > li {
+      float: right;
+      height: 100px;
+      width: 100px;
+      border: solid 1px #666;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
+      display: block;
+    }
+    .image-grid > li > img {
+      display: block;
+      height: 100%;
+    }
+    .list > li > ul, .list > li > ol {
+      padding-right: 15px !important;
+      margin-right: 0 !important;
+    }
+    .list > li > ul > li, .list > li > ol > li {
+      padding-right: 0 !important;
+      margin-right: 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="current">
+    <h1>موسيقى</h1>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      <h2>موسيقى</h2>
+      <ul class='list'>
+        <li class='comp'>
+          <aside>
+            <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>ديانا حداد</h3>
+            <h4>بنت أصول</h4>
+            <p>ديانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>راشد الماجد‎</h3>
+            <h4>جبار حبك</h4>
+            <p>راشد الماجد هو الموسيقى العربية الكلاسيكية. وهو من أبرز المطربين.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+       <li class='comp'>
+          <aside>
+            <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>نانسي عجرم</h3>
+            <h4>أعمل عاقلة</h4>
+            <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>عمرو دياب</h3>
+            <h4>الليلة</h4>
+            <p>قال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Ykhallili Albak' src="../rtl_images/arabic/Ykhallili_Albak_Najwa.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>نجوى كرم</h3>
+            <h4>يخليلي قلبك</h4>
+            <p>نجوى لديها وسيلة فريدة من نوعها في الغناء.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+      </ul>  
+    </section>
+  </article>
+  <nav class='next'>
+    <h1>الصور</h1>
+  </nav>
+  <article id='article2' class='next'>
+    <section>
+      <ul class='image-grid'>
+        <li>
+          <img src='../images/myPictures/american-football-63109_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/couple-168191_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/daisy-75190_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/dependent-100343_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/dreamy-20100_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/girl-102831_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/lacrosse-165576_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/hot-air-balloon-4761_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/piercing-123240_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/portrait-53899_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/quarterback-67701_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/rugby-78193_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/africa-139343_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/baby-19295_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/baby-20339_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/utah-95032_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/germany-70567_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/mountain-91385_640.jpg'>
+        </li>
+      </ul>
+    </section>
+  </article>
+  <nav class='next'>
+    <h1>وثائق</h1>
+  </nav>
+  <article id='article3' class='next'>
+    <section>
+      <ul class='list'>
+        <li class='comp'>
+          <div>
+            <h3>المبالغ المستلمة</h3>
+          </div>
+          <aside>
+            <h4>غداء</h4>
+            <span class='counter'>24</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>المبالغ المستلمة</h3>
+          </div>
+          <aside>
+            <h4>الغازولين</h4>
+            <span class='counter'>12</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>المبالغ المستلمة</h3>
+          </div>
+          <aside>
+            <h4>البقالة</h4>
+            <span class='counter'>6</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>خدمات</h3>
+          </div>
+          <aside>
+            <h4>كهرباء</h4>
+            <span class='counter'>1</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>إيجار</h3>
+          </div>
+          <aside>
+            <h4>استلام</h4>
+            <span class='counter'>10</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>قانوني</h3>
+          </div>
+          <aside>
+            <h4>سيارة</h4>
+            <span class='counter'>5</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>عائلة</h3>
+          </div>
+          <aside>
+            <h4>قانوني</h4>
+            <span class='counter'>3</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>الشخصية</h3>
+          </div>
+          <aside>
+            <h4>إرادة</h4>
+            <span class='counter'>1</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>الشخصية</h3>
+          </div>
+          <aside>
+            <h4>الرعاية الصحية</h4>
+            <span class='counter'>16</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+      </ul>          
+    </section>
+  </article>
+  <nav class='next'>
+    <h1>قاموس</h1>
+  </nav>
+  <article id='article4' class='next'>
+    <section>
+      <ul class='list'>
+        <li>
+        <ol>
+          <li>رفيف - رَفيفٌ :
+          <ol>
+            [ ر ف ف ]. ( مصدر رَفَّ ، يَرِفُّ ).
+            <li>" رَفيفُ الثَّغْرِ " : بَريقٌ .</li>
+            <li> ثَوْبٌ رَفيفٌ " : رَقيقٌ . </li>
+            <li>" شَجَرَةٌ رَفيفَةٌ " : مُنْتَدِيَةٌ . " شَجَرٌ رَفيفٌ ". </li>
+            <li>" شَجَرَةٌ رَفيفَةٌ " : مُنْتَدِيَةٌ . " شَجَرٌ رَفيفٌ ". </li>
+            <li>" أَرْضٌ ذاتُ رَفيفٍ " : خِصْبَةٌ .</li>
+            <li>" هُوَ رَفِيفُ الأَخْلاَقِ " : حَسَنُهَا . </li>
+            <li>" ذاتُ الرَّفيفِ " : البَساتِينُ يَرُفُّ نَباتُها وَشَجَرُها مِنَ الرَّيِّ والنَّضارَةِ .</li>
+            <li>"ذاتُ الرَّفيفِ " : سُفُنٌ تُنْضَدُ في النَّهْرِ لِلْعُبُورِ عَلَيْها .</li>
+            المعجم: الغني
+          </ol>
+          </li>
+          <li>
+            رَفيف :
+            <ul>
+              <li>مصدر رفَّ / رفَّ إلى / رفَّ بـ / رفَّ على / رفَّ لـ .</li>
+              <li>المعجم: اللغة العربية المعاصر</li>
+            </ul>
+          </li>
+          <li>
+            رَفيف : 
+            <ul>
+              <li>اسم علم مؤنث عربي ، </li>
+              <li>معناه : الخصب حسنُ الأخلاق ، المحبة للطعام والشراب ، الساعية لخدمة الآخرين ، الكريمة ، العطوفة ، المرتاحة ، </li>
+              <li>سقف البيت . وإذا سمي بها المذكر كانت المعاني نفسها في حال التذكير .</li>
+            </ul>
+          </li>
+        </ol>
+      </ul>
+    </section>
+  </article>
+  <nav class='next'>
+    <h1>المفضلة</h1>
+  </nav>
+  <article id='article5' class='next'>
+    <section>
+      <h2>أشياء مختلفة</h2>
+      <ul class='list'>
+        <li>
+           <h3>واحد</h3>
+        </li>
+        <li>
+           <h3>اثنان</h3>
+        </li>
+        <li>
+           <h3>ثلاثة</h3>
+        </li>
+        <li>
+           <h3>أربعة</h3>
+        </li>
+        <li>
+           <h3>خمسة</h3>
+        </li>    
+        <li>
+           <h3>ستة</h3>
+        </li>  
+        <li>
+           <h3>سبعة</h3>
+        </li>  
+        <li>
+           <h3>ثمانية</h3>
+        </li>      
+        <li>
+           <h3>تسعة</h3>
+        </li>    
+        <li>
+           <h3>عشرة</h3>
+        </li>  
+       </ul>
+    </section>
+  </article>
+</body>
+</html>

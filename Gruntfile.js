@@ -151,6 +151,69 @@ module.exports = function(grunt) {
         files: {
           '<%= pkg.projectPath %>demo/index-win.html': ['src/demo/index.html']
         }
+      },
+      // Concat Android right-to-left examples:
+      rtl_examples_android: {
+        options: {
+          banner: '<!DOCTYPE html>\n<html lang="en" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="msapplication-tap-highlight" content="no">\n  <title>ChocolateChip-UI Android</title>\n  <link rel="stylesheet" href="../chui/chui-android-<%= pkg.version %>.css">\n  <script src="<%= pkg.jquery.url %>"></script>\n  <script src="../chui/chui-<%= pkg.version %>.js"></script>\n'
+        },
+        files: [{
+          expand: true,
+          cwd: 'src/rtl-examples/',
+          src: ['**/*'],
+          dest: '<%= pkg.projectPath %>rtl-examples-android/'
+        }]
+      },
+      // Concat iOS right-to-left examples:
+      rtl_examples_ios: {
+        options: {
+          banner: '<!DOCTYPE html>\n<html lang="en" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="msapplication-tap-highlight" content="no">\n  <title>ChocolateChip-UI iOS</title>\n  <link rel="stylesheet" href="../chui/chui-ios-<%= pkg.version %>.css">\n  <script src="<%= pkg.jquery.url %>"></script>\n  <script src="../chui/chui-<%= pkg.version %>.js"></script>\n'
+        },
+        files: [{
+          expand: true,
+          cwd: 'src/rtl-examples/',
+          src: ['**/*'],
+          dest: '<%= pkg.projectPath %>rtl-examples-ios/'
+        }]
+      },
+      // Concat Android right-to-left examples:
+      rtl_examples_win: {
+        options: {
+          banner: '<!DOCTYPE html>\n<html lang="en" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="msapplication-tap-highlight" content="no">\n  <title>ChocolateChip-UI Win</title>\n  <link rel="stylesheet" href="../chui/chui-win-<%= pkg.version %>.css">\n  <script src="<%= pkg.jquery.url %>"></script>\n  <script src="../chui/chui-<%= pkg.version %>.js"></script>\n'
+        },
+        files: [{
+          expand: true,
+          cwd: 'src/rtl-examples/',
+          src: ['**/*'],
+          dest: '<%= pkg.projectPath %>rtl-examples-win/'
+        }]
+      },
+      // Concat Android RTL version of demo:
+      rtl_demo_android: {
+        options: {
+          banner: '<!DOCTYPE html>\n<html lang="en" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="msapplication-tap-highlight" content="no">\n  <title>ChocolateChip-UI Demo Android</title>\n  <link rel="stylesheet" href="../chui/chui-android-<%= pkg.version %>.css">\n  <script src="<%= pkg.jquery.url %>"></script>\n  <script src="../chui/chui-<%= pkg.version %>.js"></script>\n'
+        },
+        files: {
+          '<%= pkg.projectPath %>rtl-demo/index-android.html': ['src/rtl-demo/index.html']
+        }
+      },
+      // Concat Android RTL version of demo:
+      rtl_demo_ios: {
+        options: {
+          banner: '<!DOCTYPE html>\n<html lang="en" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="msapplication-tap-highlight" content="no">\n  <title>ChocolateChip-UI Demo iOS</title>\n  <link rel="stylesheet" href="../chui/chui-ios-<%= pkg.version %>.css">\n  <script src="<%= pkg.jquery.url %>"></script>\n  <script src="../chui/chui-<%= pkg.version %>.js"></script>\n'
+        },
+        files: {
+          '<%= pkg.projectPath %>rtl-demo/index-ios.html': ['src/rtl-demo/index.html']
+        }
+      },
+      // Concat Android RTL version of demo:
+      rtl_demo_win: {
+        options: {
+          banner: '<!DOCTYPE html>\n<html lang="en" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\n  <meta name="apple-mobile-web-app-capable" content="yes">\n  <meta name="mobile-web-app-capable" content="yes">\n  <meta name="msapplication-tap-highlight" content="no">\n  <title>ChocolateChip-UI Demo Win</title>\n  <link rel="stylesheet" href="../chui/chui-win-<%= pkg.version %>.css">\n  <script src="<%= pkg.jquery.url %>"></script>\n  <script src="../chui/chui-<%= pkg.version %>.js"></script>\n'
+        },
+        files: {
+          '<%= pkg.projectPath %>rtl-demo/index-win.html': ['src/rtl-demo/index.html']
+        }
       }
     },
     cssmin: {
@@ -225,6 +288,14 @@ module.exports = function(grunt) {
           dest: '<%= pkg.projectPath %>examples-win/'
          }
         ]
+      },
+      rtl_images: {
+        files: [{ 
+          expand: true,
+          cwd: 'src/rtl_images/', 
+          src: ['**/*.{png,jpg,svg}'], 
+          dest:'<%= pkg.projectPath %>rtl_images/' 
+        }]
       }
     },
     // Run JsHint on JavaScript files:
@@ -291,6 +362,17 @@ module.exports = function(grunt) {
           },
           {
             pattern: /\}\)\(window\.jQuery\);/img,
+            replacement: ''
+          }]
+        }
+      },
+      removeCarriageReturns: {
+        files: {
+          '<%= pkg.projectPath %>chui/chui-<%= pkg.version %>.js': '<%= pkg.projectPath %>chui/chui-<%= pkg.version %>.js'
+        },
+        options: {
+          replacements: [{            
+            pattern: /\r/img,
             replacement: ''
           }]
         }
@@ -373,6 +455,7 @@ module.exports = function(grunt) {
   // Build just ChUI.js:
   grunt.registerTask('chuijs', [
     'concat:chui', 
+    'string-replace:removeCarriageReturns',
     'string-replace:dist',
     'string-replace:newlines',
     'concat:wrap', 
@@ -441,5 +524,20 @@ module.exports = function(grunt) {
     'copy:images', 
     'copy:data', 
     'copy:index_win'
+  ]);
+
+  // Build Right-to-left Examples (Arabic-Hebrew):
+  grunt.registerTask('rtl', [
+    'chuijs',
+    'themes',
+    'concat:rtl_examples_android',
+    'concat:rtl_examples_ios',
+    'concat:rtl_examples_win',
+    'concat:rtl_demo_android',
+    'concat:rtl_demo_ios',
+    'concat:rtl_demo_win',
+    'copy:images', 
+    'copy:rtl_images',
+    'copy:data'
   ]);
 };

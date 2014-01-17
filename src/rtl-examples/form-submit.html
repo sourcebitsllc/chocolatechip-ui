@@ -1,0 +1,149 @@
+  <style>
+    form li > label {
+      display: block;
+      -webkit-box-sizing: border-box;
+      width: 110px !important;
+      text-align: right;
+      font-weight: bold;
+      padding-right: 10px;
+      font-size: 14px;
+      line-height: 22px;
+      color: #586B96;
+    }
+    form li > h3 {
+      width: auto;
+    }
+    form li > label > span.warning {
+      color: red;
+    }
+    form button[type=submit] {
+      display: none;
+    }
+
+  </style>
+  <script>
+    $(function() {
+      $('#selectList').UISelectList({
+        selected: 1,
+        callback: $.noop
+      })    
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <a class='button cancel'>إلغاء</a>
+    <h1>مثال على نموذج</h1>
+    <a class='button done align-flush'>منجز</a>
+  </nav>
+  <article class='current'>
+    <section>
+      <form id='userForm' action='javascript:submitForm()'>
+        <h2>معلومات شخصية</h2>
+        <ul class='list'>
+          <li class='comp'>
+            <div>
+              <h3>الاسم الأول:</h3>
+            </div>
+            <aside>
+              <input type='text' name='firstname' placeholder='علي'>
+             </aside>
+           </li>
+           <li class='comp'>
+             <div>
+              <h3>اسم العائلة:</h3>
+            </div>
+            <aside>
+              <input type='text' name='lastname' placeholder='محمد'>
+            </aside>
+           </li>
+           <li class='comp'>
+             <div>
+              <h3>هاتف:</h3>
+             </div>
+            <aside>
+              <input type='text' name='phone' placeholder='000-0000'>
+            </aside>
+           </li>
+           <li class='comp'>
+             <div>
+              <h3>البريد الإلكتروني:</h3>
+            </div>
+            <aside>
+              <input type='text' name='email' placeholder='me@me.com'>
+            </aside>
+           </li>
+        </ul>
+        <h2>الأغذية المفضلة:</h2>
+        <ul class='list'>
+          <li class='comp'>
+            <div>
+              <h3>سلطة:</h3>
+             </div>
+            <aside>
+              <span class='switch on' id='sleepSwitch'>
+                <input type='checkbox' name='favoriteFood' value='salad'>
+              </span>
+            </aside>
+          </li>
+          <li class='comp'>
+            <div>
+              <h3>حلوى:</h3>
+             </div>
+            <aside>
+              <span class='switch' id='vacationSwitch'>
+                <input type='checkbox' name='favoriteFood' value='pizza'>
+              </span>
+            </aside>
+          </li>
+          <li class='comp'>
+            <div>
+              <h3>الفلافل:</h3>
+             </div>
+            <aside>
+              <span class='switch' id='breakfastSwtich'>
+                <input type='checkbox' name='favoriteFood' value='chicken'>
+              </span>
+            </aside>
+          </li>
+        </ul>
+        <h2>ردود الفعل</h2>
+        <ul class='list'>
+          <li class='comp'>
+            <div>
+              <h3>رسالة:</h3>
+             </div>
+            <aside>
+                <input type='text' name='message' placeholder='يقول سوميتينج:'>
+            </aside>
+          </li>
+        </ul>
+        <h2>مهندس البرمجيات:</h2>
+        <ul class='list' id='selectList'>  
+          <li>
+            <h3>المطور على شبكة الإنترنت</h3> 
+            <input type='radio' name='job' value='Web developer'>
+          </li>
+          <li>
+            <h3>الم الصواريخ</h3> 
+            <input type='radio' name='job' value='Rocket scientist'>
+          </li>
+          <li>
+            <h3>طبخ</h3> 
+            <input type='radio' name='job' value='Cook'>
+          </li>
+          <li>
+            <h3>مصرفي</h3> 
+            <input type='radio' name='job' value='Banker'>
+          </li>
+          <li>
+            <h3>بواب</h3> 
+            <input type='radio' name='job' value='Janitor'>
+          </li>
+        </ul>
+      </form>
+      <br><br>
+    </section>
+  </article>
+</body>
+</html>

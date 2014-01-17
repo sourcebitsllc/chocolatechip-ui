@@ -1,0 +1,114 @@
+  <script>
+    $(function() {
+      var sleepSwitch = {
+        id : "sleepSwitch",
+        state : "on",
+        name : "activity.choice",
+        value: "نوم"
+      };
+      var vacationSwitch = {
+        id : "vacationSwitch",
+        state : "off",
+        name : "activity.choice",
+        value : "عطلة"
+      };
+      var breakfastSwitch = {
+        id : "breakfastSwitch",
+        state : "off",
+        name : "activity.choice",
+        value : "إفطار"
+      };
+      $('aside').each(function(ctx, idx) {
+        if (window && window.jQuery) {
+          temp = ctx;
+          ctx = idx;
+          idx = temp;
+        }
+        switch (idx){
+          case 0:
+            $(ctx).prepend($.UICreateSwitch(sleepSwitch));
+            break;
+          case 1:
+            $(ctx).prepend($.UICreateSwitch(vacationSwitch));
+            break;
+          case 2:
+            $(ctx).prepend($.UICreateSwitch(breakfastSwitch));
+            break;
+        }
+      })
+      $('.switch').UISwitch();
+      
+      
+      // Set response to last checked switch:
+      $('.switch').each(function(ctx, idx) {
+        var temp;
+          if (window && window.jQuery) {
+            temp = ctx;
+            ctx = idx;
+            idx = temp;
+          }
+        if (ctx.classList.contains('on')) {
+          $('#response').html($(ctx).find('input').val());
+        }
+      });
+      
+      var handleSwitch = function(_switch) {
+        var value = '';
+        if (_switch.classList.contains('on')) {
+          value = $(_switch).find('input').val();
+          $('#response').html(value);
+        } else {
+          $('#response').empty();
+        }
+      };
+      $.body.on('singletap swipeleft swiperight', '.switch', function() {
+        handleSwitch(this);
+      });
+    });
+  </script>
+  <style>
+    #response {
+      color: #0099e3;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
+  </style>
+</head>
+<body>  
+  <nav class='current'>
+    <h1>مفتاح: ديناميكي</h1>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      <ul class='list'>
+        <li class='comp'>
+          <div>
+            <h3>نوم</h3>
+          </div>
+          <aside>
+          </aside>
+        </li>
+      </ul>
+      <ul class='list'>
+        <li class='comp'>
+          <div>
+            <h3>عطلة</h3>
+          </div>
+          <aside>
+          </aside>
+        </li>
+      </ul>
+      <ul class='list'>
+        <li class='comp'>
+          <div>
+            <h3>إفطار</h3>
+          </div>
+          <aside>
+          </aside>
+        </li>
+      </ul>
+      <p><span><strong>إجابة: </strong></span><span id="response"></span></p>
+    </section>
+  </article>
+</body>
+</html>

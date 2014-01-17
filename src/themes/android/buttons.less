@@ -109,3 +109,28 @@ body {
     }
   }    
 }
+html[dir=rtl] a.button {
+  line-height: 12pt;
+   
+  &.back, &.backTo {
+     padding: 0 !important;
+     margin: 3px 0 0 30px !important;
+     width: 25px !important;
+     box-sizing: border;
+    
+    &::before {
+      .transform(rotate(135deg));
+      right: auto;
+      left: 6px;
+    }
+    &::after {
+      right: auto;
+      left: -26px;
+    }
+  }
+
+  &.align-flush {
+    left: 10px;
+    right: auto;
+  }
+}

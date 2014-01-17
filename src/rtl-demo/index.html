@@ -1,0 +1,1048 @@
+  <style>
+    .icon {
+      height: 40px;
+      width: 40px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: auto 70%;
+    }
+    .icon.weather {
+      background-color: #29abe2;
+      background-image: url(../images/app-icons/weather.png);
+      background-size: 70% auto;
+    }
+    .icon.mail {
+      background-color: #52c5d0;
+      background-image: url(../images/app-icons/mail.png);
+      background-size: 70% auto;
+    }
+    .icon.music {
+      background-color: #f38133;
+      background-image: url(../images/app-icons/music.png);
+    }
+    .icon.browser {
+      background-color: #ed453a;
+      background-image: url(../images/app-icons/browser.png);
+    }
+    .icon.app {
+      background-color: #6ec05c;
+      background-image: url(../images/app-icons/app.png);
+    }
+    /* Border Radius for each OS: */
+    .isiOS .icon {
+      border-radius: 10px;
+    }
+    .isAndroid .icon {
+      border-radius: 50%;
+    }
+    .isWindows .icon {
+      border-radius: 0;
+    }
+    .isWindows p {
+      color: #fff;
+    }
+    
+    /* Popup Demo Styles */
+    #popupMessageTarget {
+      opacity: 0;
+      font-size: 12pt;
+      line-height: 14pt;
+      font-family: 'HelveticaNeue-Light';
+      color: #007aff;
+      padding: 0 15px;
+      margin: 0;
+    }
+    .animatePopupMessage {
+      -webkit-animation-duration: 2s;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-name: updatePopupMessage;
+    }
+    
+    @-webkit-keyframes updatePopupMessage {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes updatePopupMessage {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .popover-buttons {
+      margin-bottom: 20px;
+      padding: 0 40px;
+    }
+    .popover-buttons > .button {
+      display: -webkit-box;
+      display: -webkit-flex;
+      border: solid 1px #007aff;
+      padding: 4px 15px;
+      border-left: none;
+      background-color: rgba(255,255,255,.65);
+      width: auto;
+      overflow-x: hidden;
+      -webkit-transition: none;
+      transition: none;
+      font-size: 10pt;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-flex: 1;
+      -wekbit-flex: 1;
+      text-align: center;
+    }
+    
+    .popover-buttons > .button:first-of-type {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    .popover-buttons > .button:last-of-type {
+      border-left: solid 1px #007aff;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+    .popover-buttons > .button:hover {
+      color: #fff;
+      background-color: #007aff;
+      border-left-color: #fff !important;
+    }
+    .isWindows section > .popover-buttons > .button:first-of-type,
+    .isWindows section > .popover-buttons > .button:last-of-type {
+      background-color: #000;
+      border-color: #fff;
+      border-radius: 0 !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+    .isWindows section > .popover-buttons > .button:hover {
+      background-color: #fff;
+      color: #000;
+      border-color: #000 !important;
+    }
+    .isAndroid .popover-buttons > .button {
+      border-radius: 0 !important;
+    }
+  </style>
+  <script type="text/javascript">
+    $(function() {
+      
+      ////////////////////
+      // Segmented Control
+      ////////////////////
+      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
+       
+       //////////////
+       // Select List
+       //////////////
+       if (window.jQuery) {
+        if ($('.select li').is('.selected')) {
+          $("#select-response").html($('.select li.selected')[0].textContent);
+        }       
+       } else {
+        if ($('.select li').is('.selected')[0]) {
+          $("#select-response").html($('.select li').is('.selected')[0].textContent);
+        }       }
+
+      // Select list callback:
+      $('.list.select').UISelectList({
+         selected: 0,
+         callback: function() {
+           $("#select-response").html($(this).text());
+         }
+       });
+       
+       /////////////////
+       // Switch Control
+       /////////////////
+       
+       // Define switches
+      var sleepSwitch = {
+        id : "sleepSwitch",
+        state : "on",
+        name : "activity.choice",
+        value: "نوم"
+      };
+      var vacationSwitch = {
+        id : "vacationSwitch",
+        state : "off",
+        name : "activity.choice",
+        value : "عطلة"
+      };
+      var breakfastSwitch = {
+        id : "breakfastSwitch",
+        state : "off",
+        name : "activity.choice",
+        value : "إفطار"
+      };
+      
+      // Insert switches into list:
+      $('#switches aside').each(function(ctx, idx) {
+        var temp;
+        if (window.jQuery) {
+          temp = ctx;
+          ctx = idx;
+          idx = temp;
+        }
+        switch (idx){
+          case 0:
+            $(ctx).prepend($.UICreateSwitch(sleepSwitch));
+            break;
+          case 1:
+            $(ctx).prepend($.UICreateSwitch(vacationSwitch));
+            break;
+          case 2:
+            $(ctx).prepend($.UICreateSwitch(breakfastSwitch));
+            break;
+        }
+      })
+      // Initialize switches:
+      $('.switch').UISwitch();
+      
+      
+      // Set response to last checked switch for page load state:
+      $('.switch').each(function(_, ctx) {
+        if (ctx.classList.contains('on')) {
+          $('#switch-response').html($(ctx).find('input').val());
+        }
+      });
+      
+      // Set switch's checkbox value:
+      var handleSwitch = function(_switch) {
+        var value = '';
+        if (_switch.classList.contains('on')) {
+          value = $(_switch).find('input').val();
+          $('#switch-response').html(value);
+        } else {
+          $('#switch-response').empty();
+        }
+      };
+      $.body.on('singletap', '.switch', function() {
+        handleSwitch(this);
+      });
+      
+      ////////////////////
+      // Setup Range Input
+      ////////////////////
+      $('#rangeValue1').html($('#rangeControl1').val());
+      $('#rangeControl1').on('change', function() {
+        $('#rangeValue1').html($(this).val());
+      });
+      
+      $('#rangeValue2').html($('#rangeControl2').val());
+      $('#rangeControl2').on('change', function() {
+        $('#rangeValue2').html($(this).val());
+      });    
+      
+      ////////////////
+      // Stepper Setup
+      ////////////////  
+      $('#digits').UIStepper({  
+        start: 1,
+        end: 8,
+        defaultValue: 3
+      });
+      
+       ///////////////////////
+       // Setup Deletable list
+       ///////////////////////
+       $.UIDeletable({
+          list: '#deletables', 
+          editLabel: 'تحرير',
+          doneLabel: 'منجز',
+          deleteLabel: 'حذف',
+          callback: function(item) {
+            var text = $(item).siblings('h3').text();
+            $('#deletable-response').html('قمت بحذفها: <strong>' + text + '</strong>');
+          }
+        });
+
+        ///////////////////
+        // Initialize Popup
+        ///////////////////
+        $("#openPopup").on("singletap", function() {
+          $.UIPopup({
+            id: "warning",
+            title: 'اهتمام!', 
+            message: 'شكرا لهذه القراءة.', 
+            cancelButton: 'إلغاء', 
+            continueButton: 'استمر'
+          });
+        });
+      
+        //////////////////////
+        // Setup for Popovers:
+        //////////////////////
+      
+          // Content for Popovers:
+          var popover1Content = "<ul class='list'><li><h3>تفاحة</h3></li><li><h3>مانجو</h3></li><li><h3>مشمش</h3></li><li><h3>موز</h3></li><li><h3>كرز</h3></li><li><h3>عنب</h3></li><li><h3>ليمون</h3></li><li><h3>خوخ</h3></li><li><h3>برقوق</h3></li><li><h3>كمثرى</h3></li><li><h3>برتقال</h3></li></ul>";
+          
+          var popover2Content = "<ul class='list'><li><h3>كعكة</h3></li><li><h3>أيس كريم</h3></li><li><h3>فطائر</h3></li><li><h3>كوكي</h3></li><li><h3>الكعك</h3></li><li><h3>الكريب</h3></li><li><h3>كاسترد</h3></li><li><h3>الكرمل</h3></li><li><h3>حلويات</h3></li></ul>";
+          
+        // Callback for Popovers:
+        var fillPopover1 = function(popover) {
+          // Populate Popover with content:
+          $('.popover').find('section').append(popover1Content);
+          popoverEventHandler();
+        };
+        
+        var fillPopover2 = function(popover) {
+          // Populate Popover with content:
+          $('.popover').find('section').append(popover2Content);
+          popoverEventHandler();
+        };
+        
+        var popoverEventHandler = function() {
+          // Attach event to catch user interaction.
+          // Use singletap to allow user to scroll content.
+          $('.popover').on('singletap', function(e) {
+            var results;
+            if (this.id === 'fruitsPopover') {
+              results = '#fruitsChoice';
+            } else if(this.id === 'desertsPopover') {
+              results = '#desertsChoice';
+            }
+            var listItem;
+            if (e.target.nodeName === 'LI') {
+              $(results).html(e.target.textContent.trim());
+            } else {
+              listItem = $(e.target).closest('li')[0];
+              $(results).html(listItem.textContent.trim());
+            }
+            $.UIPopoverClose();
+          });
+        };
+        
+        // Initialize Popover:
+        $('#showPopover1').UIPopover({
+          id: 'fruitsPopover', 
+          title: "فاكهة", 
+          callback: fillPopover1
+        });
+        // Initialize Popover:
+        $('#showPopover2').UIPopover({
+          id: 'desertsPopover', 
+          title: "حلوى", 
+          callback: fillPopover2
+        });      
+        
+        ///////////////////////////
+        // Setup Horizontal Paging:
+        ///////////////////////////
+        $.UIPaging();
+        
+        //////////////
+        // Setup Sheet
+        //////////////
+        $.UISheet();
+        $('.sheet').find('section').append('<h2>خيارات متاحة</h2>');
+        $('.sheet').find('section').append("<ul class='list'></li>");
+        var list = $('.sheet .list');
+        list.append('<li><a class="button" href="javascript:void(null)">حفظ</a></li>');
+        list.append('<li><a class="button" href="javascript:void(null)">حذف</a></li>');
+        list.append('<li><a class="button" href="javascript:void(null)">إلغاء</a></li>');
+        list.on('singletap', '.button', function() {
+          $.UIHideSheet();
+        });
+      // Initialize button to show sheet:
+      $('#showSheet').on('singletap', function() {
+        $.UIShowSheet();
+      });
+      $('#sheetBackButton').on($.eventStart, function() {
+        $.UIHideSheet();
+      });
+    });
+  </script>
+  <style>
+    #select-response,
+    #switch-response,
+    #deletable-response,
+    #fruitsChoice,
+    #desertsChoice {
+      color: #007aff;
+      text-transform: capitalize;
+    }
+    .sheet .button {
+      min-width: 200px;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>استعراض</h1>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      <ul class='list'>
+        <li data-goto="segmented-article" class='nav'>
+          <h3>زر مجزأ</h3>
+        </li>
+        <li data-goto="select-article" class='nav'>
+          <h3>قائمة الاختيار</h3>
+        </li>
+        <li data-goto="deletable-article" class='nav'>
+          <h3>قائمة الحذف</h3>
+        </li>
+        <li data-goto="popup-article" class='nav'>
+          <h3>نافذة قصيرة</h3>
+        </li>
+        <li data-goto="popover-article" class='nav'>
+          <h3>عنصر غطاء</h3>
+        </li>
+        <li data-goto="sheet-article" class='nav'>
+          <h3>ورقة</h3>
+        </li>
+        <li data-goto="paging-article" class='nav'>
+          <h3>تصفح</h3>
+        </li>
+      </ul>
+    </section>
+  </article>
+  <nav>
+    <a class='button back'>ستعراض</a>
+    <h1>زر مجزأ</h1>
+  </nav>
+  <article id='segmented-article' class='next'>
+    <section>
+      <div class='horizontal centered'>
+        <div class='segmented'>
+          <a class='button selected'>مفتاح</a>
+          <a class='button'>نطاق</a>
+          <a class='button'>السائر</a>
+        </div>
+      </div>
+      <div id="toggle-panels">
+        <div id='switches'>
+          <h2>مفتاح</h2>
+          <ul class='list'>
+            <li class='comp'>
+              <div>
+                <h3>نوم</h3>
+              </div>
+              <aside>
+              </aside>
+            </li>
+          </ul>
+          <ul class='list'>
+            <li class='comp'>
+              <div>
+                <h3>عطلة</h3>
+              </div>
+              <aside>
+              </aside>
+            </li>
+          </ul>
+          <ul class='list'>
+            <li class='comp'>
+              <div>
+                <h3>إفطار</h3>
+              </div>
+              <aside>
+              </aside>
+            </li>
+          </ul>
+          <p><span>إجابة: </span><span id="switch-response"></span></p>
+        </div>
+        <div>
+          <h2>نطاق</h2>
+          <ul class='list'>
+            <li>
+              <h3>زيادة نقطة بنقطة<span></span></h3>
+              <div>
+                <label>القيمة الحالية: <span id='rangeValue1'></span></label>
+                <input type="range" id="rangeControl1" value="10" min="0" max="40">
+              </div>
+            </li>
+          </ul>
+          <ul class='list' ui-li-order="stacked" ui-kind='grouped'>
+            <li>
+              <h3>زيادة كل 5 نقطة<span></span></h3>
+              <div>
+                <label>القيمة الحالية: <span id='rangeValue2'></span></label>
+                <input type="range" id="rangeControl2" step='5' value="20" min="0" max="40">    
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <ul class='list'>
+            <li>
+              <h3>اختيار قيمة:</h3>
+              <span class='stepper' id="digits"></span>
+            </li>
+          </ul>          
+        </div>
+      </div>
+    </section>
+  </article>
+  <nav>
+    <a class='button back'>ستعراض</a>
+    <h1>قائمة الاختيار</h1>
+  </nav>
+  <article id='select-article' class='next'>
+    <section>
+      <h2>المهام للقيام</h2>
+      <ul class='list select'>
+        <li class='selected'>
+          <h3>يذهب يأكل شيئا.</h3>
+        </li>
+        <li>
+          <h3>أخذ غفوة.</h3>
+        </li>
+        <li>
+          <h3>الحصول على بعض العمل المنجز.</h3>
+        </li>
+        <li>
+          <h3>تلعب لعبة.</h3>
+        </li>
+      </ul>
+      <p><strong>أنت ذاهب ل: </strong><span id="select-response"></span></p>
+    </section>
+  </article>
+  <nav>
+    <a class='button back'>استعراض</a>
+    <h1>قائمة الحذف</h1>
+  </nav>
+  <article id='deletable-article' class='next'>
+    <section>
+      <h2>لمس "تحرير" لتمكين الحذف.</h2>
+      <ul class='list' id='deletables'>
+        <li>
+          <h3>الأشخاص</h3>
+        </li>
+        <li>
+          <h3>المكان</h3>
+        </li>
+        <li>
+          <h3>الأشياء</h3>
+        </li>
+        <li>
+          <h3>حيوانات</h3>
+        </li>
+        <li>
+          <h3>طعام</h3>
+        </li>
+      </ul>
+      <p id='deletable-response'></p>
+    </section>
+  </article>
+  <nav>
+    <a class='button back'>ستعراض</a>
+    <h1>قصة ممتعة</h1>
+    <a href='javascript:void(null)' class='button align-flush' id="openPopup">فتح</a>
+  </nav>
+  <article id='popup-article' class='next'>
+    <section>
+      <p id='popupMessageTarget'></p>
+      <h2>نوعية رحمة</h2>
+      <ul class='list'>
+        <li>
+          <h3>>تنازع شخصان وذهبا إلى جحا * وكان قاضيا * فقال المدعي : لقد كان هذا الرجل يحمل حملا ثقيلا ، فوقع على الأرض ، فطلب مني أن أعاونه ، فسألته عن الأجر الذي يدفعه لي بدل مساعدتي له ، فقال ( لا شيء) فرضيت بها وحملت حمله . وهاأنذا أريد أن يدفع لي اللا شيء . فقال جحا : دعواك صحيحه يا بني ، اقترب مني وارفع هذا الكتاب . ولما رفعه قال له جحا : ماذا وجدت تحته ؟ قال : لا شيء . قال جحا : خذها وأنصرف
+</h3>
+        </li>
+      </ul>
+    </section>
+  </article>
+  <nav>
+    <a class='button back'>ستعراض</a>
+    <h1>عنصر غطاء</h1>
+  </nav>
+  <article id='popover-article' class='next'>
+    <section>
+      <div class='horizontal centered popover-buttons'>
+        <a class='button show-popover' id="showPopover1" href="javascript:void(null)">فاكهة</a>
+        <a class='button show-popover' id="showPopover2" href="javascript:void(null)">الحلويات</a>
+      </div>
+      <ul class='list'>
+        <li>
+          <h3>مثال عنصر غطاء</h3>
+          <h4>انقر فوق الزر أعلاه.</h4>
+        </li>
+      </ul>
+      <h2>خياراتك</h2>
+      <ul class="list" id='popover-choices'>
+         <li>
+           <h3>فاكهة:</h3>
+           <h4 id="fruitsChoice"></h4>
+         </li>
+         <li>
+           <h3>حلوى:</h3>
+           <h4 id="desertsChoice"></h4>
+         </li>
+      </ul>
+    </section>
+  </article>
+  <nav>
+    <a class='button back' id='sheetBackButton'>ستعراض</a>
+    <h1>ورقة</h1>
+    <a class='button align-flush' id='showSheet' href='javascript:void(null)'>عرض</a>
+  </nav>
+  <article id='sheet-article' class='next'>
+    <section>
+      <h2>موسيقى</h2>
+      <ul class='list'>
+       <li class='comp'>
+          <aside>
+            <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>نانسي عجرم</h3>
+            <h4>أعمل عاقلة</h4>
+            <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Ykhallili Albak' src="../rtl_images/arabic/Ykhallili_Albak_Najwa.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>نجوى كرم</h3>
+            <h4>يخليلي قلبك</h4>
+            <p>نجوى لديها وسيلة فريدة من نوعها في الغناء.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>ديانا حداد</h3>
+            <h4>بنت أصول</h4>
+            <p>ديانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>راشد الماجد‎</h3>
+            <h4>جبار حبك</h4>
+            <p>راشد الماجد هو الموسيقى العربية الكلاسيكية. وهو من أبرز المطربين.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>عمرو دياب</h3>
+            <h4>الليلة</h4>
+            <p>قال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+      </ul>    
+    </section>
+  </article>
+  <nav>
+    <a class='button back'>ستعراض</a>
+    <h1>تصفح</h1>
+    <div class='segmented paging horizontal align-flush'>
+       <a class='button' href='javascript:void(null)' title='previous panel'></a>
+       <a class='button' href='javascript:void(null)' title='next panel'></a>
+    </div>
+  </nav>
+  <article id='paging-article' class='next paging'>
+    <section>
+      <ul class='list'>
+        <li class='comp' data-goto>
+          <div>
+            <h3>الأشخاص</h3>
+            <h4>الأصدقاء</h4>
+            <p>العديد من أصدقائك قد يكون مضحكا. بعضهم قد لا يكون مضحكا. بغض النظر، أنهم أصدقاء. الأصدقاء هم أكثر قيمة من الذهب. الأصدقاء هم هناك لك عند الآخرين ليسوا كذلك. حاول دائما أن يكون أكبر عدد ممكن من الأصدقاء ممكن.</p>
+          </div>
+          <aside>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>المكان</h3>
+            <h4>وجهة مثيرة للاهتمام</h4>
+            <p>هناك العديد من الأماكن التي يمكن زيارتها. لك العديد من ليس مثل بعض منهم. كنت في الواقع قد لا ترغب معظمها. ولكن بالتأكيد سوف يكون بعض الأماكن الخاصة. انها أكثر من أي شيء يمكنك التعرف عليها. هو مجرد مكان؟ هل هو الشعب؟ هل هو الأرض أو المباني؟ هل هو المناخ؟ هو الغذاء؟ هل هو العادات والتقاليد؟</p>
+          </div>
+          <aside>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>حيوانات</h3>
+            <h4>المخلوقات من جميع أنحاء العالم</h4>
+            <p>هناك أنواع كثيرة من الحيوانات. لذلك يمكن أن تكون جميلة لرؤية، والبعض الآخر القبيح. حتى الحيوانات هي مفيدة وبعضها لا. يمكن لبعض الحيوانات أن نكون أصدقاء وترويض حتى. وبعض الحيوانات يمكن أن تكون خطيرة جدا. قد يريدون أن تأكل أنت أو مجرد قتلك.</p>
+          </div>
+          <aside>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>طعام</h3>
+            <h4>المطاعم</h4>
+            <p>الجميع مثل الغذاء. ولكن ليس الجميع يحب نفس الطعام. وليس كل الغذاء هو نفسه. بعض الطعام وبعض المواد الغذائية heathy سيئة للغاية بالنسبة لك. فقط لأن الغذاء الأذواق جيدة لا يعني انه لامر جيد بالنسبة لك. وأحيانا الطعام الذي هو صحي جدا قد لا طعم جيد جدا.</p>
+          </div>
+          <aside>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>الأشياء</h3>
+            <h4>أشياء مجرد غريبة</h4>
+            <p>العالم يمكن أن تكون مملة في بعض الأحيان. وأحيانا يمكن أن يكون ذلك غريبا. هناك الكثير من الأشياء لتأخذ بعين الاعتبار. بعض الأشياء ليست سوى العاديين. بينما أمور أخرى قد تكون غير عادية. ما هو عادي بالنسبة لك قد يكون غير عادي لشخص آخر. وما هو خاص بالنسبة لك قد يبدو مملا للآخرين.</p>
+          </div>
+          <aside>
+            <span class='nav'></span>
+          </aside>
+        </li>
+      </ul>        
+    </section>
+    <section>
+      <h2>موسيقى</h2>
+      <ul class='list'>
+       <li class='comp'>
+          <aside>
+            <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Nancy Ajram'>نانسي عجرم</h3>
+            <h4>أعمل عاقلة</h4>
+            <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Amr Diab'>عمرو دياب</h3>
+            <h4>الليلة</h4>
+            <p>قال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Ykhallili Albak' src="../rtl_images/arabic/Ykhallili_Albak_Najwa.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Najwa Karam'>نجوى كرم‎</h3>
+            <h4>يخليلي قلبك</h4>
+            <p>نجوى لديها وسيلة فريدة من نوعها في الغناء.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Diana Haddad'>ديانا حداد</h3>
+            <h4>بنت أصول</h4>
+            <p>ديانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Rashid Majid'>راشد الماجد‎</h3>
+            <h4>جبار حبك</h4>
+            <p>راشد الماجد هو الموسيقى العربية الكلاسيكية. وهو من أبرز المطربين.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+      </ul>        
+    </section>
+    <section>
+      <h2>أغاني شعبية</h2>
+      <ul class='list'>
+        <li class='comp'>
+          <aside>
+            <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>ديانا حداد</h3>
+            <h4>بنت أصول</h4>
+            <p>ديانا هو أسطورة. موسيقاها يتحرك روحك. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتك.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>راشد الماجد‎</h3>
+            <h4>جبار حبك</h4>
+            <p>اراشد الماجد هو الموسيقى العربية الكلاسيكية. هو أبرز المطربين الحديثة.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+       <li class='comp'>
+          <aside>
+            <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>نانسي عجرم</h3>
+            <h4>أعمل عاقلة</h4>
+            <p>هذه هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>عمرو دياب</h3>
+            <h4>الليلة</h4>
+            <p>عمرو الحديثة، والورك. وقال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Ykhallili Albak' src="../rtl_images/arabic/Ykhallili_Albak_Najwa.jpg" height="80px">
+          </aside>
+          <div>
+            <h3>نجوى كرم</h3>
+            <h4>يخليلي قلبك</h4>
+            <p>نجوى لديه وسيلة فريدة من نوعها فاسيناتينج الغناء التي نود حقا.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+      </ul>    
+    </section>
+    <section>
+      <ul class='list'>
+        <li class='switched'>
+          <h3>الأشخاص</h3>
+          <h4>الأصدقاء</h4>
+        </li>
+        <li class='switched'>
+          <h3>المكان</h3>
+          <h4>وجهة مثيرة للاهتمام</h4>
+        </li>
+        <li class='switched'>
+          <h3>حيوانات</h3>
+          <h4>امخلوقات غريبة</h4>
+        </li>
+        <li class='switched'>
+          <h3>طعام</h3>
+          <h4>المطاعم</h4>
+        </li>
+      </ul>   
+    </section>
+    <section>
+      <ul class='list'>
+        <li class='comp' data-goto='people'>
+          <div>
+            <h3>الأشخاص</h3>
+          </div>
+          <aside>
+            <h4>الأصدقاء</h4>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto='places'>
+          <div>
+            <h3>المكان</h3>
+          </div>
+          <aside>
+            <h4>وجهة مثيرة للاهتمام</h4>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto='animals'>
+          <div>
+            <h3>حيوانات</h3>
+          </div>
+          <aside>
+            <h4>امخلوقات غريبة</h4>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto='cooking'>
+          <div>
+            <h3>طعام</h3>
+          </div>
+          <aside>
+            <h4>المطاعم</h4>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto='food'>
+          <div>
+            <h3>الأشياء</h3>
+          </div>
+          <aside>
+            <h4>أشياء مجرد غريبة</h4>
+            <span class='nav'></span>
+          </aside>
+        </li>
+      </ul>   
+    </section>
+    <section>
+      <ul class='list'>
+        <li class='comp' data-goto>
+          <div>
+            <h3>الأشخاص</h3>
+          </div>
+          <aside>
+            <span class='date-time'>يوم الاثنين</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>المكان</h3>
+          </div>
+          <aside>
+            <span class='date-time'>3/14/10</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>حيوانات</h3>
+          </div>
+          <aside>
+            <span class='date-time'>12:30</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>طعام</h3>
+          </div>
+          <aside>
+            <span class='date-time'>منتصف النهار</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <div>
+            <h3>تسلية</h3>
+          </div>
+          <aside>
+            <span class='date-time'>الأسبوع المقبل</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <ul class='list'>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon weather'></span>
+          </aside>
+          <div>
+            <h3>حالة الطقس</h3>
+          </div>
+          <aside>
+            <h4>التنبيهات</h4>
+            <span class='counter'>2</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon music'></span>
+          </aside>
+          <div>
+            <h3>موسيقى</h3>
+          </div>
+          <aside>
+            <h4>مشتريات جديدة</h4>
+            <span class='counter'>16</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon mail'></span>
+          </aside>
+          <div>
+            <h3>البريد</h3>
+          </div>
+          <aside>
+            <h4>الجديد</h4>
+            <span class='counter'>134</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon browser'></span>
+          </aside>
+          <div>
+            <h3>المتصفح</h3>
+          </div>
+          <aside>
+            <h4>الإشارات المرجعية</h4>
+            <span class='counter'>22</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon app'></span>
+          </aside>
+          <div>
+            <h3>تطبيقات</h3>
+          </div>
+          <aside>
+            <h4>تحديثات</h4>
+            <span class='counter'>3</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+      </ul> 
+      <p>مثال على الرموز في عناصر القائمة.</p>
+    </section>
+  </article>
+</body>
+</html>

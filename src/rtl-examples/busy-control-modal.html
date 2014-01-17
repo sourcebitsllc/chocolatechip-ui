@@ -1,0 +1,28 @@
+  <script>
+    $(function() {
+      $('#showModalBusyIndicator').on($.eventStart, function(e) {
+        e.preventDefault();
+        $.UIPopup({empty: true});
+        $('.popup').UIBusy({'color':'orange', 'size': '80px'})
+        setTimeout(function() {
+          $('.popup').UIPopupClose()
+        },5000);
+      });
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>مؤشر الانشغال</h1>
+  </nav>
+  <article id='main' class="current">
+    <section>
+      <ul class='list'>
+        <li>
+          <a class='button' id='showModalBusyIndicator' href='#'>إظهار مؤشر الانشغال</a>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

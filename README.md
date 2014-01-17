@@ -99,8 +99,35 @@ While editing your project, you may find yourself making changes to the LESS fil
     // Watch the html source files:
     grunt watch:html
 
+##Right-to-left Language Support
+
+For languages that are right-to-left, such as Arabic, Farse, Urdu and Hebrew, ChocolateChip-UI provides full support. All you have to do is add the following to your document:
+
+    &lt;html dir="rtl"&gt;
+
+You can also add the appropriate lang attribute value for the language you are using. When ChocolateChip-UI see the dir="rtl" value on the HTML tag it automatically adjust the layouts and user interaction to suit the right-to-left format. This includes correct right-to-left navigation direction, reverse back buttons, etc.
+
+You can also build out right-to-left examples from the source. Just run this in your terminal:
+
+    grunt rtl
+
+The folders with right-to-left examples for Android, iOS and Windows will be created.
+
 ###Note
 
 You do not need Nodejs to use ChocolateChip-UI. Nodejs is only used to build the framework and examples from the source files.
+
+##Contributing Code
+###Avoiding Carriage Returns in Commits
+
+ChocolateChip-UI uses Unix linefeeds (LF) for new lines. Github for Windows adds carriage returns to linefeeds (CRLF). If you try to check in such files, Git will flag every line with changed new lines, which means practically everything. To avoid this we've added a .gitattributes file to the repository. This will prevent Github from converting the new lines on Windows. 
+
+If you are editing the source code on Windows, depending on the text editor you are using, or if you do a copy/paste, you may inadvertently introduce Windows carriage returns. Also some Grunt actions, such as concatenation with banners, automatically create newlines with carriage returns on Windows. When these carriage returns are added to the source code, they will show up as a changes at commit time. You can avoid this. Navigate to the ChocolateChip-UI repository in the command prompt, then execute these two Git commands:
+
+    git config core.eol lf
+    git config core.autocrlf input
+
+core.eol tells Git to always checkout this repository with LF. 
+core.autocrlf tells Git to convert CRLF to LF on commit.
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/2f123684cf50f62013c044733bfc36fb "githalytics.com")](http://githalytics.com/sourcebitsllc/chocolatechip-ui)

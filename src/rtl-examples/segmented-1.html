@@ -1,0 +1,87 @@
+  <script>
+    $(function() {
+      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>Segmented</h1>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      <div class='horizontal centered'>
+        <div class='segmented'>
+          <a class='button'>لليلة</a>
+          <a class='button'>أعمل عاقلة</a>
+          <a class='button'>بنت أصول</a>
+        </div>
+      </div>
+      <div id="toggle-panels">
+        <div>
+          <ul class='list'>
+            <li class='comp'>
+              <aside>
+                <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+              </aside>
+              <div>
+                <h3 title='Amr Diab'>عمرو دياب</h3>
+                <h4>الليلة</h4>
+                <p>قال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+              </div>
+              <aside>
+                <span class='show-detail'></span>
+              </aside>
+            </li>
+          </ul>  
+        </div>
+        <div>
+          <ul class='list'>
+            <li class='comp'>
+              <aside>
+                <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+              </aside>
+              <div>
+                <h3 title='Nancy Ajram'>نانسي عجرم</h3>
+                <h4>أعمل عاقلة</h4>
+                <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+              </div>
+              <aside>
+                <span class='show-detail'></span>
+              </aside>
+            </li>
+          </ul>  
+        </div>
+        <div>
+          <ul class='list'>
+            <li class='comp'>
+              <aside>
+                <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+              </aside>
+              <div>
+                <h3 title='Diana Haddad'>ديانا حداد</h3>
+                <h4>بنت أصول</h4>
+                <p>ديانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+              </div>
+              <aside>
+                <span class='show-detail'></span>
+              </aside>
+            </li>
+          </ul>  
+        </div>
+      </div>
+      <ul class='list'>        
+        <li>
+           <h3>الأشخاص</h3>
+        </li>    
+        <li>
+           <h3>الأشياء</h3>
+        </li>    
+        <li>
+           <h3>المطاعم</h3>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

@@ -30,3 +30,12 @@ li.switched {
     max-width: 50%;
   }
 }
+
+html[dir=rtl] {
+  li.switched {
+    & h4 {
+      margin-left: 10px;
+      margin-right: auto;
+    }
+  }
+}

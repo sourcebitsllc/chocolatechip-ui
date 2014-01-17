@@ -1,0 +1,93 @@
+  <script type="text/javascript">
+    $(function(){
+      
+          // Content for Popovers:
+          var popover1Content = "<ul class='list'><li><h3>تفاحة</h3></li><li><h3>مانجو</h3></li><li><h3>مشمش</h3></li><li><h3>موز</h3></li><li><h3>كرز</h3></li><li><h3>عنب</h3></li><li><h3>ليمون</h3></li><li><h3>خوخ</h3></li><li><h3>برقوق</h3></li><li><h3>كمثرى</h3></li><li><h3>برتقال</h3></li></ul>";
+          
+          var popover2Content = "<ul class='list'><li><h3>كعكة</h3></li><li><h3>أيس كريم</h3></li><li><h3>فطائر</h3></li><li><h3>كوكي</h3></li><li><h3>الكعك</h3></li><li><h3>الكريب</h3></li><li><h3>كاسترد</h3></li><li><h3>الكرمل</h3></li><li><h3>حلويات</h3></li></ul>";
+          
+        // Callback for Popovers:
+        var fillPopover1 = function(popover) {
+          // Populate Popover with content:
+          $('.popover').find('section').append(popover1Content);
+          popoverEventHandler();
+        };
+        
+        var fillPopover2 = function(popover) {
+          // Populate Popover with content:
+          $('.popover').find('section').append(popover2Content);
+          popoverEventHandler();
+        };
+        
+        var popoverEventHandler = function() {
+          // Attach event to catch user interaction.
+          // Use singletap to allow user to scroll content.
+          $('.popover').on('singletap', function(e) {
+            var results;
+            if (this.id === 'fruitsPopover') {
+              results = '#fruitsChoice';
+            } else if(this.id === 'desertsPopover') {
+              results = '#desertsChoice';
+            }
+            var listItem;
+            if (e.target.nodeName === 'LI') {
+              $(results).html(e.target.textContent.trim());
+            } else {
+              listItem = $(e.target).closest('li')[0];
+              $(results).html(listItem.textContent.trim());
+            }
+            $.UIPopoverClose();
+          });
+        };
+        
+        // Initialize Popover:
+        $('#showPopover1').UIPopover({
+          id: 'fruitsPopover', 
+          title: "فاكهة", 
+          callback: fillPopover1
+        });
+        // Initialize Popover:
+        $('#showPopover2').UIPopover({
+          id: 'desertsPopover', 
+          title: "حلوى", 
+          callback: fillPopover2
+        });  
+    });
+  </script>
+  <style>
+    #choices h4 {
+      color: #0099e3;
+      font-family: SegoeWP, SegoeUI, HelveticaNeue, Roboto, Sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class='button show-popover' id="showPopover1" href="javascript:void(null)">فاكهة</a>
+    <h1>عنصر غطاء</h1>
+    <a class='button show-popover align-flush' id="showPopover2" href="javascript:void(null)">الحلويات</a>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      </div>
+      <ul class='list'>
+        <li>
+          <h3>مثال عنصر غطاء</h3>
+          <h4>انقر فوق الزر أعلاه.</h4>
+        </li>
+      </ul>
+      <h2>خياراتك</h2>
+      <ul class="list" id='popover-choices'>
+         <li>
+           <h3>فاكهة:</h3>
+           <h4 id="fruitsChoice"></h4>
+         </li>
+         <li>
+           <h3>حلوى:</h3>
+           <h4 id="desertsChoice"></h4>
+         </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

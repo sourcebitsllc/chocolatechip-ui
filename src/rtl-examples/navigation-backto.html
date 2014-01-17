@@ -1,0 +1,58 @@
+  <script>
+    $(function() {
+      $("#goToLast").on("singletap", function() {
+         $.UIGoToArticle("#article3");
+       });
+       $('#backToMain').on('singletap', function() {
+         $.UIGoBackToArticle('#main');
+       });
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>غير الخطي للملاحة</h1>
+  </nav>
+  <article id='main' class='current'>
+    <section>
+      <ul class='list' role='list'>
+        <li role='button' class='nav' data-goto="article2">
+          <h3>عنصر</h3>
+        </li>
+      </ul>
+      <br><br>
+      <a id='goToLast' href='javascript:void(null)' class="button action">انتقل إلى القصة</a>
+    </section>
+  </article>
+  <nav>
+    <a href='javascript:void(null)' class="button back">رجوع</a>
+    <h1>المادة الثانية</h1>
+  </nav>
+  <article id="article2" class='next'>
+    <section>
+      <ul class='list' role='list'>
+        <li role='button' data-goto="article3" class='nav'>
+          <span class='counter'>1</span>
+          <h3>عنصر</h3>
+          <h4>عنوان فرعي</h4>
+        </li>
+      </ul>
+    </section>
+  </article>
+  <nav>
+    <a href='javascript:void(null)' id='backToMain' class='button backTo'>رجوع</a>
+    <h1>زر الرجوع</h1>
+  </nav>
+  <article id="article3" class='next'>
+    <section>
+      <ul class='list'>
+        <li>
+          <h3>عنصر</h3>
+          <h4>عنوان فرعي</h4>
+          <p>لى تم الإتحاد الهزائم الإكتفاء. لم فقامت ناجازاكي قام. وقد استمرار الخنادق و, ذلك الخاسرة اليابانية بـ. كما مرجع فرنسية في, أن لكل المحيط النمسا الساحلية.</p>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

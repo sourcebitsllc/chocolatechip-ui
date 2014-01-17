@@ -105,3 +105,41 @@ article.paging.vertical > section.current {
 article.paging.vertical > section.next {
   .transform(translate3d(0,-100%,0));
 }
+
+html[dir=rtl] {
+  & .segmented.paging.horizontal {
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    & .button:first-child {
+      -webkit-box-ordinal-group: 2;
+      -webkit-order: 2;
+      order: 2;
+      border: none !important;
+    }
+
+    & .button:last-child {
+      -webkit-box-ordinal-group: 1;
+      -webkit-order: 1;
+      order: 1;
+    }
+  }
+  
+  & .segmented.paging.horizontal > .button::before {
+    top: -2px;
+  }
+  
+  & article.paging.horizontal > section.previous {
+    .transform(translate3d(100%,0,0));
+  }
+
+  & article.paging.horizontal > section.current {
+    .transform(translate3d(0,0,0) scale(1,1));
+  }
+
+  & article.paging.horizontal > section.next {
+    .transform(translate3d(-100%,0,0));
+  }
+  & .segmented.paging.horizontal > .button::before {
+    -webkit-transform: rotate(180deg);
+  }
+}

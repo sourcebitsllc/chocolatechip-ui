@@ -65,6 +65,37 @@ body.splitlayout {
   background-color: @masterListSelected;
 }
 
+html[dir=rtl] {
+  body.splitlayout { 
+    & > nav {
+      &:first-of-type {
+        right: 0;
+        left: 320px;
+        border-right: none;
+        border-left: solid 1px @splitlayoutBorders !important;
+      }
+
+      &:last-of-type {
+        left: 0;
+        right: 320px;
+      }
+    }
+
+    & > article {
+      &.master {
+        left: 320px !important;
+        right: 0 !important;
+        border-right: none !important;
+        border-left: solid 1px @splitlayoutBorders !important;
+      }
+      &.detail {
+        right: 320px !important;
+        left: 0 !important;
+      }
+    }
+  }
+}
+
 @media only screen and (max-device-width : 320px) and (orientation : portrait) {
   .splitlayout > article.master {
     right: 260px !important;

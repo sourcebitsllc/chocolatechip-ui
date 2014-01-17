@@ -1,0 +1,93 @@
+  <script type="text/javascript">
+    var masterData = [
+      { title: "California", "data_url": 'california' },
+      { title: "Oregon", "data_url": 'oregon' },
+      { title: "Washington", "data_url": 'washington' },
+      { title: "Colorado", "data_url": 'colorado' },
+      { title: "Nevada", "data_url": 'nevada' },
+      { title: "Arizona", "data_url": 'arizona' },
+      { title: "New Mexico", "data_url": 'newmexico' },
+      { title: "New York", "data_url": 'newyork' },
+      { title: "Massachussetts", "data_url": 'massachussetts' },
+      { title: "Ohio", "data_url": 'ohio' },
+      { title: "Illinois", "data_url": 'illinois' },
+      { title: "Hawaii", "data_url": 'hawaii' },
+      { title: "Texas", "data_url": 'texas' },
+      { title: "Alaska", "data_url": 'alaska' },
+      { title: "Florida", "data_url": 'florida' },
+      { title: "Virginia", "data_url": 'virginia' },
+      { title: "Nebraska", "data_url": 'nebraska' },
+      { title: "Connecticut", "data_url": 'connecticut' }
+    ];
+    $(function() {
+      var masterTemplate = 
+      '<li data-url="[[=data.data_url]]">[[=data.title]]</li>';
+      var myTmpl8 = $.template(masterTemplate);
+      masterData.forEach(function(ctx) {
+        $('.master ul').append(myTmpl8(ctx));
+      });
+      $('.master ul li').eq(0).addClass('selected');
+      $.get('../data/splitlayout/california.html', function(data) {
+        $('.detail section').html(data);
+      });
+      $('.master ul').on('singletap', 'li', function() {
+        $.UISetHashOnUrl('#' + $(this).attr('data-url'));
+        $(this).siblings().removeClass('selected');
+        $(this).addClass('selected');
+        $('#detailTitle').text(this.textContent);
+        var detail = $('.detail section');
+        detail.empty();
+        detail.UIBusy({'color':'#000', 'size': '100px'});
+        var url = '../data/splitlayout/' + this.getAttribute('data-url') + '.html';
+        // Delay 1/2 second to show busy indicator while loading.
+        // Please do not do this for real world app!
+        setTimeout(function() {
+          $.get(url, function(data) {
+            detail.html(data);
+          });
+        }, 500);
+      });
+    });
+  </script>
+  <style>
+    // Style master list items:
+    .master .list > li.selected {
+      background-color: #d9d9d9;
+    }
+    .detail .list > li > img {
+      width: 200px;
+      min-height: 100px;
+      border: solid 1px #ccc;
+    }
+    .busy {
+      top: 50px
+    }
+  </style>
+</head>
+<body class='splitlayout'>
+  <nav>
+    <h1>Pick One</h1>
+  </nav>
+  <article class='master'>
+    <section id="scroller2">
+      <ul class='list'>
+      </ul>
+    </section>
+  </article>
+  <div class="toolbar current">
+    <a class='button' href="javascript:void(null)">Button 1</a>
+  </div>
+  <nav>
+    <h1 id='detailTitle'>Detail 1</h1>
+  </nav>
+  <article class='detail' class='master'>
+    <section>
+      <ul class='list'>
+    </section>
+  </article>
+  <div class="toolbar current">
+    <a class='button' href="javascript:void(null)">Button 2</a>
+    <a class='button align-flush' href="javascript:void(null)">Button 3</a>
+  </div>
+</body>
+</html>

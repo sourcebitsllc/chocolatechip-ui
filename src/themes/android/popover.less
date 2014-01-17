@@ -77,3 +77,25 @@ nav > .button.show-popover::after {
 nav > h1 + .button.show-popover.align-flush {
   margin: 8px 0 0 0 !important;
 }
+
+html[dir=rtl] {
+  & .button.show-popover {
+    padding: 6px 10px 2px 20px !important;
+
+    &::after {
+      left: 2px;
+      right: auto;
+      border: none;
+      border-left: solid 6px #ccc;
+      border-bottom: solid 6px #ccc;
+      border-top: solid 6px transparent;
+      border-right: solid 6px transparent;
+    }
+
+    &:hover::after {
+      border-color: @buttonTextHoverColor;
+      border-top-color: transparent;
+      border-right-color: transparent;
+    }
+  }
+}

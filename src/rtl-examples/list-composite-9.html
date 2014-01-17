@@ -1,0 +1,121 @@
+  <script>
+    $(function() {
+      
+    });
+  </script>
+  <style>
+    .icon {
+      height: 40px;
+      width: 40px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: auto 70%;
+      border-radius: 10px;
+    }
+    .isWindows .icon {
+      border-radius: 0;
+    }
+    .isAndroid .icon {
+      border-radius: 50px;
+    }
+    .icon.weather {
+      background-color: #29abe2;
+      background-image: url(../images/app-icons/weather.png);
+      background-size: 70% auto;
+    }
+    .icon.mail {
+      background-color: #52c5d0;
+      background-image: url(../images/app-icons/mail.png);
+      background-size: 70% auto;
+    }
+    .icon.music {
+      background-color: #f38133;
+      background-image: url(../images/app-icons/music.png);
+    }
+    .icon.browser {
+      background-color: #ed453a;
+      background-image: url(../images/app-icons/browser.png);
+    }
+    .icon.app {
+      background-color: #6ec05c;
+      background-image: url(../images/app-icons/app.png);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>قائمة مركبة</h1>
+  </nav>
+  <article id='main'>
+    <section>
+      <ul class='list'>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon weather'></span>
+          </aside>
+          <div>
+            <h3>حالة الطقس</h3>
+          </div>
+          <aside>
+            <h4>التنبيهات</h4>
+            <span class='counter'>2</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon music'></span>
+          </aside>
+          <div>
+            <h3>موسيقى</h3>
+          </div>
+          <aside>
+            <h4>مشتريات جديدة</h4>
+            <span class='counter'>16</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon mail'></span>
+          </aside>
+          <div>
+            <h3>البريد</h3>
+          </div>
+          <aside>
+            <h4>الجديد</h4>
+            <span class='counter'>134</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon browser'></span>
+          </aside>
+          <div>
+            <h3>المتصفح</h3>
+          </div>
+          <aside>
+            <h4>الإشارات المرجعية</h4>
+            <span class='counter'>22</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+        <li class='comp' data-goto>
+          <aside>
+            <span class='icon app'></span>
+          </aside>
+          <div>
+            <h3>تطبيقات</h3>
+          </div>
+          <aside>
+            <h4>تحديثات</h4>
+            <span class='counter'>3</span>
+            <span class='nav'></span>
+          </aside>
+        </li>
+      </ul>        
+    </section>
+  </article>
+</body>
+</html>

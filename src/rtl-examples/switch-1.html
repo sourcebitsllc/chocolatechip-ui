@@ -1,0 +1,70 @@
+  <script>
+    $(function() {
+      // Set response to last checked switch:
+      $('.switch').each(function(ctx, idx) {
+        if (window && window.jQuery) ctx = idx;
+        if (ctx.classList.contains('on')) {
+          $('#response').html($(ctx).find('input').val());
+        }
+      });
+      
+      $('.switch').on('singletap swipeleft swiperight', function() {
+        if (this.classList.contains('on')) {
+          $('#response').html($(this).find('input').val());
+        } else {
+          $('#response').empty();
+        }
+      });
+    });
+  </script>
+  <style>
+    #response {
+      color: #0099e3;
+      font-weight: bold;
+      text-transform: capitalize;
+      }
+  </style>
+</head>
+<body>  
+  <nav class='current'>
+    <h1>مفتاح</h1>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      <ul class='list'>
+        <li class='comp'>
+          <div>
+            <h3>نوم</h3>
+          </div>
+          <aside>
+            <span class="switch on" id="sleepSwitch">
+               <input type="checkbox" value="نوم" name="sleepSwitch">
+            </span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>عطلة</h3>
+          </div>
+          <aside>
+            <span class="switch" id="vacationSwitch">
+              <input type="checkbox" value="عطلة" name="vacationSwitch">
+            </span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <div>
+            <h3>إفطار</h3>
+          </div>
+          <aside>
+            <span class="switch" id="breakfastSwitch">
+              <input type="checkbox" value="إفطار" name="breakfastSwitch">
+            </span>
+          </aside>
+        </li>
+      </ul>
+      <p><span><strong>إجابة: </strong></span><span id="response"></span></p>
+    </section>
+  </article>
+</body>
+</html>

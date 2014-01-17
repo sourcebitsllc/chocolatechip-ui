@@ -1,0 +1,78 @@
+  <style>
+    /* Popup Demo Styles */
+    #popupMessageTarget {
+      opacity: 0;
+      font-size: 14pt;
+      line-height: 16pt;
+      font-weight: 200;
+      font-family: SegoeWP, SegoeUI, HelveticaNeue, Roboto, Sans-serif;
+      color: #007aff;
+      padding: 0 15px;
+    }
+    .animatePopupMessage {
+      -webkit-animation-duration: 2s;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-name: updatePopupMessage;
+      animation-duration: 2s;
+      animation-timing-function: linear;
+      animation-name: updatePopupMessage;
+    }
+    @-webkit-keyframes updatePopupMessage {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    @keyframes updatePopupMessage {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+  <script>
+    $(function() {
+      // This is just an animation for popup callback, 
+      // Not part of popup functionality.
+      $("#popupMessageTarget").on("webkitAnimationEnd", function() {
+        this.className = "";
+        this.textContent = "";
+      });
+      
+      // Bind event to show the popup:
+      $("#openPopup").on("singletap", function() {
+        $.UIPopup({
+          id: "warning",
+          title: 'اهتمام!', 
+          message: 'شكرا لهذه القراءة.', 
+          cancelButton: 'إلغاء', 
+          continueButton: 'استمر',
+          callback: function() {
+            $("#popupMessageTarget").text('شكرا لمشاركة!');
+            $("#popupMessageTarget").toggleClass('animatePopupMessage');
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>قصة ممتعة</h1>
+    <a href='javascript:void(null)' class='button align-flush' id="openPopup">فتح</a>
+  </nav>
+  <article id='popup-article' class='current'>
+    <section>
+      <p id='popupMessageTarget'></p>
+      <h2>نوعية رحمة</h2>
+      <ul class='list'>
+        <li>
+          <h3>تنازع شخصان وذهبا إلى جحا * وكان قاضيا * فقال المدعي : لقد كان هذا الرجل يحمل حملا ثقيلا ، فوقع على الأرض ، فطلب مني أن أعاونه ، فسألته عن الأجر الذي يدفعه لي بدل مساعدتي له ، فقال ( لا شيء) فرضيت بها وحملت حمله . وهاأنذا أريد أن يدفع لي اللا شيء . فقال جحا : دعواك صحيحه يا بني ، اقترب مني وارفع هذا الكتاب . ولما رفعه قال له جحا : ماذا وجدت تحته ؟ قال : لا شيء . قال جحا : خذها وأنصرف
+</h3>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

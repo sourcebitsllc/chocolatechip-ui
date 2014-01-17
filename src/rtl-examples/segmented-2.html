@@ -1,0 +1,95 @@
+  <style>
+    #output {
+      color: #007aff;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    $(function() {
+      var segmentedOptions = {
+        id: 'mySegmented',
+        labels : ['جبار حبك','بنت أصول','أعمل عاقلة'],
+        selected: 2
+      };
+      var segmentedResponse = function(e) {
+        e.stopPropagation();
+        $('#output').find('h3 > span').html(($(this).index() + 1));
+      };
+      var newSegmented = $.UICreateSegmented(segmentedOptions);
+      $('#segmentedPanel').append(newSegmented);
+      $('.segmented').UISegmented({callback:segmentedResponse});
+      $('.segmented').UIPanelToggle('#toggle-panels',function(){$.noop;});
+      var selectedPanel = $('.segmented').find('.selected').index();
+      $('#output').find('span').html(selectedPanel + 1);
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>زر مجزأ: ديناميكي</h1>
+  </nav>
+  <article id="main" class="current">
+    <section>
+      <div id='segmentedPanel' class='horizontal centered'></div>
+      <div id="toggle-panels">
+        <div>
+          <ul class='list'>
+            <li class='comp'>
+              <aside>
+                <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+              </aside>
+              <div>
+                <h3 title='Rashid Majid'>راشد الماجد‎</h3>
+                <h4>جبار حبك</h4>
+                <p>راشد الماجد هو الموسيقى العربية الكلاسيكية. وهو من أبرز المطربين.</p>
+              </div>
+              <aside>
+                <span class='show-detail'></span>
+              </aside>
+            </li>
+          </ul>  
+        </div>
+        <div>
+          <ul class='list'>
+            <li class='comp'>
+              <aside>
+                <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+              </aside>
+              <div>
+                <h3 title='Diana Haddad'>ديانا حداد</h3>
+                <h4>بنت أصول</h4>
+                <p>ديانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+              </div>
+              <aside>
+                <span class='show-detail'></span>
+              </aside>
+            </li>
+          </ul>  
+        </div>
+        <div>
+          <ul class='list'>
+            <li class='comp'>
+              <aside>
+                <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+              </aside>
+              <div>
+                <h3 title='Nancy Ajram'>نانسي عجرم</h3>
+                <h4>أعمل عاقلة</h4>
+                <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+              </div>
+              <aside>
+                <span class='show-detail'></span>
+              </aside>
+            </li>
+          </ul>  
+        </div>
+      </div>
+      <ul class='list' id='output'>
+        <li>
+          <h3>االذي حددته: <span></span>.</h3>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

@@ -57,3 +57,17 @@ div.horizontal.centered > .segmented {
   right: 15px;
   top: 10px;
 }
+
+html[dir=rtl] {
+  .segmented.align-flush {
+    left: 15px;
+    right: auto;
+  }
+  & .segmented > .button {
+    border-left: solid 2px @buttonBorder;
+    border-right: none;
+    &:first-of-type {
+      border-right: solid 2px @buttonBorder;
+    }
+  }
+}

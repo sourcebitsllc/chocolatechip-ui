@@ -58,3 +58,21 @@ div.toolbar {
     -webkit-transform: translate3d(-101%,0,0) !important;
   }
 }
+
+html[dir=rtl] {
+  & .splitlayout {
+
+    & > .master + .toolbar {
+      right: 0;
+      left: 320px;
+      width: 320px;
+      border-right: none;
+      border-left: solid 1px lighten(@appBkColor, 20%) !important;
+    }
+
+    & > .detail + .toolbar  {
+      right: 320px;
+      left: 0;
+    }
+  }
+}

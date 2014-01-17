@@ -1,0 +1,261 @@
+  <style>
+    .image-grid {
+      list-style: none:
+      margin: 0;
+      padding: 0;
+      position: relative;
+      right: 15px;
+    }
+    .image-grid > li {
+      list-style: none:
+      margin: 0;
+      padding: 0;
+    }
+    .image-grid::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .image-grid > li {
+      float: right;
+      height: 100px;
+      width: 30%;
+      border: solid 1px #666;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
+      display: block;
+    }
+    .image-grid > li > img {
+      display: block;
+      width: 150%;
+    }
+  </style>
+  <script>
+    $(function() {
+      $.UISlideout();
+      $.UISlideout.populate([{music:'موسيقى'},{pictures:'الصور'},{dictionary:'قاموس'},{contacts:'اتصال'}]);
+    });
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>موسيقى</h1>
+  </nav>
+  <article id='music'>
+    <section>
+      <h2>موسيقى</h2>
+      <ul class='list'>
+       <li class='comp'>
+          <aside>
+            <img title='Aamel Aaqla' src="../rtl_images/arabic/Aamel_Aaqlah.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Nancy Ajram'>نانسي عجرم</h3>
+            <h4>أعمل عاقلة</h4>
+            <p>هي واحدة من الأغاني المفضلة لدينا من قبل نانسي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='El Leila' src="../rtl_images/arabic/Amr_Diab-El_Leila.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Amr Diab'>عمرو دياب</h3>
+            <h4>الليلة</h4>
+            <p>قال انه لا يوجد لديه الخوف في خلط أحدث الأساليب العالم مع نظيره الغناء عاطفي.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Ykhallili Albak' src="../rtl_images/arabic/Ykhallili_Albak_Najwa.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Najwa Karam'>نجوى كرم‎</h3>
+            <h4>يخليلي قلبك</h4>
+            <p>نجوى لديها وسيلة فريدة من نوعها في الغناء.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Bent Osol' src="../rtl_images/arabic/Diana_Haddad_Bent_Osol.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Diana Haddad'>ديانا حداد</h3>
+            <h4>بنت أصول</h4>
+            <p>ديانا هي أسطورة. موسيقاها يحرك الروح. ونحن لا يمكن أبدا أن نسمع ما يكفي من صوتها.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+        <li class='comp'>
+          <aside>
+            <img title='Jaber Alkaser' src="../rtl_images/arabic/jaber_alkaser_Rasheed.jpg" height="80px">
+          </aside>
+          <div>
+            <h3 title='Rashid Majid'>راشد الماجد‎</h3>
+            <h4>جبار حبك</h4>
+            <p>راشد الماجد هو الموسيقى العربية الكلاسيكية. وهو من أبرز المطربين.</p>
+          </div>
+          <aside>
+            <span class='show-detail'></span>
+          </aside>
+        </li>
+      </ul>        
+    </section>
+  </article>
+  <nav>
+    <h1>الصور</h1>
+  </nav>
+  <article id='pictures'>
+    <section>
+      <ul class='image-grid'>
+        <li>
+          <img src='../images/myPictures/american-football-63109_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/couple-168191_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/daisy-75190_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/dependent-100343_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/dreamy-20100_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/girl-102831_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/lacrosse-165576_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/hot-air-balloon-4761_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/piercing-123240_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/portrait-53899_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/quarterback-67701_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/rugby-78193_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/africa-139343_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/baby-19295_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/baby-20339_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/utah-95032_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/germany-70567_640.jpg'>
+        </li>
+        <li>
+          <img src='../images/myPictures/mountain-91385_640.jpg'>
+        </li>
+      </ul>
+    </section>
+  </article>
+  <nav>
+    <h1>قاموس</h1>
+  </nav>
+  <article id='dictionary'>
+    <section>
+      <ul class='list'>
+        <li>
+        <ol>
+          <li>رفيف - رَفيفٌ :
+          <ol>
+            [ ر ف ف ]. ( مصدر رَفَّ ، يَرِفُّ ).
+            <li>" رَفيفُ الثَّغْرِ " : بَريقٌ .</li>
+            <li> ثَوْبٌ رَفيفٌ " : رَقيقٌ . </li>
+            <li>" شَجَرَةٌ رَفيفَةٌ " : مُنْتَدِيَةٌ . " شَجَرٌ رَفيفٌ ". </li>
+            <li>" شَجَرَةٌ رَفيفَةٌ " : مُنْتَدِيَةٌ . " شَجَرٌ رَفيفٌ ". </li>
+            <li>" أَرْضٌ ذاتُ رَفيفٍ " : خِصْبَةٌ .</li>
+            <li>" هُوَ رَفِيفُ الأَخْلاَقِ " : حَسَنُهَا . </li>
+            <li>" ذاتُ الرَّفيفِ " : البَساتِينُ يَرُفُّ نَباتُها وَشَجَرُها مِنَ الرَّيِّ والنَّضارَةِ .</li>
+            <li>"ذاتُ الرَّفيفِ " : سُفُنٌ تُنْضَدُ في النَّهْرِ لِلْعُبُورِ عَلَيْها .</li>
+            المعجم: الغني
+          </ol>
+          </li>
+          <li>
+            رَفيف :
+            <ul>
+              <li>مصدر رفَّ / رفَّ إلى / رفَّ بـ / رفَّ على / رفَّ لـ .</li>
+              <li>المعجم: اللغة العربية المعاصر</li>
+            </ul>
+          </li>
+          <li>
+            رَفيف : 
+            <ul>
+              <li>اسم علم مؤنث عربي ، </li>
+              <li>معناه : الخصب حسنُ الأخلاق ، المحبة للطعام والشراب ، الساعية لخدمة الآخرين ، الكريمة ، العطوفة ، المرتاحة ، </li>
+              <li>سقف البيت . وإذا سمي بها المذكر كانت المعاني نفسها في حال التذكير .</li>
+            </ul>
+          </li>
+        </ol>
+      </ul>
+    </section>
+  </article>
+  <nav>
+    <h1>اتصالات</h1>
+  </nav>
+  <article id='contacts'>
+    <section>
+      <ul class='list'>
+        <li>
+          <h3>John Doe</h3>
+          </h4>Bagley's Bagels</h4>
+          <p>111-111-1111</p>
+        </li>
+        <li>
+          <h3>Suzy Cue</h3>
+          </h4>Jeff's Jiffies</h4>
+          <p>222-222-2222</p>
+        </li>
+        <li>
+          <h3>Paul Parker</h3>
+          </h4>Bonzo's</h4>
+          <p>333-333-3333</p>
+        </li>
+        <li>
+          <h3>Mary Joe</h3>
+          </h4>Borx International</h4>
+          <p>444-444-4444</p>
+        </li>
+        <li>
+          <h3>Joe Bodoni</h3>
+          </h4>Sasquatch Suits</h4>
+          <p>555-555-5555</p>
+        </li>
+        <li>
+          <h3>Edna Edmond</h3>
+          </h4>MacDoogle's</h4>
+          <p>666-666-6666</p>
+        </li>
+      </ul>
+    </section>
+  </article>
+</body>
+</html>

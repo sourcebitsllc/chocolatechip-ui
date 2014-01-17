@@ -93,3 +93,40 @@
     }
   }
 }
+
+html[dir=rtl] {
+  .list > li {
+    & > .deletion-indicator {
+      float: right;
+      margin-right: auto;
+      margin-left: -20px;
+      right: -40px;
+    }
+
+    & > .button.delete {
+      -webkit-transform: translate3d(-80px, 0, 0);
+      left: 0;
+      right: auto;
+    }
+  }
+
+  .list.showIndicators > li {
+    & > .deletion-indicator {
+      right: 0px !important;
+      margin-left: 10px;
+    }
+
+    & > .button.delete {
+      right: auto;
+      left: 0 !important;
+    }
+    &.selected {
+      margin-right: 0;
+      margin-left: 80px;
+
+      & > .button.delete {
+        .transform(translate3d(-80px,0,0));
+      }
+    }
+  }
+}

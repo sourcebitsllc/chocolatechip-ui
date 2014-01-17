@@ -116,6 +116,38 @@ li.comp {
   }
 }
 
+
+html[dir=rtl] {
+  li.comp {
+    padding-bottom: 0 !important;
+    & > aside > .nav::after {
+      -webkit-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+    & > aside:first-child {
+      margin-left: 10px;
+      margin-right: 0;
+    }
+    & > aside:last-child {
+      padding: 0 10px 0 0;
+
+      & > .nav::after {
+        margin-left: -10px !important;
+      }
+    }
+    & > aside {
+      & > span.counter, & > span.date-time {
+        margin-right: 5px;
+        margin-left: 0px;
+      }
+
+      & > h4 {
+        padding-bottom: 4px;
+      }
+    }
+  }
+}
+
 @media only screen and (max-device-width : 320px) and (orientation : portrait) {
   li.comp > aside > h4 {
     max-width: 100px;

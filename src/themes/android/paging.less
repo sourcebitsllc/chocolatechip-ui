@@ -130,3 +130,51 @@ article {
     }
   }
 }
+
+html[dir=rtl] {
+
+  & .segmented.paging.horizontal {
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+
+    & .button:first-child {
+      -webkit-box-ordinal-group: 2;
+      -webkit-order: 2;
+      order: 2;
+    }
+
+    & .button:last-child {
+      -webkit-box-ordinal-group: 1;
+      -webkit-order: 1;
+      order: 1;
+    }
+
+    & > .button::before {
+      -webkit-transform: rotate(180deg);
+      top: 0;
+      left: 0;
+    }
+  }
+
+  & article {
+
+    &.paging {
+
+      &.horizontal > section {
+
+        &.previous {
+          .transform(translate3d(100%,0,0));
+        }
+
+        &.next {
+          .transform(translate3d(-100%,0,0));
+        }
+
+        &.current {
+          .transform(translate3d(0,0,0));
+        }
+      }
+
+    }
+  }
+}

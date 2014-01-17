@@ -150,3 +150,10 @@ section > p,
   line-height: 16pt;
   color: @listDetialColor;
 }
+
+html[dir=rtl] {
+  .list > li.show-detail::after {
+    left: 16px;
+    right: auto;
+  }
+}

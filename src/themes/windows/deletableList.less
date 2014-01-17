@@ -100,3 +100,52 @@ li.selected > .deletion-indicator {
 li.selected > .button.delete {
   transform: translate3d(0,0,0);
 }
+
+html[dir=rtl] {
+  & .deletion-indicator {
+    right: -50px !important;
+    left: auto;
+  }
+  & li.selected > .deletion-indicator::before {
+    margin: -2px 18px 0 0;
+  }
+
+  & .list.showIndicators li {
+    padding-left: 0;
+    padding-right: 32px;
+  }
+
+  & .button.delete {
+    float: left
+  }
+
+  & .list > li {
+    & > .deletion-indicator {
+      float: right;
+      margin-right: auto;
+      margin-left: -20px;
+      right: -40px;
+    }
+
+    & > .button.delete {
+      transform: translate3d(-80px, 0, 0);
+      left: 0;
+      right: auto;
+    }
+  }
+
+  & .list.showIndicators > li {
+    & > .deletion-indicator {
+      right: 0px !important;
+      margin-left: 10px;
+    }
+    &.selected {
+      margin-right: 0;
+      margin-left: 80px;
+
+      & > .button.delete {
+        transform: translate3d(-80px,0,0);
+      }
+    }
+  }
+}

@@ -75,3 +75,17 @@ a.button {
     max-width: 300px;
   }
 }
+
+html[dir=rtl] {
+  & .button {
+    &.back, &.backTo {
+      &::before {
+        transform: rotate(180deg);
+      }
+    }
+    &.align-flush {
+      left: 16px;
+      right: auto;
+    }
+  }
+}

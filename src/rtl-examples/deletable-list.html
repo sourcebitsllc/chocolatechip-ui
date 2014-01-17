@@ -1,0 +1,48 @@
+  <script>
+    $(function() {
+      $.UIDeletable({
+        list: '#list1', 
+        editLabel: 'تحرير',
+        doneLabel: 'منجز',
+        deleteLabel: 'حذف',
+        callback: function(item) {
+          var text = $(item).siblings('h3').text();
+          $('#deletable-response').html('قمت بحذفها: <strong>' + text + '</strong>');
+        }
+      });
+    });
+  </script>
+  <style type="text/css">
+    #response {
+      color: #007aff !important;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>قائمة الحذف</h1>
+  </nav>
+  <article id='main'>
+    <section>
+      <ul class='list' id='list1'>
+        <li>
+          <h3>الأشخاص</h3>
+        </li>
+        <li>
+          <h3>المكان</h3>
+        </li>
+        <li>
+          <h3>الأشياء</h3>
+        </li>
+        <li>
+          <h3>حيوانات</h3>
+        </li>
+        <li>
+          <h3>طعام</h3>
+        </li>
+      </ul>
+      <p id='response'></p>
+    </section>
+  </article>
+</body>
+</html>
