@@ -14,6 +14,9 @@ var gulp = require('gulp')
 ,   header = require('gulp-header')
 ,   footer = require('gulp-footer');
 
+//Add Trailing slash to projectPath if not exists.
+pkg.projectPath = pkg.projectPath.replace(/\/?$/, '/');
+
 // Define values for file headers:
 var chui = ['ChUI-Android.css','ChUI-iOS.css','ChUI-Win.css','ChUI.js']
 ,   osNames = ['Android','iOS','Windows']
@@ -140,27 +143,27 @@ gulp.task('examples', function() {
     langDir =  ' dir="rtl"';
     // Copy out rtl images:
     gulp.src('src/rtl-images/**/*')
-      .pipe(gulp.dest('rtl-images/'));
+      .pipe(gulp.dest(pkg.projectPath +'rtl-images/'));
     // Copy out regular images & data:`
     gulp.run('copy');
   }
   osTypes.forEach(function(ctx, idx) {
     gulp.src('src/' + prefix + 'examples/**/*')
       .pipe(header(htmlHeader, { pkg : pkg, osType : osTypes[idx], osName : osNames[idx], dir : prefix[dir], langDir : langDir }))
-      .pipe(gulp.dest(prefix + 'examples-' + ctx + '/'));
+      .pipe(gulp.dest(pkg.projectPath + prefix + 'examples-' + ctx + '/'));
     gulp.src('src/' + prefix + 'demo/*.html')
       .pipe(header(htmlHeader, { pkg : pkg, osType : osTypes[idx], osName : osNames[idx], dir : prefix[dir], langDir : langDir }))
       .pipe(rename(prefix + 'demo-' + ctx + '.html'))
-      .pipe(gulp.dest(prefix + 'demo/'));
+      .pipe(gulp.dest(pkg.projectPath + prefix + 'demo/'));
   });
 });
 
 // Copy out media:
 gulp.task('copy', function() {
   gulp.src('src/images/**/*')
-    .pipe(gulp.dest('images/'));
+    .pipe(gulp.dest(pkg.projectPath + 'images/'));
   gulp.src('src/data/**/*')
-    .pipe(gulp.dest('data/'));
+    .pipe(gulp.dest(pkg.projectPath + 'data/'));
 });
 
 // JSHint:
