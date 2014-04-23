@@ -100,6 +100,7 @@
               $(this).removeClass('selected');
             });
             $(list).on(swipe_x, 'li', function() {
+              $(this).siblings().removeClass('selected');
               $(this).addClass('selected');
             });
           }
