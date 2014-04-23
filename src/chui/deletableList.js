@@ -92,6 +92,7 @@
               $(this).parent('li').removeClass('selected');
               return;
             } else {
+              $(this).parent('li').siblings().removeClass('selected');
               $(this).parent('li').addClass('selected');
             }
           });
