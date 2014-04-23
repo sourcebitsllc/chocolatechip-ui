@@ -96,6 +96,9 @@
             $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
             });
+            $(list).on('swipeleft', 'li', function() {
+              $(this).addClass('selected');
+            });
           }
           $(list).on('singletap', '.delete', function() {
             var $this = this;
