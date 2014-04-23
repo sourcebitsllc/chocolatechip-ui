@@ -30,7 +30,11 @@
       var deletionIndicator;
       var button;
       var swipe = 'swiperight';
-      if ($('html').attr('dir') === 'rtl') swipe = 'swipeleft';
+      var swipe_x = 'swipeleft';
+      if ($('html').attr('dir') === 'rtl') {
+        swipe = 'swipeleft';
+        swipe_x = 'swiperight';
+      }
       // Windows uses an icon for the delete button:
       if ($.isWin) deleteLabel = '';
       var height = $('li').eq(1)[0].clientHeight;
@@ -96,6 +100,12 @@
             $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
             });
+<<<<<<< HEAD
+=======
+            $(list).on(swipe_x, 'li', function() {
+              $(this).addClass('selected');
+            });
+>>>>>>> 12ddbb7... iOS on swipeleft delete helper
           }
           $(list).on('singletap', '.delete', function() {
             var $this = this;
