@@ -41,7 +41,7 @@
       $.body.addClass('isSafari6');
     }
     if ($.isNativeAndroid) {
-      $.body.addClass('isNativeAndroidBrowser')
+      $.body.addClass('isNativeAndroidBrowser');
     }
   });
 })(window.jQuery);
