@@ -102,6 +102,7 @@
 <<<<<<< HEAD
 =======
             $(list).on(swipe_x, 'li', function() {
+              $(this).siblings().removeClass('selected');
               $(this).addClass('selected');
             });
 >>>>>>> 12ddbb7... iOS on swipeleft delete helper
