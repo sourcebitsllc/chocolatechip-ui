@@ -86,7 +86,7 @@
                 $(list).find('li').removeClass('selected');
               });            
             }
-          });
+          });          
           $(list).on('singletap', '.deletion-indicator', function() {
             if ($(this).parent('li').hasClass('selected')) {
               $(this).parent('li').removeClass('selected');
@@ -96,18 +96,16 @@
               $(this).parent('li').addClass('selected');
             }
           });
-          
+
           if ($.isiOS || $.isSafari) {
             $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
             });
-<<<<<<< HEAD
-=======
+
             $(list).on(swipe_x, 'li', function() {
               $(this).siblings().removeClass('selected');
               $(this).addClass('selected');
             });
->>>>>>> 12ddbb7... iOS on swipeleft delete helper
           }
           $(list).on('singletap', '.delete', function() {
             var $this = this;
