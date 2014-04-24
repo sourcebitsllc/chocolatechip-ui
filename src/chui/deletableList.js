@@ -30,7 +30,11 @@
       var deletionIndicator;
       var button;
       var swipe = 'swiperight';
-      if ($('html').attr('dir') === 'rtl') swipe = 'swipeleft';
+      var swipe_x = 'swipeleft';
+      if ($('html').attr('dir') === 'rtl') {
+        swipe = 'swipeleft';
+        swipe_x = 'swiperight';
+      }
       // Windows uses an icon for the delete button:
       if ($.isWin) deleteLabel = '';
       var height = $('li').eq(1)[0].clientHeight;
@@ -80,7 +84,7 @@
                 $($this).text(editLabel);
                 $(list).removeClass('showIndicators');
                 $(list).find('li').removeClass('selected');
-              });            
+              });  
             }
           });
           $(list).on('singletap', '.deletion-indicator', function() {
@@ -88,13 +92,19 @@
               $(this).parent('li').removeClass('selected');
               return;
             } else {
+              if ($.isiOS || $.isSafari) $(this).parent('li').siblings().removeClass('selected');
               $(this).parent('li').addClass('selected');
             }
           });
-        
+
           if ($.isiOS || $.isSafari) {
             $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
+            });
+
+            $(list).on(swipe_x, 'li', function() {
+              $(this).siblings().removeClass('selected');
+              $(this).addClass('selected');
             });
           }
           $(list).on('singletap', '.delete', function() {
