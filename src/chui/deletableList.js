@@ -86,7 +86,7 @@
                 $(list).find('li').removeClass('selected');
               });            
             }
-          });          
+          });
           $(list).on('singletap', '.deletion-indicator', function() {
             if ($(this).parent('li').hasClass('selected')) {
               $(this).parent('li').removeClass('selected');
@@ -96,6 +96,7 @@
               $(this).parent('li').addClass('selected');
             }
           });
+          
           if ($.isiOS || $.isSafari) {
             $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
