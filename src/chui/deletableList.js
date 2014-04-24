@@ -84,9 +84,9 @@
                 $($this).text(editLabel);
                 $(list).removeClass('showIndicators');
                 $(list).find('li').removeClass('selected');
-              });            
+              });  
             }
-          });          
+          }); 
           $(list).on('singletap', '.deletion-indicator', function() {
             if ($(this).parent('li').hasClass('selected')) {
               $(this).parent('li').removeClass('selected');
