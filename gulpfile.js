@@ -65,16 +65,7 @@ var htmlHeader = ['<!DOCTYPE html>',
 
 // Process, minify and output LESS:
 gulp.task('less', function () {
-  osTypes.forEach(function(ctx, idx) {
-    gulp.src('src/themes/' + ctx + '/main.less')
-      .pipe(less())
-      .pipe(rename('chui-' + ctx + '-' + pkg.version + '.css'))
-      .pipe(header(chuiHeader, { pkg : pkg, chuiName: chui[idx] }))
-      .pipe(gulp.dest(pkg.projectPath + 'chui/')).pipe(minifyCSS({}))
-      .pipe(header(chuiHeaderMin, { pkg : pkg, chuiName: chui[idx] }))
-      .pipe(rename('chui-' + ctx + '-' + pkg.version + '.min.css'))
-      .pipe(gulp.dest(pkg.projectPath + './chui/'));;   
-  });
+  osTypes.forEach(less_for);
 });
 
 // Concat, minify and output JavaScript:
@@ -132,33 +123,6 @@ gulp.task('js', function () {
     .pipe(gulp.dest(pkg.projectPath + 'chui/'));;
 });
 
-// Create examples & demos (ltr or rtl):
-gulp.task('examples', function() {
-  var langDir = '';
-  var rtl = gutils.env.dir === 'rtl';
-  var dir = 'ltr';
-  var prefix = '';
-  if (rtl) {
-    prefix = 'rtl-';
-    dir = 'rtl';
-    langDir =  ' dir="rtl"';
-    // Copy out rtl images:
-    gulp.src('src/rtl-images/**/*')
-      .pipe(gulp.dest(pkg.projectPath +'rtl-images/'));
-    // Copy out regular images & data:`
-    gulp.run('copy');
-  }
-  osTypes.forEach(function(ctx, idx) {
-    gulp.src('src/' + prefix + 'examples/**/*')
-      .pipe(header(htmlHeader, { pkg : pkg, osType : osTypes[idx], osName : osNames[idx], dir : prefix[dir], langDir : langDir }))
-      .pipe(gulp.dest(pkg.projectPath + prefix + 'examples-' + ctx + '/'));
-    gulp.src('src/' + prefix + 'demo/*.html')
-      .pipe(header(htmlHeader, { pkg : pkg, osType : osTypes[idx], osName : osNames[idx], dir : prefix[dir], langDir : langDir }))
-      .pipe(rename(prefix + 'demo-' + ctx + '.html'))
-      .pipe(gulp.dest(pkg.projectPath + prefix + 'demo/'));
-  });
-});
-
 // Copy out media:
 gulp.task('copy', function() {
   gulp.src('src/images/**/*')
@@ -190,3 +154,105 @@ gulp.task('chui', ['less','js','jshint']);
 gulp.task('watch', function() {
   gulp.watch('src/themes/**/*.less', ['less']);
 });
+
+//generate only js
+gulp.task('chuijs', ['js','jshint']);
+
+//generate all three themes - same as less following ChUI grunt conventions, easy docs
+gulp.task('themes', ['less']);
+
+
+var less_for = function (ctx, idx) {
+    gulp.src('src/themes/' + ctx + '/main.less')
+      .pipe(less())
+      .pipe(rename('chui-' + ctx + '-' + pkg.version + '.css'))
+      .pipe(header(chuiHeader, { pkg : pkg, chuiName: chui[idx] }))
+      .pipe(gulp.dest(pkg.projectPath + 'chui/')).pipe(minifyCSS({}))
+      .pipe(header(chuiHeaderMin, { pkg : pkg, chuiName: chui[idx] }))
+      .pipe(rename('chui-' + ctx + '-' + pkg.version + '.min.css'))
+      .pipe(gulp.dest(pkg.projectPath + './chui/'));;   
+}
+
+//generate only android CSS
+gulp.task('android', function () {
+  less_for('android', 0); // 0 for position of element on chui var
+});
+
+//generate only ios CSS
+gulp.task('ios', function () {
+  less_for('ios', 1);
+});
+
+//generate only windows CSS
+gulp.task('win', function () {
+  less_for('win', 2);
+});
+
+
+var gen_example = function(OS){
+
+  return (function()
+  {
+
+    var langDir = '';
+    var rtl = gutils.env.dir === 'rtl';
+    var dir = 'ltr';
+    var prefix = '';
+
+    var eg_for=function (ctx, idx) {
+
+      gulp.src('src/' + prefix + 'examples/**/*')
+        .pipe(header(htmlHeader, { pkg : pkg, osType : osTypes[idx], osName : osNames[idx], dir : prefix[dir], langDir : langDir }))
+        .pipe(gulp.dest(pkg.projectPath + prefix + 'examples-' + ctx + '/'));
+      gulp.src('src/' + prefix + 'demo/*.html')
+        .pipe(header(htmlHeader, { pkg : pkg, osType : osTypes[idx], osName : osNames[idx], dir : prefix[dir], langDir : langDir }))
+        .pipe(rename(prefix + 'demo-' + ctx + '.html'))
+        .pipe(gulp.dest(pkg.projectPath + prefix + 'demo/'));
+
+    }
+
+    if (rtl) {
+      prefix = 'rtl-';
+      dir = 'rtl';
+      langDir =  ' dir="rtl"';
+      // Copy out rtl images:
+      gulp.src('src/rtl-images/**/*')
+        .pipe(gulp.dest(pkg.projectPath +'rtl-images/'));
+        
+      //Copy out regular images & data:`
+      //gulp.run('copy'); 
+      //-- Needs Clarification, is that necessary for RTL??
+      //## Default Examples are called from 'default' task only, where copy is already called.
+      //## Also gulp,run is deprecated!
+    }
+    
+    if (OS === 'android')
+    {
+      eg_for('android',0);
+    }
+    else if(OS === 'ios')
+    {
+      eg_for('ios',1);
+    }
+    else if(OS ==='win')
+    {
+      eg_for('win',2);
+    }
+    else
+    {
+      osTypes.forEach(eg_for);
+    }
+  });
+}
+
+//generate only android example & demo
+gulp.task('android_examples', ['chuijs','android','copy'], gen_example('android'));
+
+//generate only ios example & demo
+gulp.task('ios_examples', ['chuijs','ios','copy'], gen_example('ios'));
+
+//generate only windows example & demo
+gulp.task('win_examples', ['chuijs','win','copy'], gen_example('win'));
+
+// Create examples & demos (ltr or rtl):
+gulp.task('examples', gen_example());
