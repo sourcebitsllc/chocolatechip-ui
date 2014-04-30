@@ -232,12 +232,12 @@
       // Setup Range Input
       ////////////////////
       $('#rangeValue1').html($('#rangeControl1').val());
-      $('#rangeControl1').on('change', function() {
+      $('#rangeControl1').on('touchend', function() {
         $('#rangeValue1').html($(this).val());
       });
       
       $('#rangeValue2').html($('#rangeControl2').val());
-      $('#rangeControl2').on('change', function() {
+      $('#rangeControl2').on('touchend', function() {
         $('#rangeValue2').html($(this).val());
       });    
       
