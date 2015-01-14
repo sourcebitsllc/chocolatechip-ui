@@ -1,5 +1,8 @@
 #ChocolateChip - A Compact Framework for Mobile Web Apps
 
+#Attention!
+##We have consolidated ChocolateChip-UI and all other projects related to it under an new Github repository [chocolatechipui](https://github.com/chocolatechipui). All future work will be done under that account. Please update your forks or clones to point to that repository.
+
 ###ChocolateChip-UI has been acquired by [Sourcebits Inc](http://www.sourcebits.com).
 
 ##ChocolateChip-UI
