@@ -11,7 +11,7 @@
     ];
 
     $(function() {
-      if (localStorage.getItem('chosen-items')) {
+      if (localStorage && localStorage.getItem('chosen-items')) {
         var items = localStorage.getItem('chosen-items');
         items = items.split("'")[1];
         JSON.parse(items).forEach(function(ctx) {
@@ -60,6 +60,8 @@
             $('#editList').append('<li data-list-item-value="'+ ctx + '"><h3>' + ctx + '</h3></li>');
           });
           $('#editList').UIEditList(editableListOptions);
+          $('#editList').removeClass('showIndicators');
+          $('button.done').addClass('edit').removeClass('done').text('Edit');
       });
 
     });
@@ -77,5 +79,4 @@
     </section>
   </article>
 </body>
-</html>
 </html>

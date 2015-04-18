@@ -11,7 +11,7 @@ ChocolateChip-UI
 ChUI.js
 Copyright 2015 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.8.1
+Version: 3.8.5
 */
 window.CHUIJSLIB;
 if(window.jQuery) {
@@ -125,6 +125,19 @@ if(window.jQuery) {
         return this.is(selector);
       }
     },
+    ////////////////////////////////
+    // Return array of unique items:
+    ////////////////////////////////
+    unique : function() {
+      var ret = [];
+      var sort = this.sort();
+      sort.forEach(function(ctx, idx) {
+        if (ret.indexOf(ctx) === -1) {
+          ret.push(ctx);
+        }
+      });
+      return ret.length ? ret : [];
+    },
     //////////////////////////////
     // Return element that doesn't 
     // match selector:
@@ -144,7 +157,6 @@ if(window.jQuery) {
     haz : function ( selector ) {
       return this.has(selector);
     },
- 
     ///////////////////////////////////
     // Return element whose descendants 
     // don't match selector:
@@ -300,14 +312,17 @@ if(window.jQuery) {
     isWin : /trident/img.test(navigator.userAgent),
     isWinPhone : (/trident/img.test(navigator.userAgent) && /mobile/img.test(navigator.userAgent)),
     isIE10 : navigator.userAgent.match(/msie 10/i),
-    isIE11 : navigator.userAgent.match(/msie 11/i),
+    isIE11 : (navigator.userAgent.match(/windows nt/i) && navigator.userAgent.match(/trident/i)),
+    isIEEdge : (navigator.userAgent.match(/windows nt/i) && navigator.userAgent.match(/edge/i)),
     isWebkit : navigator.userAgent.match(/webkit/),
     isMobile : /mobile/img.test(navigator.userAgent),
     isDesktop : !(/mobile/img.test(navigator.userAgent)),
     isSafari : (!/Chrome/img.test(navigator.userAgent) && /Safari/img.test(navigator.userAgent) && !/android/img.test(navigator.userAgent)),
     isChrome : /Chrome/img.test(navigator.userAgent),
-    isNativeAndroid : (/android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent))
-  });
+    isNativeAndroid : (/android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent)),
+    isWideScreen : window.innerWidth >= 960 && (window.orientation === 90 || window.orentation === -90),
+    isWideScreenPortrait : window.innerWidth >= 960 && (window.orientation !== 90 || window.orientation !== -90)
+    });
 
 
   
@@ -921,9 +936,15 @@ if(window.jQuery) {
       $(destinationHref).addClass('navigable');
       setTimeout(function() {
         $this.removeClass('selected');
-      }, 500);
+      }, 1000);
       var destination = $(destinationHref);
-      $.UIGoToArticle(destination);
+      if ($.isAndroid || $.isChrome) {
+        setTimeout(function() {
+          $.UIGoToArticle(destination);
+        }, 200);
+      } else {
+        $.UIGoToArticle(destination);
+      }
     });
     $('li[data-goto]').forEach(function(ctx) {
       $(ctx).closest('article').addClass('navigable');
@@ -953,13 +974,12 @@ if(window.jQuery) {
     ///////////////////////////////////
     $('body').on('singletap', 'button', function() {
       var $this = $(this);
-      if ($this.parent('.segmented')[0]) return;
-      if ($this.parent('.tabbar')[0]) return;
-      if ($.isDesktop) return;
+      if ($this.parent('.segmented')[0] || $this.parent('.tabbar')[0]) return;
+      if (this.classList.contains('slide-out-button') || this.classList.contains('back') || this.classList.contains('backTo')) return;
       $this.addClass('selected');
       setTimeout(function() {
         $this.removeClass('selected');
-      }, 500);
+      }, 1000);
     });
   });
 
@@ -1148,13 +1168,24 @@ if(window.jQuery) {
       $('body').append(popup);
       if (callback && continueButton) {
         $('.popup').find('.continue').on($.eventStart, function() {
-          $('.popup').UIPopupClose();
-          callback.call(callback);
+          var $this = $(this);
+          if ($.isAndroid || $.isChrome) {
+            $this.addClass('selected');
+            setTimeout(function() {
+              $this.removeClass('selected');
+              $('.popup').UIPopupClose();
+              callback.call(callback);
+            }, 300);
+          } else {
+            $('.popup').UIPopupClose();
+            callback.call(callback);
+          }
         });
       }
     
       $.UICenterPopup();
       setTimeout(function() {
+      	$('body').find('.popup').addClass('opened');
         $('body').find('.popup').removeClass('closed');
       }, 200);
       $('body').find('.popup').UIBlock('0.5');
@@ -1199,8 +1230,17 @@ if(window.jQuery) {
     // Handle Closing Popups:
     //////////////////////////
     $('body').on($.eventStart, '.cancel', function() {
-      if ($(this).closest('.popup')[0]) {
-        $(this).closest('.popup').UIPopupClose();
+      var $this = $(this);
+      if ($this.closest('.popup')[0]) {
+        if ($.isAndroid || $.isChrome) {
+          $this.addClass('selected');
+          setTimeout(function() {
+            $this.closest('.popup').UIPopupClose();
+            $this.removeClass('selected');
+          }, 300);
+        } else {
+          $this.closest('.popup').UIPopupClose();
+        }
       }
     });
     /////////////////////////////////////////////////
@@ -1251,10 +1291,10 @@ if(window.jQuery) {
         if ((popover.width() + offset.left) > window.innerWidth) {
           popover.css({
             'left': ((window.innerWidth - popover.width())-20) + 'px',
-            'top': (calcTop + 20) + 'px'
+            'top': (calcTop - 30) + 'px'
           });
         } else {
-          popover.css({'left': left + 'px', 'top': (calcTop + 20) + 'px'});
+          popover.css({'left': left + 'px', 'top': (calcTop - 30) + 'px'});
         }
       };
 
@@ -1263,7 +1303,12 @@ if(window.jQuery) {
         $('body').UIUnblock();
         return;
       }
-      $('body').append(popover);      
+      $('body').append(popover);   
+      if ($.isAndroid || $.isChrome) {
+        setTimeout(function() {
+          $(popoverID).addClass('opened'); 
+        }, 50);
+      } 
       if ($.isWin) {
         $(popoverID).addClass('open');
       }
@@ -1337,7 +1382,8 @@ if(window.jQuery) {
       var callback = (options && options.callback) ? options.callback : $.noop;
       var selected = (options && options.selected > 0) ? options.selected : 0;
       this.find('button').forEach(function(ctx, idx) {
-        $(ctx).find('button').attr('role','radio');
+        $(ctx).attr('role','radio');
+        $(ctx).addClass('segment');
         if (idx === selected) {
           ctx.setAttribute('aria-checked', 'true');
           ctx.classList.add('selected');
@@ -1376,7 +1422,7 @@ if(window.jQuery) {
       if (className) _segmented.push(' ' + className);
       _segmented.push('">');
       labels.forEach(function(ctx, idx) {
-        _segmented.push('<button role="radio"');
+        _segmented.push('<button role="radio" class="segment"');
         _segmented.push('"');
         _segmented.push('>');
         _segmented.push(ctx);
@@ -1505,6 +1551,7 @@ if(window.jQuery) {
 
 
   $.fn.extend({
+    
     ////////////////////////////
     // Initialize Editable List,
     // allows moving items and
@@ -1538,6 +1585,7 @@ if(window.jQuery) {
         return;
       }
 
+      var transform = ($.isiOS || $.isSafari) ? transform: 'transform';
       var editLabel = settings.editLabel;
       var doneLabel = settings.doneLabel;
       var deleteLabel = settings.deleteLabel;
@@ -1563,7 +1611,7 @@ if(window.jQuery) {
       var height = $('li').eq(0)[0].clientHeight;
 
       if (settings.deletable) {
-        deleteButton = $.concat('<button class="delete"><label>', deleteLabel, '</label></button');
+        deleteButton = $.concat('<button class="delete"><label>', deleteLabel, '</label></button>');
         deletionIndicator = '<span class="deletion-indicator"></span>';
         $(this).addClass('deletable');
       }
@@ -1572,7 +1620,7 @@ if(window.jQuery) {
         var moveDownIndicator = "<span class='move-down'></span>";
         $(this).addClass('editable');
       }
-      editButton = $.concat('<button class="edit">', editLabel, '</button');
+      editButton = $.concat('<button class="edit">', editLabel, '</button>');
       if (!$(this).closest('article').prev().find('.edit')[0] && !$(this).closest('article').prev().find('.done')[0]) {
         $(this).closest('article').prev().append(editButton);
       }
@@ -1593,10 +1641,18 @@ if(window.jQuery) {
         }
       });
 
-      var listData = [];
-      this.find('li').forEach(function(ctx) {
-        listData.push($(ctx).attr('data-ui-value'));
+      // Setup identifiers for list items.
+      // These will help determine position & deletion.
+      var listItemPosition = [];
+      $(this).find('li').forEach(function(ctx, idx) {
+        if (idx === 0) {
+          $(ctx).attr('data-list-position', '0')
+        } else {
+          $(ctx).attr('data-list-position', idx)
+        }
+        listItemPosition.push(idx);
       });
+      $(this).attr('data-list-items-position', listItemPosition.join(','));
 
       // Callback to setup indicator interactions:
       var setupDeletability = function(callback, list, button) {
@@ -1618,7 +1674,7 @@ if(window.jQuery) {
               // Execute callback if edit was performed:
               //========================================
               if ($(list).data('list-edit')) {
-                callback.call(callback, $this);
+                callback.call(callback, list);
               }
               setTimeout(function() {
                 $this.classList.remove('done');
@@ -1626,7 +1682,12 @@ if(window.jQuery) {
                 $($this).text(settings.editLabel);
                 $(list).removeClass('showIndicators');
                 $(list).find('li').removeClass('selected');
-              });            
+              });     
+              var movedItems = [];
+              $(list).find('li').forEach(function(ctx, idx) {
+                movedItems.push($(ctx).attr('data-list-position'));
+              });  
+              $(list).attr('data-list-items-position', movedItems.join(','));        
             }
           });
 
@@ -1664,23 +1725,66 @@ if(window.jQuery) {
             } else {
               // Mark list as edited:
               $(list).data('list-edit', true);
-              var clone = $(this).closest('li').clone();
-              item.prev().before(clone);
-              item.remove();
+              var item = $(this).closest('li');
+              var prev = item.prev();
+              // Clone the items to replace the
+              // transitioned ones alter:
+              var itemClone = item.clone();
+              var prevClone = prev.clone();
+              var height = item[0].offsetHeight;
+              item.css({
+                "-webkit-transform": "translate3d(0,-" + height + "px,0)",
+                "transform": "translate3d(0,-" + height + "px,0)"
+              });
+
+              prev.css({
+                "-webkit-transform": "translate3d(0," + height + "px,0)",
+                "transform": "translate3d(0," + height + "px,0)"
+              });              
+              setTimeout(function() {
+                if (window.$chocolatechipjs) {
+                  $.replace(prevClone, item);
+                  $.replace(itemClone, prev);
+                } else {
+                  item.replaceWith(prevClone)
+                  prev.replaceWith(itemClone)
+                }
+              }, 250);
             }
           });
 
           // Move list item down:
           $(list).on('singletap', '.move-down', function(e) {
             var item = $(this).closest('li');
+            var next = item.next();
+            // Clone the items to replace the
+            // transitioned ones alter:
+            var itemClone = item.clone();
+            var nextClone = next.clone();
             if ((window.$chocolatechipjs && item.is('li:last-child')[0]) || window.jQuery && item.is('li:last-child')) {
               return;
             } else {
               // Mark list as edited:
               $(list).data('list-edit', true);
-              var clone = $(this).closest('li').clone();
-              item.next().after(clone);
-              item.remove();
+
+              var height = item[0].offsetHeight;
+              item.css({
+                '-webkit-transform': 'translate3d(0,' + height + 'px,0)',
+                transform: 'translate3d(0,' + height + 'px,0)'
+              });
+              next.css({
+                "-webkit-transform": "translate3d(0,-" + height + "px,0)",
+                "transform": "translate3d(0,-" + height + "px,0)"
+              });
+              setTimeout(function() {
+                if (window.$chocolatechipjs) {
+                   $.replace(nextClone, item);
+                   $.replace(itemClone, next);
+                } else {
+                  item.replaceWith(nextClone)
+                  next.replaceWith(itemClone)
+                }
+              }, 250);
             }
           });
 
@@ -1691,7 +1795,23 @@ if(window.jQuery) {
             $(list).data('list-edit', true);
             var direction = '-1200%';
             if ($('html').attr('dir') === 'rtl') direction = '1000%';
-            $(this).siblings().css({'-webkit-transform': 'translate3d(' + direction + ',0,0)', '-webkit-transition': 'all 1s ease-out', 'transform': 'translate3d(' + direction + ',0,0)', 'transition': 'all 1s ease-out'});
+            $(this).siblings().css({
+              '-webkit-transform': 'translate3d(' + direction + ',0,0)', 
+              '-webkit-transition': 'all 1s ease-out', 
+              'transform': 'translate3d(' + direction + ',0,0)', 
+              'transition': 'all 1s ease-out'
+            });
+
+            // Handle storing info about deleted items on the list itself:
+            var deletedItems = $(list).attr('data-list-items-deleted');
+            if (deletedItems === undefined) {
+              deletedItems = [$(this).closest('li').attr('data-list-position')];
+            } else {
+              deletedItems = deletedItems.split(',');
+              deletedItems.push($(this).closest('li').attr('data-list-position'));
+            }
+            $(list).attr('data-list-items-deleted', deletedItems.sort().join(','));
+
             setTimeout(function() {
               $($this).parent().remove();
             }, 500);
@@ -1780,12 +1900,21 @@ if(window.jQuery) {
       settings.id = $.Uuid();
       settings.listClass = '';
       settings.background = '';
-      settings.handle = '<div class="handle"></div>';
+      settings.handle = '<div class="handle"><span></span></div>';
       if (options) $.extend(settings, options);
       var sheet = $.concat('<div id="', settings.id, '" class="sheet', settings.listClass, '"', settings.background, '>', settings.handle, '<section class="scroller-vertical"></section></div>');
       $('body').append(sheet);
       $('.sheet .handle').on($.eventStart, function() {
-        $.UIHideSheet();
+        var $this = $(this);
+        if ($.isAndroid || $.isChrome) {
+          $this.addClass('selected');
+          setTimeout(function() {
+            $this.removeClass('selected');
+            $.UIHideSheet();
+          }, 500);
+        } else {
+          $.UIHideSheet();
+        }
       });
     },
     UIShowSheet : function ( id ) {
@@ -1852,23 +1981,49 @@ if(window.jQuery) {
       $('#global-nav').append(slideoutButton);
       $('.slide-out-button').on($.eventStart, function() {
         $('.slide-out').toggleClass('open');
+        $(this).toggleClass('focused');
       });
       if (!dynamic) {
         $('.slide-out').on('singletap', 'li', function() {
+          var $this = $(this);
+          $this.addClass('selected');
+          setTimeout(function() {
+            $this.removeClass('selected');
+          }, 500);
           var whichArticle = '#' + $(this).attr('data-show-article');
           $.UINavigationHistory[0] = whichArticle;
           $.UISetHashOnUrl(whichArticle);
           $.publish('chui/navigate/leave', $('article.show')[0].id);
           $.publish('chui/navigate/enter', whichArticle);
-          $('.slide-out').removeClass('open');
-          $('article').removeClass('show');
-          $('article').prev().removeClass('show');
-          $(whichArticle).addClass('show');
-          $(whichArticle).prev().addClass('show');
+          if ($.isAndroid || $.isChrome) {
+            setTimeout(function() {
+            $('.slide-out').removeClass('open');
+            $('article').removeClass('show');
+            $('article').prev().removeClass('show');
+            $(whichArticle).addClass('show');
+            $(whichArticle).prev().addClass('show');
+            $('.slide-out-button').removeClass('focused');
+            }, 400);
+          } else {
+            $('.slide-out').removeClass('open');
+            $('article').removeClass('show');
+            $('article').prev().removeClass('show');
+            $(whichArticle).addClass('show');
+            $(whichArticle).prev().addClass('show');
+            $('.slide-out-button').removeClass('focused');
+          }
         });
       } else {
         $('.slide-out').on('singletap', 'li', function() {
-          callback(this);
+          if ($.isAndroid || $.isChrome) {
+            setTimeout(function() {
+              callback(this);
+              $('.slide-out-button').removeClass('focused');
+            }, 400);
+          } else {
+            callback(this);
+            $('.slide-out-button').removeClass('focused');
+          }
         });
       }
     }
@@ -2256,6 +2411,52 @@ if(window.jQuery) {
       return template;
     }
   });
+
+  // Define repeater.
+  // This lets you output a template repeatedly,
+  // using an array of data.
+
+
+  $.template.data = {};
+  
+  $.template.index = 0;
+
+  $.template.repeater = function( element, tmpl, data) {
+    if (!element) {
+      var repeaters = $('[data-repeater]');
+      $.template.index = 0;
+      repeaters.forEach(function(repeater) {
+        var template = repeater.innerHTML;
+        repeater = $(repeater);
+        var d = repeater.attr('data-repeater');
+        if (!d || !$.template.data[d]) {
+          console.error("No matching data for template. Check your data assignment on $.template.data or the template's data-repeater value.");
+          return;
+        }
+        repeater.empty();
+        repeater.removeClass('cloak');
+        var t = $.template(template);
+        $.template.data[d].forEach(function(item) {
+          repeater.append(t(item));
+          $.template.index += 1;
+        });
+        delete $.template.data[d];
+      });      
+    } else {
+      // Exit if data is not repeatable:
+      if (!$.isArray(data)) {
+        console.error('$.template.repeater() requires data of type Array.');
+        return '$.template.repeater() requires data of type Array.';
+      } else {
+        var template = $.template(tmpl);
+        if ($.isArray(data)) {
+          data.forEach(function(item) {
+            $(element).append(template(item));
+          });
+        }
+      }
+    }
+  };
 
 
   /////////////////////////
@@ -2699,7 +2900,8 @@ if(window.jQuery) {
       } else { 
         newPlace = width * newPoint + offset; offset -= newPoint; 
       }
-      input.css({'background-size': Math.round(newPlace) + 'px 10px'});         
+      if ($.isAndroid || $.isChrome) input.css({'background-size': Math.round(newPlace) + 'px 3px, 100% 2px'});
+      else input.css({'background-size': Math.round(newPlace) + 'px 10px'});         
     }
   });
   $(function() {
@@ -2768,38 +2970,6 @@ if(window.jQuery) {
   });
 
 
-  ///////////////////////////////////////
-  // Initialize horizontal scroll panels:
-  ///////////////////////////////////////
-  $.fn.extend({
-    UIHorizontalScrollPanel : function () {
-      if (window.$chocolatechipjs) {
-        var w = 0;
-        this.forEach(function(ctx) {
-          var scrollPanel = $(this).find('ul');
-          var panelsWidth = 0;
-          scrollPanel.find('li').forEach(function(ctx) {
-              panelsWidth += ctx.offsetWidth;
-          });
-          var parentPadding = (parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')));
-          w = (panelsWidth + (parentPadding + parentPadding / 2));
-          scrollPanel.css('width', w + 'px');
-        });
-      } else {
-        return this.each(function() {
-          var scrollPanel = $(this).find('ul');
-          var panelsWidth = 0;
-          scrollPanel.find('li').each(function(_, ctx) {
-              panelsWidth += parseInt($(ctx).outerWidth(true));
-          });
-          var parentPadding = (parseInt($(this).css('padding-left')) + parseInt($(this).css('padding-right')));
-          scrollPanel.css('width', (panelsWidth + (parentPadding + parentPadding / 2)));
-        });
-      }
-    }
-  });
-
-
   //////////////////////////////////////////
   // Plugin to setup automatic data binding:
   //////////////////////////////////////////
@@ -2842,6 +3012,13 @@ if(window.jQuery) {
         var broadcast = 'data-binding-' + $(this).attr('data-controller');
         $.publish(broadcast, $(this).val());
       });
+    },
+
+    //////////////////////////////////////
+    // Unbind a specific controller/model:
+    //////////////////////////////////////
+    UIUnBindData : function (controller) {
+      delete $.subscriptions['data-binding-' + controller];
     }
   });
 

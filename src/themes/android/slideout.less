@@ -1,14 +1,12 @@
 /* ==============================
    Slide Out
    =========================== */
-@slideOutButtonSVG: escape('<svg width="81px" height="60px" viewBox="0 0 81 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="slideout" fill="@{iconColor}"><rect id="Rectangle" x="8" y="0" width="64.167" height="7.666"></rect><rect id="Rectangle" x="8" y="26" width="64.167" height="7.667"></rect><rect id="Rectangle" x="8" y="52" width="64.167" height="7.666"></rect></g></g></svg>');
-
 body.isNativeAndroidBrowser .slide-out {
   visibility: visible;
 }
 .slide-out {
   position: absolute;
-  top: 52px;
+  top: 48px;
   left: 0;
   bottom: 0;
   background-color: @appBkColor;
@@ -34,30 +32,115 @@ body.isNativeAndroidBrowser .slide-out {
     padding-bottom: 100px;
     .overflow-y-scroll;
     width: 100%;
+
+    & .list > li {
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.045) 20%);
+    background-size: 1000% 1000%;
+    background-repeat: no-repeat;
+    background-position: center center;
+      &.selected {
+        -webkit-animation-name: listRipple;
+        animation-name: listRipple;
+      }
+    }
   }
 }
 
-button.slide-out-button {
+nav > button.slide-out-button {
+  background-color: transparent;
   position: absolute;
   z-index: 1111111;
-  top: 5px;
-  left: 15px;
+  top: 8px;
+  left: 10px;
   .size(35px, 35px);
+  background-image: -webkit-linear-gradient(left, black, black) !important;
+  background-image: linear-gradient(left, black, black) !important;
+  background-size: 20px 2px !important;
+  background-repeat: no-repeat;
+  background-position: 8px center;
   box-sizing: border-box;
   padding: 0 !important;
   margin-left: 0;
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+  border-radius: 50%;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  box-shadow: none;
+
+  &:hover {
+    -webkit-animation-name: '';
+    animation-name: '';
+    -webkit-animation-name: backButtonRipple;
+    animation-name: backButtonRipple;
+    background-color: transparent !important;
+  }
+
+  &.focused {
+    background-color: transparent !important;
+    background-size: 20px 2px;
+    background-image: -webkit-linear-gradient(left, black, black);
+    background-image: linear-gradient(left, black, black);
+    background-repeat: no-repeat;
+    -webkit-animation-name: '';
+    -webkit-transform: rotate(360deg);
+    animation-name: '';
+    transform: rotate(360deg);
+    background-position: 9px center;
+
+    &::before {
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      width: 14px;
+      top: 12px;
+      left: 6px;
+    }
+
+    &::after {
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      width: 14px;
+      top: 22px !important;
+      left: 6px;
+    }
+  }
 
   &::before {
     content: '';
     display: block;
-    .size(35px, 35px);
-    background-image: url("@{imageMaskRoot}@{slideOutButtonSVG}");
-    background-position: 50% 50%;
-    background-size: 70% 70%;
-    background-repeat: no-repeat;
+    height: 2px;
+    width: 20px;
+    background-color: black;
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    transition: all .25s ease-out;
+    -webkit-trasform-origin: left 60px;
+    trasform-origin: left 60px;
+  }
+
+  &::after {
+    display: block;
+    content: '';
+    width: 20px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 24px;
+    left: 8px;
+    transition: all .25s ease-out;
   }
 }
-
 body.slide-out-app {
   
   > article {
@@ -69,11 +152,17 @@ body.slide-out-app {
     }
   }
 
+  > #global-nav {
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.2) !important;
+  }
+
   > nav {
 
-    &.show:not(:first-of-type) {
+    &.show:not(':first-of-type') {
       display: block !important;
-      z-index: 100; 
+      z-index: 1111111111;
+      left: 200px;
+      right: 200px;
     }
 
     &:not(:first-of-type) {

@@ -64,7 +64,8 @@ li.selected > .deletion-indicator::before {
   content: '';
   display: block !important;
   .size(22px, 22px);
-  background-image: url("@{imageMaskRoot}@{selectListIndicatorSVG}");
+  background-image: none;
+  background-image: url("@{imageMaskRoot}@{selectListIndicatorSVG}") !important;
   background-position: 50% 50%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -134,10 +135,10 @@ button.delete {
   margin-right: 0 !important;
   color: transparent;
   background-color: lighten(@boxShadowColor, 40%);
-  background-image: url("@{imageMaskRoot}@{deleteIndicatorSVG}");
-  background-position: 50% 50%;
-  background-size: auto 20px;
-  background-repeat: no-repeat;
+  background-image: url("@{imageMaskRoot}@{deleteIndicatorSVG}") !important;
+  background-position: 50% 50% !important;
+  background-size: auto 20px !important;
+  background-repeat: no-repeat !important;
   box-shadow: inset 2px 2px 2px lighten(@boxShadowColor, 20%);
   border-radius: 0;
   border-bottom: 1px solid lighten(@boxShadowColor, 20%);

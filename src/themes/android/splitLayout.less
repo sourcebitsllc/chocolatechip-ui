@@ -13,6 +13,7 @@ body.splitlayout {
   > nav {
     background-color: @navBkgnd;
     border-bottom: solid 1px @spitlayoutNavBorder;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 
     &:first-of-type {
       width: 320px;
@@ -29,7 +30,7 @@ body.splitlayout {
     }
   }
 
-  > .master + nav:not(:last-of-type) {
+  > .master + nav:not(':last-of-type') {
     width: 320px;
     right: auto;
     border-right: solid 1px @splitlayoutBorders !important;

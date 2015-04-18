@@ -220,9 +220,15 @@
       $(destinationHref).addClass('navigable');
       setTimeout(function() {
         $this.removeClass('selected');
-      }, 500);
+      }, 1000);
       var destination = $(destinationHref);
-      $.UIGoToArticle(destination);
+      if ($.isAndroid || $.isChrome) {
+        setTimeout(function() {
+          $.UIGoToArticle(destination);
+        }, 200);
+      } else {
+        $.UIGoToArticle(destination);
+      }
     });
     $('li[data-goto]').forEach(function(ctx) {
       $(ctx).closest('article').addClass('navigable');

@@ -24,6 +24,8 @@
   }
 
   > button {
+    background-color: @actionButtonColor !important;
+    background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.05) 10%) !important;
     display: inline-box;
     .size(30px, 30px);
     .box-sizing(border-box);
@@ -36,6 +38,7 @@
     border: solid 1px @buttonBorderColor;
     padding: 0 !important;
     border-radius: 0;
+    box-shadow: none !important;
 
     > span {
       font-size: inherit;
@@ -61,6 +64,9 @@
 }
 body:not(.isDesktop) .stepper > button:last-of-type {
   padding-top: 4px !important;
+}
+body.isDesktopChrome .stepper > button:last-of-type > span {
+  margin-top: -4px !important;
 }
 
 html[dir=rtl] {

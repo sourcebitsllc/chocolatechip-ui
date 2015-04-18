@@ -1,6 +1,29 @@
 /* ==============================
    Switch
    =========================== */
+@keyframes switchRipple {
+  0% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+  40% {
+    box-shadow: 0px 0 5px 8px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes switchRippleReverse {
+  0% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+  40% {
+    box-shadow: 0px 0 5px 8px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+}
 .switch {
   display: inline-block;
   .size(40px, 20px);
@@ -9,17 +32,18 @@
   #flex > .justify-content(space-around);
   .box-sizing(border-box);
   background-image: 
-    -webkit-linear-gradient(left, @secondaryColor, @secondaryColor),
+    -webkit-linear-gradient(left, lighten(@secondaryColor, 20%), lighten(@secondaryColor, 20%)),
     -webkit-linear-gradient(left, @boxShadowColor, @boxShadowColor);
   background-image: 
-    linear-gradient(to left, @secondaryColor, @secondaryColor),
+    linear-gradient(to left, lighten(@secondaryColor, 20%), lighten(@secondaryColor, 20%)),
     linear-gradient(to left, @boxShadowColor, @boxShadowColor);
-  background-position: left 10px, left 10px;
-  background-size: 0% 2px, 100% 2px;
+  background-position: left 3px, left 3px;
+  background-size: 0% 14px, 100% 14px;
   background-repeat: no-repeat, no-repeat;
   -webkit-tap-highlight-color: transparent;
   overflow: visible;
   cursor: pointer;
+  border-radius: 50% !important;
   -webkit-user-select: none;
   -webkit-animation-duration: .65s;
   -webkit-animation-timing-function: ease-in-out;
@@ -29,8 +53,7 @@
   animation-duration: .65s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-name: switchAnimationOff;
-  .transition(all .3s ease-out);
+  .transition(all .1s ease-out);
 
   &.traditional {
     .size(70px, 24px);
@@ -42,12 +65,13 @@
     overflow: hidden;
 
     > em {
-      .size(30px, 22px);
+      .size(22px, 22px);
       top: -1px;
       border-radius: 0;
       border: solid 1px @switchThumbBorder;
       border-top: solid 1px @buttonTopColor;
       background-color: @switchThumbBkgnd;
+      box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.3);
     }
   }
 
@@ -60,23 +84,27 @@
     position: relative;
     z-index: 30;
     top: 0;
-    .size(18px, 18px);
+    .size(20px, 20px);
     border-radius: 50%;
     background-color: #fff;
-    border: solid 2px @boxShadowColor;
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
     pointer-events: none;
     .transform(translate3d(-1px,0,0));
     .transition(all .1s ease-in-out);
+    animation-duration: .65s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-name: switchRippleReverse;
 
   }
 
   &.on {
-    background-size: 100% 2px, 100% 2px;
+    background-size: 100% 14px, 100% 14px;
 
     > em {
       .transform(translate3d(20px,0,0));
       background-color: @secondaryColor;
-      border: solid 2px @secondaryColor;
+      animation-name: switchRipple;
     }
   }
 
@@ -90,6 +118,7 @@
       border: solid 1px @primaryColor;
       border-top: solid 1px @switchOnTop;
       border-left-color: @switchOnColor;
+      animation-name: '';
     }
   }
 

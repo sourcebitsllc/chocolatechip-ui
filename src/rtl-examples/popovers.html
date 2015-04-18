@@ -31,12 +31,20 @@
           }
           var listItem;
           if (e.target.nodeName === 'LI') {
+            listItem = e.target;
             $(results).html(e.target.textContent.trim());
           } else {
             listItem = $(e.target).closest('li')[0];
             $(results).html(listItem.textContent.trim());
           }
-          $.UIPopoverClose();
+          $(listItem).addClass('selected');
+          if ($.isAndroid || $.isChrome) {
+            setTimeout(function() {
+              $.UIPopoverClose();
+            }, 300);
+          } else {
+            $.UIPopoverClose();
+          }
         });
       };
         
@@ -72,13 +80,25 @@
     body.isNativeAndroidBrowser nav > .show-popover.align-flush {
       top: -4px !important;
     }
+    .horizontal.centered {
+      width: 200px;
+      display: -wekbit-flex;
+      display: flex;
+      top: 5px;
+    }
+    .isiOS .horizontal.centered,
+    .isDesktopSafari .horizontal.centered {
+      width: 130px;
+    }
   </style>
 </head>
 <body>
   <nav>
-    <button class='show-popover' id="showPopover1">فاكهة</button>
     <h1>عنصر غطاء</h1>
-    <button class='show-popover align-flush' id="showPopover2">الحلويات</button>
+    <div class='horizontal centered align-flush'>
+      <button class='show-popover' id="showPopover1">فاكهة</button>
+      <button class='show-popover' id="showPopover2">الحلويات<</button>
+    </div>
   </nav>
   <article id="main" class="current">
     <section>

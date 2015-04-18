@@ -7,7 +7,16 @@
       $('.sheet .list').append ('<h2 style="text-align: center; margin: 20px;">The End</h2>');
       
       $('.sheet .list').on('singletap', 'button', function() {
-        $.UIHideSheet();
+        var $this = $(this);
+        if ($.isAndroid || $.isChrome) {
+          $this.addClass('selected');
+          setTimeout(function() {
+            $.UIHideSheet();
+            $this.removeClass('selected');
+          }, 500);
+        } else {
+          $.UIHideSheet();
+        }
       });
       
       // Initialize button to show sheet:

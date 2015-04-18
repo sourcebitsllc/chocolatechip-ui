@@ -1,6 +1,7 @@
 (function($) {
   "use strict";
   $.fn.extend({
+    
     ////////////////////////////
     // Initialize Editable List,
     // allows moving items and
@@ -34,6 +35,7 @@
         return;
       }
 
+      var transform = ($.isiOS || $.isSafari) ? transform: 'transform';
       var editLabel = settings.editLabel;
       var doneLabel = settings.doneLabel;
       var deleteLabel = settings.deleteLabel;
@@ -59,7 +61,7 @@
       var height = $('li').eq(0)[0].clientHeight;
 
       if (settings.deletable) {
-        deleteButton = $.concat('<button class="delete"><label>', deleteLabel, '</label></button');
+        deleteButton = $.concat('<button class="delete"><label>', deleteLabel, '</label></button>');
         deletionIndicator = '<span class="deletion-indicator"></span>';
         $(this).addClass('deletable');
       }
@@ -68,7 +70,7 @@
         var moveDownIndicator = "<span class='move-down'></span>";
         $(this).addClass('editable');
       }
-      editButton = $.concat('<button class="edit">', editLabel, '</button');
+      editButton = $.concat('<button class="edit">', editLabel, '</button>');
       if (!$(this).closest('article').prev().find('.edit')[0] && !$(this).closest('article').prev().find('.done')[0]) {
         $(this).closest('article').prev().append(editButton);
       }
@@ -89,10 +91,18 @@
         }
       });
 
-      var listData = [];
-      this.find('li').forEach(function(ctx) {
-        listData.push($(ctx).attr('data-ui-value'));
+      // Setup identifiers for list items.
+      // These will help determine position & deletion.
+      var listItemPosition = [];
+      $(this).find('li').forEach(function(ctx, idx) {
+        if (idx === 0) {
+          $(ctx).attr('data-list-position', '0')
+        } else {
+          $(ctx).attr('data-list-position', idx)
+        }
+        listItemPosition.push(idx);
       });
+      $(this).attr('data-list-items-position', listItemPosition.join(','));
 
       // Callback to setup indicator interactions:
       var setupDeletability = function(callback, list, button) {
@@ -114,7 +124,7 @@
               // Execute callback if edit was performed:
               //========================================
               if ($(list).data('list-edit')) {
-                callback.call(callback, $this);
+                callback.call(callback, list);
               }
               setTimeout(function() {
                 $this.classList.remove('done');
@@ -122,7 +132,12 @@
                 $($this).text(settings.editLabel);
                 $(list).removeClass('showIndicators');
                 $(list).find('li').removeClass('selected');
-              });            
+              });     
+              var movedItems = [];
+              $(list).find('li').forEach(function(ctx, idx) {
+                movedItems.push($(ctx).attr('data-list-position'));
+              });  
+              $(list).attr('data-list-items-position', movedItems.join(','));        
             }
           });
 
@@ -160,23 +175,66 @@
             } else {
               // Mark list as edited:
               $(list).data('list-edit', true);
-              var clone = $(this).closest('li').clone();
-              item.prev().before(clone);
-              item.remove();
+              var item = $(this).closest('li');
+              var prev = item.prev();
+              // Clone the items to replace the
+              // transitioned ones alter:
+              var itemClone = item.clone();
+              var prevClone = prev.clone();
+              var height = item[0].offsetHeight;
+              item.css({
+                "-webkit-transform": "translate3d(0,-" + height + "px,0)",
+                "transform": "translate3d(0,-" + height + "px,0)"
+              });
+
+              prev.css({
+                "-webkit-transform": "translate3d(0," + height + "px,0)",
+                "transform": "translate3d(0," + height + "px,0)"
+              });              
+              setTimeout(function() {
+                if (window.$chocolatechipjs) {
+                  $.replace(prevClone, item);
+                  $.replace(itemClone, prev);
+                } else {
+                  item.replaceWith(prevClone)
+                  prev.replaceWith(itemClone)
+                }
+              }, 250);
             }
           });
 
           // Move list item down:
           $(list).on('singletap', '.move-down', function(e) {
             var item = $(this).closest('li');
+            var next = item.next();
+            // Clone the items to replace the
+            // transitioned ones alter:
+            var itemClone = item.clone();
+            var nextClone = next.clone();
             if ((window.$chocolatechipjs && item.is('li:last-child')[0]) || window.jQuery && item.is('li:last-child')) {
               return;
             } else {
               // Mark list as edited:
               $(list).data('list-edit', true);
-              var clone = $(this).closest('li').clone();
-              item.next().after(clone);
-              item.remove();
+
+              var height = item[0].offsetHeight;
+              item.css({
+                '-webkit-transform': 'translate3d(0,' + height + 'px,0)',
+                transform: 'translate3d(0,' + height + 'px,0)'
+              });
+              next.css({
+                "-webkit-transform": "translate3d(0,-" + height + "px,0)",
+                "transform": "translate3d(0,-" + height + "px,0)"
+              });
+              setTimeout(function() {
+                if (window.$chocolatechipjs) {
+                   $.replace(nextClone, item);
+                   $.replace(itemClone, next);
+                } else {
+                  item.replaceWith(nextClone)
+                  next.replaceWith(itemClone)
+                }
+              }, 250);
             }
           });
 
@@ -187,7 +245,23 @@
             $(list).data('list-edit', true);
             var direction = '-1200%';
             if ($('html').attr('dir') === 'rtl') direction = '1000%';
-            $(this).siblings().css({'-webkit-transform': 'translate3d(' + direction + ',0,0)', '-webkit-transition': 'all 1s ease-out', 'transform': 'translate3d(' + direction + ',0,0)', 'transition': 'all 1s ease-out'});
+            $(this).siblings().css({
+              '-webkit-transform': 'translate3d(' + direction + ',0,0)', 
+              '-webkit-transition': 'all 1s ease-out', 
+              'transform': 'translate3d(' + direction + ',0,0)', 
+              'transition': 'all 1s ease-out'
+            });
+
+            // Handle storing info about deleted items on the list itself:
+            var deletedItems = $(list).attr('data-list-items-deleted');
+            if (deletedItems === undefined) {
+              deletedItems = [$(this).closest('li').attr('data-list-position')];
+            } else {
+              deletedItems = deletedItems.split(',');
+              deletedItems.push($(this).closest('li').attr('data-list-position'));
+            }
+            $(list).attr('data-list-items-deleted', deletedItems.sort().join(','));
+
             setTimeout(function() {
               $($this).parent().remove();
             }, 500);

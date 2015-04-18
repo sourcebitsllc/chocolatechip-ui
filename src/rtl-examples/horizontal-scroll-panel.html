@@ -1,19 +1,21 @@
   <script>
     $(function() {
-      $('.horizontal-scroll-panel').UIHorizontalScrollPanel();
+
     });
   </script>
   <style>
-
     .horizontal-scroll-panel li > img {
       height: 200px !important;
     }
     
     @media only screen and (max-device-width: 320px) {
-      .horizontal-scroll-panel li,
-      .horizontal-scroll-panel li > img {
-        height: 125px !important;
+      .horizontal-scroll-panel li {
+        height: 102px !important;
         width: 125px !important;
+      }
+      .horizontal-scroll-panel li > img {
+        height: 102px !important;
+        width: auto !important;
       }
     }
   </style>

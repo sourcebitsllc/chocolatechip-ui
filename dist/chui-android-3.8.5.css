@@ -11,7 +11,7 @@ ChocolateChip-UI
 ChUI-Android.css
 Copyright 2015 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.8.1
+Version: 3.8.5
 */
 /*
   To create a custom theme, adjust the color for @primaryColor. If you want a secondary color, uncomment the line for @secondaryColor and set it's value to what you want.
@@ -27,6 +27,34 @@ Version: 3.8.1
   #flex > .align-content(flex-start | flex-end | center | space-between | space-around | stretch);
   #fkex > .flex(none | [ <flex-grow> <flex-shrink> | <flex-basis> ]);
 */
+.cloak > * {
+  display: none;
+}
+@keyframes backButtonRipple {
+  0% {
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+  }
+  50% {
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.25), 0 0 10px rgba(0, 0, 0, 0.25);
+  }
+  90% {
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.15), 0 0 3px rgba(0, 0, 0, 0.25);
+  }
+  100% {
+    box-shadow: inset 0 0 0 rbga(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+@keyframes tapRipple {
+  0% {
+    background-size: 0% 100%;
+  }
+  50% {
+    background-size: 100% 500%;
+  }
+  100% {
+    background-size: 1100% 1100%;
+  }
+}
 /* ==============================
    Body
    =========================== */
@@ -113,9 +141,9 @@ article {
   bottom: 0;
   left: 0;
   padding-top: 1px;
-  -webkit-transition: all 0.15s ease-out;
-  -moz-transition: all 0.15s ease-out;
-  transition: all 0.15s ease-out;
+  -webkit-transition: all 0.45s ease-out;
+  -moz-transition: all 0.45s ease-out;
+  transition: all 0.45s ease-out;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -134,6 +162,10 @@ article {
   -moz-box-align: start;
   -webkit-align-items: flex-start;
   align-items: flex-start;
+  z-index: 1111111;
+}
+article > section {
+  background-color: #fafafa;
 }
 .hide-navbars article {
   top: 0;
@@ -154,9 +186,9 @@ article {
   visibility: hidden;
 }
 .previous {
-  -webkit-transform: translate3d(-100%, 0, 0);
-  -moz-transform: translate3d(-100%, 0, 0);
-  transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   visibility: hidden;
 }
 html[dir=rtl] .current {
@@ -257,25 +289,6 @@ li.comp > aside.vertical {
 /* ==============================
    Buttons                
    =========================== */
-@-webkit-keyframes animate-icon {
-  0% {
-    box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.25);
-  }
-  65% {
-    box-shadow: inset 0 0 5px 30px rgba(255, 255, 255, 0.25);
-  }
-  100% {
-    box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.25);
-  }
-}
-@-webkit-keyframes focused {
-  0% {
-    background-size: 0% 0%;
-  }
-  100% {
-    background-size: 300% 200%;
-  }
-}
 .align-flush {
   position: absolute;
   top: auto;
@@ -287,9 +300,18 @@ body.isNativeAndroidBrowser .align-flush {
   float: right;
 }
 button {
+  text-transform: uppercase !important;
+}
+button:focus {
+  outline: none;
+}
+button:not(.segment),
+button:not(.back),
+button:not(.backTo) {
+  -webkit-appearance: none;
   box-shadow: none;
   border: none;
-  color: #2d2d2d;
+  color: #666666;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: inline-flex;
@@ -333,25 +355,24 @@ button {
   background-position: center center;
   -webkit-animation-fill-mode: forwards;
 }
-button:hover {
-  -webkit-animation-name: focused;
-  animation-name: focused;
-}
-button:focus {
+button:not(.segment):focus,
+button:not(.back):focus,
+button:not(.backTo):focus {
   outline: none !important;
 }
-button.no-border {
+button:not(.segment).no-border,
+button:not(.back).no-border,
+button:not(.backTo).no-border {
   border: none !important;
 }
 button.action {
-  color: #2d2d2d;
-  background-color: #e0e0e0;
+  color: #666666;
+  background-color: #f5f5f5;
   margin: 0 auto;
   width: auto;
   height: 40px;
   min-width: 200px;
   max-width: 300px;
-  box-shadow: 0 1px 4px #666666;
   margin: 20px auto;
   display: -webkit-box;
   display: -webkit-flex;
@@ -362,48 +383,91 @@ section > button.action.action {
 }
 .isDesktop button.action:hover {
   box-shadow: 0 3px 7px #666666;
-  background-color: #cecece;
+  box-shadow: 0 5px 8px 2px rgba(0, 0, 0, 0.25);
 }
-button.back,
-button.backTo {
-  text-align: left;
-  padding: 0 12px 0 12px !important;
-  margin: 0 0 0 0;
-  line-height: 28px;
-  color: #eaeaea;
-  font-size: 0;
-  border: none;
-  background-color: transparent;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
-  -webkit-animation-delay: .5s;
-}
-button.back::after,
-button.backTo::after {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%22120px%22%20height%3D%22120px%22%20viewBox%3D%220%200%20120%20120%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22BackButton%22%20stroke-linecap%3D%22square%22%20stroke%3D%22%23000000%22%20stroke-width%3D%228%22%3E%3Cg%20id%3D%22Line-2-+-Line-+-Line%22%20transform%3D%22translate%2815.000000,%2022.000000%29%22%3E%3Cpath%20d%3D%22M0.62909796,38.5%20L37.1384668,76.3699524%22%20id%3D%22Line-2%22%3E%3C/path%3E%3Cpath%20d%3D%22M89.3478261,39%20L3.2313744,39%22%20id%3D%22Line%22%3E%3C/path%3E%3Cpath%20d%3D%22M0.62909796,38.5%20L37.1384668,0.63004759%22%20id%3D%22Line%22%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-position: 50% 50%;
-  background-size: 90% 90%;
+button:not(.back),
+button:not(.backTo) {
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.025) 10%);
+  background-size: 1000% 1000%;
   background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 1px 4px #666666;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
-.isDesktop button.back:hover,
-.isDesktop button.backTo:hover {
-  background-color: rgba(0, 0, 0, 0.35) !important;
-  -webkit-animation: animate-icon 0.5s none;
+button:not(.back).selected,
+button:not(.backTo).selected {
+  animation-name: tapRipple;
+  box-shadow: 0 5px 8px 2px rgba(0, 0, 0, 0.25);
 }
-.isDesktop button.back:hover::after,
-.isDesktop button.backTo:hover::after {
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%22120px%22%20height%3D%22120px%22%20viewBox%3D%220%200%20120%20120%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22BackButton%22%20stroke-linecap%3D%22square%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%228%22%3E%3Cg%20id%3D%22Line-2-+-Line-+-Line%22%20transform%3D%22translate%2815.000000,%2022.000000%29%22%3E%3Cpath%20d%3D%22M0.62909796,38.5%20L37.1384668,76.3699524%22%20id%3D%22Line-2%22%3E%3C/path%3E%3Cpath%20d%3D%22M89.3478261,39%20L3.2313744,39%22%20id%3D%22Line%22%3E%3C/path%3E%3Cpath%20d%3D%22M0.62909796,38.5%20L37.1384668,0.63004759%22%20id%3D%22Line%22%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+nav > .back,
+nav > .backTo {
+  padding: 10px;
+  text-align: left;
+  background-color: transparent;
+  background-image: none;
+  background-image: -webkit-linear-gradient(left, #000000, #000000);
+  background-image: linear-gradient(left, #000000, #000000);
+  background-size: 19px 2px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  position: relative;
+  overflow: visible;
+  box-shadow: none;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+  font-size: 0 !important;
+  -webkit-animation-name: '';
+  top: 0;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+nav > .back:hover,
+nav > .backTo:hover {
+  -webkit-animation-name: backButtonRipple;
+  animation-name: backButtonRipple;
+  background-color: transparent !important;
+}
+nav > .back::before,
+nav > .backTo::before {
+  display: block;
+  content: '';
+  -webkit-mask-image: none !important;
+  background-color: black;
+  height: 2px;
+  width: 14px;
+  position: absolute;
+  top: 12px;
+  left: 6px;
+  transition: all 0.25s ease-out;
+  -webkit-transform: rotate(-45deg);
+}
+nav > .back::after,
+nav > .backTo::after {
+  display: block;
+  content: '';
+  -webkit-mask-image: none !important;
+  background-color: black;
+  height: 2px;
+  width: 14px;
+  position: absolute;
+  top: 22px !important;
+  left: 6px;
+  -webkit-transform: rotate(45deg);
 }
 body.isChrome a.button.back,
 body.isChrome a.button.backTo {
@@ -411,18 +475,30 @@ body.isChrome a.button.backTo {
 }
 body.isNativeAndroidBrowser button.back,
 body.isNativeAndroidBrowser button.backTo {
-  top: 0;
+  top: -4px;
   bottom: 0;
 }
 body.isNativeAndroidBrowser button.back::after,
 body.isNativeAndroidBrowser button.backTo::after {
-  top: -2px;
-}
-body.isNativeAndroidBrowser button.backTo::after {
   top: 2px;
 }
 body.isNativeAndroidBrowser button.back::before {
-  top: 8px;
+  top: 12px;
+}
+nav > button,
+nav > div > button,
+.toolbar > button {
+  -webkit-appearance: none;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 12px 20px 10px;
+  margin: 5px;
+}
+nav > button:not(.back):hover,
+nav > button:not(.backTo):hover,
+.toolbar > button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 html[dir=rtl] button {
   line-height: 12pt;
@@ -446,12 +522,13 @@ html[dir=rtl] button.align-flush {
    Nav bars               
    =========================== */
 #global-nav {
-  background-color: #eaeaea;
+  background-color: #f0f0f0;
   overflow: hidden;
-  box-shadow: 0 1px 2px #666666;
   padding: 0 5px;
+  z-index: 1111111111;
 }
 nav {
+  background-color: #f0f0f0;
   height: 50px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -476,19 +553,29 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  -webkit-transition: opacity 0.5s ease-in;
-  -moz-transition: opacity 0.5s ease-in;
-  transition: opacity 0.5s ease-in;
+  -webkit-transition: all 0.45s ease-out;
+  -moz-transition: all 0.45s ease-out;
+  transition: all 0.45s ease-out;
   padding: 0 10px;
   vertical-align: middle;
+  z-index: 1111111111;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+nav.current {
+  box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.2);
 }
 nav > button:first-child {
   margin-left: 0;
 }
+nav > button:last-child {
+  margin-right: 0 !important;
+}
 nav > h1 {
   text-align: left;
   display: inline-block;
-  margin: 0 16px 0 8px;
+  margin: 0 16px 0 0;
   -webkit-box-flex: 1 !important;
   -moz-box-flex: 1 !important;
   -webkit-flex: 1 !important;
@@ -511,16 +598,9 @@ nav > div > button {
   position: relative;
   color: #000000 !important;
 }
-nav > button:hover,
-nav > div > button:hover {
-  background-color: rgba(0, 0, 0, 0.25) !important;
-  color: #000000 !important;
-}
-.isDesktop nav .back:hover,
-.isDesktop nav .backTo:hover {
-  background-color: #000000 !important;
-  -webkit-animation: animate-icon 0.5s none;
-  color: #000000;
+.hasTabBar nav {
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.05);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.09);
 }
 html[dir=rtl] nav > h1 {
   text-align: right;
@@ -540,6 +620,17 @@ html[dir=rtl] body.isNativeAndroidBrowser nav > h1 + button {
 /* ==============================
    Lists                 
    =========================== */
+@-webkit-keyframes listRipple {
+  0% {
+    background-size: 0% 100%;
+  }
+  50% {
+    background-size: 50% 100%;
+  }
+  100% {
+    background-size: 500% 500%;
+  }
+}
 .list {
   list-style: none;
   margin: 16px 0 0;
@@ -558,13 +649,31 @@ html[dir=rtl] body.isNativeAndroidBrowser nav > h1 + button {
   font-size: 12pt;
   border-bottom: solid 1px #cbcbcb;
 }
+.list > li[data-goto],
+.list > li[data-show-article] {
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.065) 20%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .2s;
+  animation-duration: .2s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+.list > li[data-goto].selected,
+.list > li[data-show-article].selected {
+  -webkit-animation-name: listRipple;
+  animation-name: listRipple;
+}
 .list > li.nav::after {
   display: block;
   content: '';
   width: 7px;
   height: 7px;
-  border-right: solid 3px #666666;
-  border-top: solid 3px #666666;
+  border-right: solid 2px #666666;
+  border-top: solid 2px #666666;
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -584,7 +693,7 @@ html[dir=rtl] body.isNativeAndroidBrowser nav > h1 + button {
   border-radius: 20px;
   border: solid 1px #007aff;
   color: #007aff;
-  font: bold 14px/0 Roboto, SegoeWP, HelveticaNeue, Sans-serif;
+  font: bold 14px/0.23 Roboto, Sans-serif;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -614,63 +723,17 @@ p {
 .isDesktop .list > li[data-goto]:hover,
 .list > li[data-goto].touched,
 .isDesktop li[data-show-article]:hover,
-li[data-show-article].touched,
-.isDesktop .list.select > li:hover {
+li[data-show-article].touched {
   cursor: pointer;
-  background-color: #007aff;
-}
-.isDesktop .list > li[data-goto]:hover h3,
-.list > li[data-goto].touched h3,
-.isDesktop li[data-show-article]:hover h3,
-li[data-show-article].touched h3,
-.isDesktop .list.select > li:hover h3,
-.isDesktop .list > li[data-goto]:hover h4,
-.list > li[data-goto].touched h4,
-.isDesktop li[data-show-article]:hover h4,
-li[data-show-article].touched h4,
-.isDesktop .list.select > li:hover h4,
-.isDesktop .list > li[data-goto]:hover h5,
-.list > li[data-goto].touched h5,
-.isDesktop li[data-show-article]:hover h5,
-li[data-show-article].touched h5,
-.isDesktop .list.select > li:hover h5,
-.isDesktop .list > li[data-goto]:hover p,
-.list > li[data-goto].touched p,
-.isDesktop li[data-show-article]:hover p,
-li[data-show-article].touched p,
-.isDesktop .list.select > li:hover p,
-.isDesktop .list > li[data-goto]:hover div,
-.list > li[data-goto].touched div,
-.isDesktop li[data-show-article]:hover div,
-li[data-show-article].touched div,
-.isDesktop .list.select > li:hover div,
-.isDesktop .list > li[data-goto]:hover span,
-.list > li[data-goto].touched span,
-.isDesktop li[data-show-article]:hover span,
-li[data-show-article].touched span,
-.isDesktop .list.select > li:hover span {
-  color: #ffffff;
-}
-.isDesktop .list > li[data-goto]:hover .nav::after,
-.list > li[data-goto].touched .nav::after,
-.isDesktop li[data-show-article]:hover .nav::after,
-li[data-show-article].touched .nav::after,
-.isDesktop .list.select > li:hover .nav::after {
-  border-color: #ffffff;
 }
 .isDesktop .list > li[data-goto].nav:hover::after {
   border-color: #ffffff;
-}
-.isDesktop .list > li[data-goto].show-detail:hover::after,
-.isDesktop .list > li[data-goto]:hover .show-detail::after {
-  border: solid 1px #ffffff;
-  color: #ffffff;
 }
 /* ==============================
    list title & subtitle      
    ============================ */
 .list > li {
-  color: #2d2d2d;
+  color: #666666;
 }
 .list > li > h3,
 .list > li > h4 {
@@ -689,12 +752,12 @@ li[data-show-article].touched .nav::after,
   font-size: 14pt;
   line-height: 18pt;
   margin-bottom: 2px;
-  color: #2d2d2d;
+  color: #666666;
 }
 .list > li h4 {
   font-family: 'Roboto Regular', 'HeveletcaNeue', Helvetica, sans-serif;
   font-weight: normal;
-  color: #2d2d2d;
+  color: #666666;
 }
 .list > li > h4,
 .list > li > div > h4,
@@ -762,8 +825,8 @@ html[dir=rtl] .list > li.nav::after {
   right: auto;
   left: 16px;
   border: none;
-  border-left: solid 3px #666666;
-  border-bottom: solid 3px #666666;
+  border-left: solid 2px #666666;
+  border-bottom: solid 2px #666666;
 }
 html[dir=rtl] li.show-detail::after {
   left: 16px;
@@ -871,8 +934,8 @@ li.comp > aside > .nav::after {
   content: '';
   width: 7px;
   height: 7px;
-  border-right: solid 3px #666666;
-  border-top: solid 3px #666666;
+  border-right: solid 2px #666666;
+  border-top: solid 2px #666666;
   -webkit-transform: rotate(45deg) translate3d(2px, -2px, 0);
   -moz-transform: rotate(45deg) translate3d(2px, -2px, 0);
   transform: rotate(45deg) translate3d(2px, -2px, 0);
@@ -889,7 +952,7 @@ li.comp > aside > .show-detail::after {
   border-radius: 20px;
   border: solid 1px #007aff;
   color: #007aff;
-  font: bold 14px/0 Roboto, Times, serif;
+  font: bold 14px/0.23 Roboto, sans-serif;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -929,8 +992,8 @@ html[dir=rtl] li.comp aside > span.nav::after {
   right: auto;
   left: 16px;
   border: none;
-  border-left: solid 3px #666666;
-  border-bottom: solid 3px #666666;
+  border-left: solid 2px #666666;
+  border-bottom: solid 2px #666666;
 }
 html[dir=rtl] li.comp aside > h4 {
   margin-left: 5px;
@@ -949,13 +1012,13 @@ html[dir=rtl] li.comp div > h3 + h4 {
 }
 @media only screen and (max-width: 480px) and (orientation: portrait) {
   li.comp > div:first-child + aside > h4:nth-child(1) {
-    max-width: 45% !important;
     flex: 1;
   }
   li.comp > div:first-child + aside {
     -webkit-box-pack: end;
     -webkit-justify-content: end;
     justify-content: flex-end;
+    display: flex;
   }
 }
 /* ==============================
@@ -1121,13 +1184,27 @@ html[dir=rtl] .grid {
   -moz-box-flex: 1 !important;
   -webkit-flex: 1 !important;
   flex: 1 !important;
+  height: 44px;
 }
 .segmented:not(.paging).align-flush {
   position: absolute;
   right: 15px;
   top: 4px;
 }
-.segmented:not(.paging) > button {
+.segmented:not(.paging) > button.segment {
+  -webkit-appearance: none !important;
+  background-color: transparent !important;
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.025) 10%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 1px 4px #666666;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
   display: -moz-box;
   display: flex;
   display: -webkit-flex;
@@ -1145,9 +1222,10 @@ html[dir=rtl] .grid {
   align-items: center;
   border: solid 1px #979797;
   text-align: center !important;
-  border-left: none;
-  border-right: solid 1px #979797;
-  box-shadow: none;
+  padding: 10px 10px 4px;
+  border: none;
+  border-bottom: solid 1px #cecece;
+  box-shadow: none !important;
   font-size: 13px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1155,24 +1233,21 @@ html[dir=rtl] .grid {
   height: 30px;
   cursor: pointer;
   margin: 0px !important;
-  padding: 6px 10px 0px !important;
+  padding: 6px 20px 0px !important;
   border-radius: 0;
 }
-.segmented:not(.paging) > button:first-of-type {
-  border-left: solid 1px #979797;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+.segmented:not(.paging) > button.segment:focus {
+  outline: none !important;
 }
-.segmented:not(.paging) > button:last-of-type {
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-}
-.isDesktop .segmented:not(.paging) > button:hover,
-.segmented:not(.paging) > button.selected {
-  background-color: #007aff;
+.isDesktop .segmented:not(.paging) > button.segment:hover,
+.segmented:not(.paging) > button.segment.selected {
   opacity: 1 !important;
   box-shadow: none;
-  color: #ffffff;
+  border-bottom: solid 3px #007aff;
+  padding: 11px 10px 3px;
+}
+.segmented:not(.paging) > button.segment.selected {
+  animation-name: tapRipple;
 }
 div.horizontal.centered > .segmented {
   display: -moz-box;
@@ -1190,19 +1265,6 @@ html[dir=rtl] .segmented.align-flush {
   left: 15px;
   right: auto;
 }
-html[dir=rtl] .segmented:not(.paging) > button {
-  border-radius: 0px;
-}
-html[dir=rtl] .segmented:not(.paging) > button:first-child {
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-left: none;
-}
-html[dir=rtl] .segmented:not(.paging) > button:last-child {
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
-  border-left: solid 1px #979797;
-}
 /* ==============================
    Segmented Paging Control
    =========================== */
@@ -1210,15 +1272,22 @@ html[dir=rtl] .segmented:not(.paging) > button:last-child {
   top: 0px !important;
 }
 .segmented.paging > button {
-  top: 4px;
+  top: 10px;
   background: none !important;
+  border-radius: 50%;
+  padding: 10px;
 }
 .segmented.paging.horizontal > button {
   border: none !important;
   background-color: none !important;
   margin: 0 !important;
   width: 30px !important;
-  height: 40px !important;
+  height: 30px !important;
+}
+.segmented.paging.horizontal > button:hover,
+.segmented.paging.horizontal > button.selected {
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.07) !important;
+  background-color: rgba(0, 0, 0, 0.07) !important;
 }
 .segmented.paging.horizontal > button:first-of-type::before,
 html[dir=rtl] .segmented.paging.horizontal > button:last-of-type::before {
@@ -1232,8 +1301,8 @@ html[dir=rtl] .segmented.paging.horizontal > button:last-of-type::before {
   -moz-transform: rotate(-45deg);
   transform: rotate(-45deg);
   position: absolute;
-  top: 10px;
-  left: 14px;
+  top: 5px;
+  left: 8px;
 }
 .segmented.paging.horizontal > button:last-of-type::before,
 html[dir=rtl] .segmented.paging.horizontal > button:first-of-type::before {
@@ -1248,8 +1317,8 @@ html[dir=rtl] .segmented.paging.horizontal > button:first-of-type::before {
   -moz-transform: rotate(-45deg);
   transform: rotate(-45deg);
   position: absolute;
-  top: 10px;
-  right: 16px;
+  top: 5px;
+  right: 8px;
 }
 html[dir=rtl] .segmented.paging.horizontal > button:last-of-type::before {
   border-right: none;
@@ -1270,6 +1339,13 @@ html[dir=rtl] .segmented.paging.horizontal > button:first-of-type::before {
 .segmented.paging.vertical > button {
   margin: 0 !important;
   background-color: none !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+.segmented.paging.vertical > button:hover,
+.segmented.paging.vertical > button.selected {
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.07) !important;
+  background-color: rgba(0, 0, 0, 0.07) !important;
 }
 .segmented.paging.vertical > button:first-of-type::before {
   content: '';
@@ -1282,8 +1358,8 @@ html[dir=rtl] .segmented.paging.horizontal > button:first-of-type::before {
   -moz-transform: rotate(45deg);
   transform: rotate(45deg);
   position: absolute;
-  top: 6px;
-  left: 10px;
+  top: 2px;
+  left: 5px;
 }
 .segmented.paging.vertical > button:last-of-type::before {
   content: '';
@@ -1296,8 +1372,8 @@ html[dir=rtl] .segmented.paging.horizontal > button:first-of-type::before {
   -moz-transform: rotate(-45deg);
   transform: rotate(-45deg);
   position: absolute;
-  top: 17px;
-  left: 10px;
+  top: 12px;
+  left: 6px;
 }
 article.paging > section {
   position: fixed;
@@ -1414,26 +1490,42 @@ html[dir=rtl] .isNativeAndroidBrowser .segmented.paging.horizontal > button:firs
   -webkit-align-items: center;
   align-items: center;
   display: -webkit-box !important;
-  -webkit-transition: all 0.15s ease-out;
-  -moz-transition: all 0.15s ease-out;
-  transition: all 0.15s ease-out;
+  -webkit-transition: all 0.45s ease-out;
+  -moz-transition: all 0.45s ease-out;
+  transition: all 0.45s ease-out;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   padding: 0 16px;
   vertical-align: middle;
-  background-color: #eaeaea;
+  background-color: #f0f0f0;
   overflow: hidden;
   border-top: solid 1px #666666;
 }
 .toolbar > button {
   color: #000000 !important;
+  background-color: #f5f5f5;
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.025) 10%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 1px 4px #666666;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
-.toolbar > button:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+.toolbar > button.selected {
+  animation-name: tapRipple;
+  box-shadow: 0 5px 8px 2px rgba(0, 0, 0, 0.25);
 }
 .toolbar > button.align-flush {
   top: 5px !important;
+}
+.isDesktop .toolbar > button:hover {
+  box-shadow: 0 5px 8px 2px rgba(0, 0, 0, 0.25);
 }
 .splitlayout > .master + .toolbar {
   left: 0;
@@ -1457,9 +1549,9 @@ div.toolbar.next {
   transform: translate3d(105%, 0, 0);
 }
 div.toolbar.previous {
-  -webkit-transform: translate3d(-100%, 0, 0);
-  -moz-transform: translate3d(-100%, 0, 0);
-  transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 html[dir=rtl] div.toolbar.current {
   -webkit-transform: translate3d(0, 0, 0);
@@ -1508,8 +1600,9 @@ body.splitlayout {
   align-items: stretch;
 }
 .splitlayout > nav {
-  background-color: #eaeaea;
+  background-color: #f0f0f0;
   border-bottom: solid 1px #a7a7aa;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 .splitlayout > nav:first-of-type {
   width: 320px;
@@ -1522,7 +1615,7 @@ body.splitlayout {
   z-index: auto;
   text-align: left;
 }
-.splitlayout > .master + nav:not(:last-of-type) {
+.splitlayout > .master + nav:not(':last-of-type') {
   width: 320px;
   right: auto;
   border-right: solid 1px #c8c8c7 !important;
@@ -1607,7 +1700,7 @@ html[dir=rtl] body.splitlayout > article.detail {
   right: 0;
   width: 100%;
   height: 100%;
-  z-index: 9999;
+  z-index: 1111111111;
   cursor: pointer;
 }
 /* ==============================
@@ -1663,6 +1756,12 @@ html[dir=rtl] .busy.align-flush {
   right: auto !important;
   float: left !important;
 }
+.busy.align-flush {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  bottom: auto;
+}
 /* ==============================
    Popover Control
    =========================== */
@@ -1674,8 +1773,16 @@ html[dir=rtl] .busy.align-flush {
   height: 250px;
   max-height: 300px;
   position: absolute;
-  z-index: 111111;
+  z-index: 11111111111;
   margin-top: 10px;
+  transform: scaleY(0);
+  transform-origin: top center;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+}
+.popover.opened {
+  transform: scaleY(1);
+  opacity: 1;
 }
 .popover header {
   display: none;
@@ -1691,22 +1798,27 @@ html[dir=rtl] .busy.align-flush {
   width: 100%;
   padding-bottom: 20px;
 }
-.isDesktop .popover .list > li:hover,
-.isDesktop .popover .list > li.selected {
-  background-color: #007aff !important;
-  color: #ffffff !important;
+.popover .list > li {
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.065) 20%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .2s;
+  animation-duration: .2s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
-.isDesktop .popover .list > li:hover h3,
-.isDesktop .popover .list > li.selected h3,
-.isDesktop .popover .list > li:hover h4,
-.isDesktop .popover .list > li.selected h4 {
-  color: #ffffff !important;
+.popover .list > li.selected {
+  -webkit-animation-name: listRipple;
+  animation-name: listRipple;
 }
 button.show-popover {
   position: relative;
   background-color: transparent !important;
   border: none !important;
-  padding: 6px 20px 2px 20px !important;
+  padding: 6px 22px 2px 20px !important;
   margin: 0 10px 0 0 !important;
   box-shadow: none !important;
   font-size: 13px !important;
@@ -1724,18 +1836,21 @@ button.show-popover::after {
   content: '';
   display: block;
   position: absolute;
-  right: 2px;
-  bottom: 2px;
+  right: 6px;
+  bottom: 18px;
   width: 0px;
   height: 0px;
-  border-right: solid 6px #000000;
-  border-bottom: solid 6px #000000;
-  border-top: solid 6px transparent;
-  border-left: solid 6px transparent;
+  border-right: solid 4px #000000;
+  border-bottom: solid 4px #000000;
+  border-top: solid 4px transparent;
+  border-left: solid 4px transparent;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 nav > button.show-popover::after {
-  border-right: solid 6px #000000;
-  border-bottom: solid 6px #000000;
+  border-right: solid 4px #000000;
+  border-bottom: solid 4px #000000;
 }
 nav > h1 + button.show-popover.align-flush {
   margin: 8px 0 0 0 !important;
@@ -1781,16 +1896,20 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   z-index: 10000;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 0 6px 4px #888888;
+  box-shadow: 0 0 6px 4px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   min-height: 100px;
+  z-index: 11111111111;
+  -webkit-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+  opacity: 0;
+  transform: scale(0);
 }
 .popup.opened {
   display: block;
   opacity: 1;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  transform: scale(1);
 }
 .popup > .panel {
   display: -moz-box;
@@ -1830,6 +1949,8 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   margin: 0 15px;
   line-height: 32pt;
   font-weight: bold;
+  font-size: 16pt;
+  color: #666666;
 }
 .popup > footer {
   width: 320px;
@@ -1857,34 +1978,27 @@ html[dir=rtl] .isDesktop .button.show-popover:hover::after {
   background-color: #ffffff;
   color: #666666;
   font-size: 12pt;
-  padding-top: 4px;
+  padding: 4px 20px !important;
   max-width: 320px !important;
   margin: 0 !important;
-}
-.popup > footer > button + button {
-  border-left: solid 1px #cbcbcb;
+  border: none;
+  box-shadow: none !important;
 }
 .isDesktop .popup > footer > button:hover {
   box-shadow: none;
-  background-color: #298fff;
-  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.025);
+}
+.popup > footer > button.selected {
+  -webkit-animation-name: tapRipple;
+  animation-name: tapRipple;
 }
 .popup > p {
   padding: 0 15px;
   text-align: center;
 }
 .popup button {
-  border-top: solid 1px #cbcbcb;
   box-shadow: none;
-}
-html[dir=rtl] .popup > footer button {
-  border-top: solid 1px #cbcbcb;
-}
-html[dir=rtl] .popup > footer button:first-child {
-  border-left: solid 1px #cbcbcb;
-}
-html[dir=rtl] .popup > footer button:first-child + button {
-  border-left: none;
+  border: none;
 }
 /* ============================== 
    Deletable Lists
@@ -1965,7 +2079,8 @@ li.selected > .deletion-indicator::before {
   display: block !important;
   width: 22px;
   height: 22px;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%22140px%22%20height%3D%22144px%22%20viewBox%3D%220%200%20140%20144%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M47.9487979,122.136928%20L92.9487978,122.136928%20L92.9487978,22.1369286%20L81.3308475,22.1369281%20L81.3308475,109.597461%20L47.9487979,109.597462%20L47.9487979,122.136928%20Z%22%20id%3D%22Rectangle-1%22%20fill%3D%22%23ffffff%22%20transform%3D%22translate%2870.448798,%2072.136929%29%20rotate%2835.000000%29%20translate%28-70.448798,%20-72.136929%29%20%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+  background-image: none;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%22140px%22%20height%3D%22144px%22%20viewBox%3D%220%200%20140%20144%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cpath%20d%3D%22M47.9487979,122.136928%20L92.9487978,122.136928%20L92.9487978,22.1369286%20L81.3308475,22.1369281%20L81.3308475,109.597461%20L47.9487979,109.597462%20L47.9487979,122.136928%20Z%22%20id%3D%22Rectangle-1%22%20fill%3D%22%23ffffff%22%20transform%3D%22translate%2870.448798,%2072.136929%29%20rotate%2835.000000%29%20translate%28-70.448798,%20-72.136929%29%20%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E") !important;
   background-position: 50% 50%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -2046,15 +2161,15 @@ button.delete {
   font-weight: 200;
   margin-right: 0 !important;
   color: transparent;
-  background-color: #eeeeee;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2283px%22%20height%3D%22108px%22%20viewBox%3D%220%200%2083%20108%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20id%3D%22Rectangle-1%22%20fill%3D%22%233A3A3A%22%20x%3D%225%22%20y%3D%2224%22%20width%3D%2272%22%20height%3D%2284%22%20rx%3D%228%22%3E%3C/rect%3E%3Cpath%20d%3D%22M-0.411132812,17.9316406%20L-0.411132812,6.22558594%20L20.1357422,6.48730469%20L25.3134766,0.25390625%20L57.4667969,0.25390625%20L62.6025391,6.48730469%20L82.9248047,6.48730469%20L82.9248047,17.8554688%20L-0.411132812,17.9316406%20Z%22%20id%3D%22Path-1%22%20fill%3D%22%233A3A3A%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
-  background-position: 50% 50%;
-  background-size: auto 20px;
-  background-repeat: no-repeat;
-  box-shadow: inset 2px 2px 2px #bbbbbb;
+  background-color: rgba(102, 102, 102, 0.2);
+  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2283px%22%20height%3D%22108px%22%20viewBox%3D%220%200%2083%20108%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Crect%20id%3D%22Rectangle-1%22%20fill%3D%22%233A3A3A%22%20x%3D%225%22%20y%3D%2224%22%20width%3D%2272%22%20height%3D%2284%22%20rx%3D%228%22%3E%3C/rect%3E%3Cpath%20d%3D%22M-0.411132812,17.9316406%20L-0.411132812,6.22558594%20L20.1357422,6.48730469%20L25.3134766,0.25390625%20L57.4667969,0.25390625%20L62.6025391,6.48730469%20L82.9248047,6.48730469%20L82.9248047,17.8554688%20L-0.411132812,17.9316406%20Z%22%20id%3D%22Path-1%22%20fill%3D%22%233A3A3A%22%3E%3C/path%3E%3C/g%3E%3C/svg%3E") !important;
+  background-position: 50% 50% !important;
+  background-size: auto 20px !important;
+  background-repeat: no-repeat !important;
+  box-shadow: inset 2px 2px 2px rgba(51, 51, 51, 0.2);
   border-radius: 0;
-  border-bottom: 1px solid #bbbbbb;
-  border-right: 1px solid #bbbbbb;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+  border-right: 1px solid rgba(51, 51, 51, 0.2);
   -webkit-animation-name: 'none' !important;
   animation-name: 'none' !important;
 }
@@ -2103,8 +2218,8 @@ html[dir=rtl] .list.deletable.showIndicators li > button.delete {
   -moz-transform: translate3d(-60px, 0, 0);
   transform: translate3d(-60px, 0, 0);
   border-right: none;
-  border-left: 1px solid #bbbbbb !important;
-  box-shadow: inset -2px 2px 2px #bbbbbb;
+  border-left: 1px solid rgba(51, 51, 51, 0.2) !important;
+  box-shadow: inset -2px 2px 2px rgba(51, 51, 51, 0.2);
 }
 html[dir=rtl] .list.editable.showIndicators li.selected > button.delete,
 html[dir=rtl] .list.deletable.showIndicators li.selected > button.delete {
@@ -2283,11 +2398,11 @@ input[type="range"] {
   margin-top: 20px;
   margin-bottom: 20px;
   width: auto;
-  height: 2px;
+  height: 4px;
   border-radius: 2px;
-  background-color: #aaaaaa;
-  background-image: -webkit-linear-gradient(top, #007aff, #007aff);
-  background-size: 0px 2px;
+  background-color: transparent;
+  background-image: -webkit-linear-gradient(top, #007aff, #007aff), -webkit-linear-gradient(top, #cccccc, #cccccc);
+  background-size: 0px 3px, 0 2px;
   background-position: left center;
   background-repeat: no-repeat;
   padding: 0;
@@ -2295,28 +2410,24 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   display: block;
-  width: 18px;
-  height: 18px;
-  border-radius: 20px;
+  width: 16px;
+  height: 16px;
+  border-radius: 18px;
   margin: 0;
   background-color: #007aff;
   border: solid 1px transparent;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 input[type="range"]:focus::-webkit-slider-thumb,
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover {
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%22102px%22%20height%3D%22102px%22%20viewBox%3D%220%200%20102%20102%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22range-thumb%22%20transform%3D%22translate%281.000000,%201.000000%29%22%3E%3Ccircle%20id%3D%22Oval-1%22%20stroke%3D%22%23007aff%22%20stroke-width%3D%222%22%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%3E%3C/circle%3E%3Ccircle%20id%3D%22Oval-2%22%20fill-opacity%3D%220.598698103%22%20fill%3D%22%23007aff%22%20cx%3D%2249.5%22%20cy%3D%2249.5%22%20r%3D%2232.5%22%3E%3C/circle%3E%3Ccircle%20id%3D%22Oval-3%22%20fill%3D%22%23007aff%22%20cx%3D%2249.5%22%20cy%3D%2249.5%22%20r%3D%2213.5%22%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%;
+  box-shadow: 0 0 0 2px #007aff, 0 0 0 11px rgba(0, 0, 0, 0.08);
 }
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {
   content: '';
   display: block;
-  width: 40px;
-  height: 40px;
   background-color: #007aff;
   border-radius: 50%;
   position: absolute;
@@ -2332,8 +2443,8 @@ input[type="range"]:focus::-webkit-slider-thumb,
   width: auto;
   height: 2px;
   border-radius: 2px;
-  background-color: #aaaaaa;
-  background-image: -webkit-linear-gradient(top, #0062cc, #0062cc);
+  background-color: #cccccc;
+  background-image: -webkit-linear-gradient(top, #007aff, #007aff);
   background-size: 0px 2px;
   background-position: left center;
   background-repeat: no-repeat;
@@ -2342,17 +2453,6 @@ input[type="range"]:focus::-webkit-slider-thumb,
 .isNativeAndroidBrowser input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   display: block;
-  width: 30px;
-  height: 30px;
-  border-radius: 20px;
-  margin: 0;
-  background-color: transparent;
-  background-image: -webkit-radial-gradient(#0053ad 4px, rgba(0, 102, 214, 0.8) 4px);
-  border: solid 1px #0053ad;
-}
-.isNativeAndroidBrowser input[type="range"]:focus::-webkit-slider-thumb,
-.isNativeAndroidBrowser .isDesktop input[type="range"]::-webkit-slider-thumb:hover {
-  background-image: -webkit-radial-gradient(#0053ad 4px, rgba(0, 122, 255, 0.5) 4px);
 }
 html[dir=rtl] input[type="range"] {
   background-position: right center;
@@ -2363,19 +2463,21 @@ html[dir=rtl] body.isNativeAndroidBrowser input[type="range"] {
 /* ============================== 
    Select List
    =========================== */
-.isDesktop .list.select li:hover {
-  background-color: #007aff;
-}
-.isDesktop .list.select li:hover::after {
-  background-color: #007aff;
-  -webkit-transition: all 0.125s ease-in-out;
-  -moz-transition: all 0.125s ease-in-out;
-  transition: all 0.125s ease-in-out;
-  opacity: 1;
-  box-shadow: 0 0 0 3px #007aff, inset 0 0px 0px 3px #ffffff;
+.list.select li {
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.045) 20%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 .list.select li.selected {
-  color: #000000;
+  -webkit-animation-name: listRipple;
+  animation-name: listRipple;
 }
 .list.select li.selected::after {
   background-color: #007aff;
@@ -2383,19 +2485,16 @@ html[dir=rtl] body.isNativeAndroidBrowser input[type="range"] {
   -moz-transition: all 0.125s ease-in-out;
   transition: all 0.125s ease-in-out;
   opacity: 1;
-  box-shadow: 0 0 0 3px #007aff, inset 0 0px 0px 3px #ffffff;
-}
-.list.select li.selected *,
-.isDesktop .list.select li:hover * {
-  color: #000000;
+  box-shadow: inset 0 0px 0px 3px #fff;
+  border: solid 2px #007aff;
 }
 .list.select li::after {
   content: '';
   display: block;
   float: right;
   margin-top: -25px;
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   -webkit-transition: all 0.125s ease-in-out;
   -moz-transition: all 0.125s ease-in-out;
   transition: all 0.125s ease-in-out;
@@ -2426,6 +2525,7 @@ html[dir=rtl] .list.select li::after {
   -moz-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
   display: none;
+  z-index: 11111111111;
 }
 .sheet.opened {
   -webkit-transform: translate3d(0, 0, 0);
@@ -2435,6 +2535,10 @@ html[dir=rtl] .list.select li::after {
 .sheet.opened > section.scroller-vertical {
   top: 36px;
   padding: 10px 0 100px 0 !important;
+}
+.sheet.opened .handle.selected {
+  -webkit-animation-name: listRipple;
+  animation-name: listRipple;
 }
 .sheet > section.scroller-vertical {
   position: absolute;
@@ -2471,19 +2575,28 @@ html[dir=rtl] .list.select li::after {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   height: 29pt;
-  background-color: rgba(0, 0, 0, 0.001);
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2294px%22%20height%3D%2237px%22%20viewBox%3D%220%200%2094%2037%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20transform%3D%22translate%281.000000,%201.000000%29%22%20id%3D%22Artboard-1%22%20fill%3D%22%23666666%22%3E%3Cpath%20d%3D%22M46,10.1317773%20L4.17415422,35.2632809%20L-0.46118846,27.5487752%20L45.8258458,-0.2632809%20L46,0.0265604%20L46.1741542,-0.2632809%20L92.4611885,27.5487752%20L87.8258458,35.2632809%20L46,10.1317773%20L46,10.1317773%20Z%22%20id%3D%22Rectangle-2%22%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-position: 50% 50%;
-  background-size: auto 40%;
-  background-repeat: no-repeat;
   margin: 10px auto 0;
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.065) 20%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .2s;
+  animation-duration: .2s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
-.isDesktop .sheet div.handle:hover {
-  background-color: #007aff;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2294px%22%20height%3D%2237px%22%20viewBox%3D%220%200%2094%2037%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20transform%3D%22translate%281.000000,%201.000000%29%22%20id%3D%22Artboard-1%22%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M46,10.1317773%20L4.17415422,35.2632809%20L-0.46118846,27.5487752%20L45.8258458,-0.2632809%20L46,0.0265604%20L46.1741542,-0.2632809%20L92.4611885,27.5487752%20L87.8258458,35.2632809%20L46,10.1317773%20L46,10.1317773%20Z%22%20id%3D%22Rectangle-2%22%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.isNativeAndroidBrowser .sheet div.handle {
-  background-size: 20% auto;
+.sheet div.handle > span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-left: solid 3px #888;
+  border-top: solid 3px #888;
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  transform: rotate(-135deg) skewX(-10deg) skewY(-10deg);
 }
 html[dir=rtl] .sheet > section > h2 {
   font-weight: bold !important;
@@ -2498,7 +2611,7 @@ body.isNativeAndroidBrowser .slide-out {
 }
 .slide-out {
   position: absolute;
-  top: 52px;
+  top: 48px;
   left: 0;
   bottom: 0;
   background-color: #fafafa;
@@ -2546,26 +2659,105 @@ body.isNativeAndroidBrowser .slide-out {
   overflow-y: auto;
   width: 100%;
 }
-button.slide-out-button {
+.slide-out > section .list > li {
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.045) 20%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.slide-out > section .list > li.selected {
+  -webkit-animation-name: listRipple;
+  animation-name: listRipple;
+}
+nav > button.slide-out-button {
+  background-color: transparent;
   position: absolute;
   z-index: 1111111;
-  top: 5px;
-  left: 15px;
+  top: 8px;
+  left: 10px;
   width: 35px;
   height: 35px;
+  background-image: -webkit-linear-gradient(left, #000000, #000000) !important;
+  background-image: linear-gradient(left, #000000, #000000) !important;
+  background-size: 20px 2px !important;
+  background-repeat: no-repeat;
+  background-position: 8px center;
   box-sizing: border-box;
   padding: 0 !important;
   margin-left: 0;
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+  border-radius: 50%;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  box-shadow: none;
 }
-button.slide-out-button::before {
+nav > button.slide-out-button:hover {
+  -webkit-animation-name: '';
+  animation-name: '';
+  -webkit-animation-name: backButtonRipple;
+  animation-name: backButtonRipple;
+  background-color: transparent !important;
+}
+nav > button.slide-out-button.focused {
+  background-color: transparent !important;
+  background-size: 20px 2px;
+  background-image: -webkit-linear-gradient(left, #000000, #000000);
+  background-image: linear-gradient(left, #000000, #000000);
+  background-repeat: no-repeat;
+  -webkit-animation-name: '';
+  -webkit-transform: rotate(360deg);
+  animation-name: '';
+  transform: rotate(360deg);
+  background-position: 9px center;
+}
+nav > button.slide-out-button.focused::before {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  width: 14px;
+  top: 12px;
+  left: 6px;
+}
+nav > button.slide-out-button.focused::after {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  width: 14px;
+  top: 22px !important;
+  left: 6px;
+}
+nav > button.slide-out-button::before {
   content: '';
   display: block;
-  width: 35px;
-  height: 35px;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2281px%22%20height%3D%2260px%22%20viewBox%3D%220%200%2081%2060%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22slideout%22%20fill%3D%22%23000000%22%3E%3Crect%20id%3D%22Rectangle%22%20x%3D%228%22%20y%3D%220%22%20width%3D%2264.167%22%20height%3D%227.666%22%3E%3C/rect%3E%3Crect%20id%3D%22Rectangle%22%20x%3D%228%22%20y%3D%2226%22%20width%3D%2264.167%22%20height%3D%227.667%22%3E%3C/rect%3E%3Crect%20id%3D%22Rectangle%22%20x%3D%228%22%20y%3D%2252%22%20width%3D%2264.167%22%20height%3D%227.666%22%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-position: 50% 50%;
-  background-size: 70% 70%;
-  background-repeat: no-repeat;
+  height: 2px;
+  width: 20px;
+  background-color: black;
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  transition: all 0.25s ease-out;
+  -webkit-trasform-origin: left 60px;
+  trasform-origin: left 60px;
+}
+nav > button.slide-out-button::after {
+  display: block;
+  content: '';
+  width: 20px;
+  height: 2px;
+  background-color: black;
+  position: absolute;
+  top: 24px;
+  left: 8px;
+  transition: all 0.25s ease-out;
 }
 body.slide-out-app > article {
   display: none !important;
@@ -2574,9 +2766,14 @@ body.slide-out-app > article.show {
   display: block !important;
   z-index: 100;
 }
-body.slide-out-app > nav.show:not(:first-of-type) {
+body.slide-out-app > #global-nav {
+  box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.2) !important;
+}
+body.slide-out-app > nav.show:not(':first-of-type') {
   display: block !important;
-  z-index: 100;
+  z-index: 1111111111;
+  left: 200px;
+  right: 200px;
 }
 body.slide-out-app > nav:not(:first-of-type) {
   display: none !important;
@@ -2639,6 +2836,8 @@ html[dir=rtl] .slide-out.open {
   background-color: #ffffff;
 }
 .stepper > button {
+  background-color: #f5f5f5 !important;
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.05) 10%) !important;
   display: inline-box;
   width: 30px;
   height: 30px;
@@ -2654,6 +2853,7 @@ html[dir=rtl] .slide-out.open {
   border: solid 1px #cbcbcb;
   padding: 0 !important;
   border-radius: 0;
+  box-shadow: none !important;
 }
 .stepper > button > span {
   font-size: inherit;
@@ -2674,6 +2874,9 @@ html[dir=rtl] .slide-out.open {
 }
 body:not(.isDesktop) .stepper > button:last-of-type {
   padding-top: 4px !important;
+}
+body.isDesktopChrome .stepper > button:last-of-type > span {
+  margin-top: -4px !important;
 }
 html[dir=rtl] .stepper > button:first-of-type {
   border-left: none;
@@ -2732,6 +2935,28 @@ html[dir=rtl] li.switched h4 {
 /* ==============================
    Switch
    =========================== */
+@keyframes switchRipple {
+  0% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+  40% {
+    box-shadow: 0px 0 5px 8px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+}
+@keyframes switchRippleReverse {
+  0% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+  40% {
+    box-shadow: 0px 0 5px 8px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
+  }
+}
 .switch {
   display: inline-block;
   width: 40px;
@@ -2750,14 +2975,15 @@ html[dir=rtl] li.switched h4 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background-image: -webkit-linear-gradient(left, #007aff, #007aff), -webkit-linear-gradient(left, #888888, #888888);
-  background-image: linear-gradient(to left, #007aff, #007aff), linear-gradient(to left, #888888, #888888);
-  background-position: left 10px, left 10px;
-  background-size: 0% 2px, 100% 2px;
+  background-image: -webkit-linear-gradient(left, #66afff, #66afff), -webkit-linear-gradient(left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(to left, #66afff, #66afff), linear-gradient(to left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-position: left 3px, left 3px;
+  background-size: 0% 14px, 100% 14px;
   background-repeat: no-repeat, no-repeat;
   -webkit-tap-highlight-color: transparent;
   overflow: visible;
   cursor: pointer;
+  border-radius: 50% !important;
   -webkit-user-select: none;
   -webkit-animation-duration: .65s;
   -webkit-animation-timing-function: ease-in-out;
@@ -2767,10 +2993,9 @@ html[dir=rtl] li.switched h4 {
   animation-duration: .65s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  animation-name: switchAnimationOff;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 .switch.traditional {
   width: 70px;
@@ -2785,13 +3010,14 @@ html[dir=rtl] li.switched h4 {
   overflow: hidden;
 }
 .switch.traditional > em {
-  width: 30px;
+  width: 22px;
   height: 22px;
   top: -1px;
   border-radius: 0;
   border: solid 1px #919191;
   border-top: solid 1px #e5e5e5;
   background-color: #cecece;
+  box-shadow: 0px 2px 5px 0 rgba(0, 0, 0, 0.3);
 }
 .isDesktop .switch.traditional:hover {
   box-shadow: 0 0 2px 2px #007aff;
@@ -2801,11 +3027,11 @@ html[dir=rtl] li.switched h4 {
   position: relative;
   z-index: 30;
   top: 0;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: #fff;
-  border: solid 2px #888888;
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.35);
   pointer-events: none;
   -webkit-transform: translate3d(-1px, 0, 0);
   -moz-transform: translate3d(-1px, 0, 0);
@@ -2813,16 +3039,20 @@ html[dir=rtl] li.switched h4 {
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
+  animation-duration: .65s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-name: switchRippleReverse;
 }
 .switch.on {
-  background-size: 100% 2px, 100% 2px;
+  background-size: 100% 14px, 100% 14px;
 }
 .switch.on > em {
   -webkit-transform: translate3d(20px, 0, 0);
   -moz-transform: translate3d(20px, 0, 0);
   transform: translate3d(20px, 0, 0);
   background-color: #007aff;
-  border: solid 2px #007aff;
+  animation-name: switchRipple;
 }
 .switch.traditional.on {
   border-color: #003166;
@@ -2836,6 +3066,7 @@ html[dir=rtl] li.switched h4 {
   border: solid 1px #007aff;
   border-top: solid 1px #3d9aff;
   border-left-color: #003166;
+  animation-name: '';
 }
 .switch > input {
   display: none;
@@ -2861,7 +3092,10 @@ html[dir=rtl] .switch > em {
    Tab Bar
    =========================== */
 body.hasTabBar article {
-  top: 77px !important;
+  top: 97px !important;
+}
+body.hasTabBar article > section > .list:first-of-type {
+  margin-top: 0 !important;
 }
 body.hasTabBar article .previous:not(.navigable),
 body.hasTabBar article .next:not(.navigable) {
@@ -2876,16 +3110,15 @@ body.hasTabBar article .next:not(.navigable) {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: 30px;
+  height: 44px;
   position: absolute;
   left: 0;
   top: 47px;
   right: 0;
-  background-color: #cecece;
 }
 .tabbar > button {
-  color: #000000;
-  background-color: #cecece;
+  -webkit-appearance: none;
+  background-color: transparent !important;
   position: relative;
   display: block !important;
   -webkit-box-flex: 1 !important;
@@ -2896,29 +3129,25 @@ body.hasTabBar article .next:not(.navigable) {
   height: 100%;
   text-align: center;
   line-height: 17px;
-  padding: 6px 10px 4px;
+  padding: 10px 10px 4px;
   border: none;
-  border-bottom: solid 3px #cecece;
-  border-right: solid 1px #666666;
-  box-shadow: none;
+  border-bottom: solid 1px #cecece;
+  box-shadow: none !important;
   border-radius: 0 !important;
+  background-size: 1100% 1100%;
 }
-.tabbar > button:last-of-type {
-  border-right: none;
-  border-left: none;
+.tabbar > button > label {
+  font-size: 12px !important;
 }
-.isDesktop .tabbar > button:hover {
-  opacity: 1 !important;
-  box-shadow: none !important;
-  border-bottom: solid 3px #007aff;
-  background-color: #007aff !important;
-  color: #ffffff !important;
+.tabbar > button:focus {
+  outline: none !important;
 }
+.isDesktop .tabbar > button:hover,
 .tabbar > button.selected {
-  color: #666666 !important;
   opacity: 1 !important;
   box-shadow: none !important;
   border-bottom: solid 3px #007aff;
+  padding: 11px 10px 3px;
 }
 .tabbar > button.more {
   font-size: 0;
@@ -2937,18 +3166,24 @@ body.hasTabBar article .next:not(.navigable) {
   -moz-box-align: center;
   -webkit-align-items: center;
   align-items: center;
+  padding: 13px 10px 3px;
+}
+.tabbar > button.more.selected,
+.tabbar > button.more:hover {
+  padding: 13px 10px 3px;
+}
+.tabbar > button.more > label {
+  display: none;
 }
 .tabbar > button.more::before {
   content: '';
   display: block;
   height: 20px;
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2239px%22%20height%3D%2211px%22%20viewBox%3D%220%200%2039%2011%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22more%22%20fill%3D%22%23666666%22%3E%3Ccircle%20id%3D%22Oval%22%20cx%3D%225.172%22%20cy%3D%225.172%22%20r%3D%225.172%22%3E%3C/circle%3E%3Ccircle%20id%3D%22Oval%22%20cx%3D%2219.172%22%20cy%3D%225.172%22%20r%3D%225.172%22%3E%3C/circle%3E%3Ccircle%20id%3D%22Oval%22%20cx%3D%2233.172%22%20cy%3D%225.172%22%20r%3D%225.172%22%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  width: 40px;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_2%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20width%3D%2248px%22%20height%3D%2248px%22%20viewBox%3D%220%200%2048%2048%22%20enable-background%3D%22new%200%200%2048%2048%22%20xml%3Aspace%3D%22preserve%22%3E%3Ccircle%20cx%3D%2210%22%20cy%3D%2223%22%20r%3D%225.172%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%2223%22%20r%3D%225.172%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2223%22%20r%3D%225.172%22%2F%3E%3C%2Fsvg%3E");
   background-position: 50% 50%;
   background-size: 40% 40%;
   background-repeat: no-repeat;
-}
-.tabbar > button.more:hover::before {
-  background-image: url("data:image/svg+xml;utf8,%3Csvg%20width%3D%2239px%22%20height%3D%2211px%22%20viewBox%3D%220%200%2039%2011%22%20version%3D%221.1%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20xmlns%3Axlink%3D%22http%3A//www.w3.org/1999/xlink%22%3E%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22more%22%20fill%3D%22%23ffffff%22%3E%3Ccircle%20id%3D%22Oval%22%20cx%3D%225.172%22%20cy%3D%225.172%22%20r%3D%225.172%22%3E%3C/circle%3E%3Ccircle%20id%3D%22Oval%22%20cx%3D%2219.172%22%20cy%3D%225.172%22%20r%3D%225.172%22%3E%3C/circle%3E%3Ccircle%20id%3D%22Oval%22%20cx%3D%2233.172%22%20cy%3D%225.172%22%20r%3D%225.172%22%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .tabbar > button > span,
 .tabbar > button > .icon {
@@ -2957,12 +3192,6 @@ body.hasTabBar article .next:not(.navigable) {
   -moz-box-flex: 1 !important;
   -webkit-flex: 1 !important;
   flex: 1 !important;
-}
-html[dir=rtl] .tabbar > button:first-child {
-  border-right: none !important;
-}
-html[dir=rtl] .tabbar > button:last-child {
-  border-right: solid 1px #666666 !important;
 }
 /* ============================== 
    Carousel styles
@@ -3070,15 +3299,15 @@ html[dir=rtl] .pagination > li:last-of-type {
 }
 .horizontal-scroll-panel {
   width: 100%;
-  height: 200px;
+  height: 240px;
   background-color: #ccc;
   padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   overflow-y: hidden !important;
-  overflow-x: auto;
+  overflow-x: scroll;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 .horizontal-scroll-panel > ul {
   list-style: none;
@@ -3086,6 +3315,7 @@ html[dir=rtl] .pagination > li:last-of-type {
   padding: 0;
   -webkit-padding-start: 0;
   font-size: 0;
+  width: 100%;
 }
 .horizontal-scroll-panel > ul li {
   display: inline-block;
@@ -3097,17 +3327,17 @@ html[dir=rtl] .pagination > li:last-of-type {
   margin-right: 20px;
   font-size: 0;
 }
-.horizontal-scroll-panel > ul:first-of-type {
+.horizontal-scroll-panel > ul li:first-of-type {
   margin-left: 0 !important;
 }
-.horizontal-scroll-panel > ul:last-of-type {
-  margin-right: 0 !important;
+.horizontal-scroll-panel > ul li:last-of-type {
+  margin-right: 20px !important;
 }
 body.isWindows .horizontal-scroll-panel {
   background-color: #333;
 }
 [dir=rtl] .horizontal-scroll-panel {
-  margin-right: -20px;
+  margin-right: 0;
   padding-right: 20px;
 }
 [dir=rtl] .horizontal-scroll-panel li {
@@ -3117,20 +3347,22 @@ body.isWindows .horizontal-scroll-panel {
 }
 [dir=rtl] .horizontal-scroll-panel li:first-of-type {
   margin-right: 0 !important;
+  margin-left: 20px !important;
 }
 [dir=rtl] .horizontal-scroll-panel li:last-of-type {
-  margin-left: 0 !important;
+  margin-left: 20px !important;
+  margin-right: 0 !important;
 }
 [dir=rtl] body.isWindows .horizontal-scroll-panel li {
   float: right;
 }
 @media only screen and (max-device-width: 480px) {
   .horizontal-scroll-panel {
-    height: 125px;
+    height: 125px !important;
     padding: 10px;
   }
   .horizontal-scroll-panel li {
-    height: 125px;
-    width: 125px;
+    height: 125px !important;
+    width: 125px !important;
   }
 }

@@ -39,10 +39,10 @@
         if ((popover.width() + offset.left) > window.innerWidth) {
           popover.css({
             'left': ((window.innerWidth - popover.width())-20) + 'px',
-            'top': (calcTop + 20) + 'px'
+            'top': (calcTop - 30) + 'px'
           });
         } else {
-          popover.css({'left': left + 'px', 'top': (calcTop + 20) + 'px'});
+          popover.css({'left': left + 'px', 'top': (calcTop - 30) + 'px'});
         }
       };
 
@@ -51,7 +51,12 @@
         $('body').UIUnblock();
         return;
       }
-      $('body').append(popover);      
+      $('body').append(popover);   
+      if ($.isAndroid || $.isChrome) {
+        setTimeout(function() {
+          $(popoverID).addClass('opened'); 
+        }, 50);
+      } 
       if ($.isWin) {
         $(popoverID).addClass('open');
       }

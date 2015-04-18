@@ -16,12 +16,15 @@
     isWin : /trident/img.test(navigator.userAgent),
     isWinPhone : (/trident/img.test(navigator.userAgent) && /mobile/img.test(navigator.userAgent)),
     isIE10 : navigator.userAgent.match(/msie 10/i),
-    isIE11 : navigator.userAgent.match(/msie 11/i),
+    isIE11 : (navigator.userAgent.match(/windows nt/i) && navigator.userAgent.match(/trident/i)),
+    isIEEdge : (navigator.userAgent.match(/windows nt/i) && navigator.userAgent.match(/edge/i)),
     isWebkit : navigator.userAgent.match(/webkit/),
     isMobile : /mobile/img.test(navigator.userAgent),
     isDesktop : !(/mobile/img.test(navigator.userAgent)),
     isSafari : (!/Chrome/img.test(navigator.userAgent) && /Safari/img.test(navigator.userAgent) && !/android/img.test(navigator.userAgent)),
     isChrome : /Chrome/img.test(navigator.userAgent),
-    isNativeAndroid : (/android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent))
-  });
+    isNativeAndroid : (/android/i.test(navigator.userAgent) && /webkit/i.test(navigator.userAgent) && !/chrome/i.test(navigator.userAgent)),
+    isWideScreen : window.innerWidth >= 960 && (window.orientation === 90 || window.orentation === -90),
+    isWideScreenPortrait : window.innerWidth >= 960 && (window.orientation !== 90 || window.orientation !== -90)
+    });
 })(window.$);

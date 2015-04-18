@@ -1,7 +1,7 @@
 /* ============================== 
    Buttons
    =========================== */
-@backButtonSVG: escape("<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' version='1.1' width='21' height='35' viewBox='0 0 21 35' id='svg2'><defs id='defs8' /><g transform='translate(-2.1355929,0.0677963)' id='Page-1' style='fill:none;stroke:none'><path d='M 21.353814,1.2365445 5.0903576,17.5 21.353814,33.763456' id='Rectangle-1' style='stroke:#000;stroke-width:3' /></g></svg>");
+@backButtonSVG: "%3Csvg%20xmlns%3Asvg%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20version%3D'1.1'%20width%3D'21'%20height%3D'35'%20viewBox%3D'0%200%2021%2035'%20id%3D'svg2'%3E%3Cdefs%20id%3D'defs8'%20%2F%3E%3Cg%20transform%3D'translate(-2.1355929%2C0.0677963)'%20id%3D'Page-1'%20style%3D'fill%3Anone%3Bstroke%3Anone'%3E%3Cpath%20d%3D'M%2021.353814%2C1.2365445%205.0903576%2C17.5%2021.353814%2C33.763456'%20id%3D'Rectangle-1'%20style%3D'stroke%3A%23000%3Bstroke-width%3A3'%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E";
 button {
   border: none;
   background: none;
@@ -23,6 +23,7 @@ button {
   border-color: @primaryColor;
   background-color: @buttonBkgnd;
   -webkit-font-smoothing: antialiased;
+  margin: 0 5px;
 
   .isDesktop &:hover {
     cursor: pointer;
@@ -73,8 +74,7 @@ nav > button {
   max-width: 100px;
 }
 
-button.align-flush,
-.toolbar > button.align-flush {
+.align-flush {
   position: absolute;
   right: 15px;
   margin-right: 0 !important;
@@ -118,6 +118,10 @@ html[dir=rtl] {
         left: auto;
       }
     }
+  }
+  .align-flush {
+    right: auto;
+    left: 15px;
   }
 
   .toolbar > button.align-flush {

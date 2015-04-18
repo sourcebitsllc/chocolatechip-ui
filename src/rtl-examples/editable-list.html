@@ -64,6 +64,8 @@
             $('#editList').append('<li data-list-item-value="'+ ctx + '"><h3>' + ctx + '</h3></li>');
           });
           $('#editList').UIEditList(editableListOptions);
+          $('#editList').removeClass('showIndicators');
+          $('button.done').addClass('edit').removeClass('done').text('Edit');
       });
 
     });

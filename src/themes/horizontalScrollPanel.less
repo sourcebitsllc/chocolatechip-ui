@@ -1,14 +1,14 @@
 .horizontal-scroll-panel {
   width: 100%;
-  height: 200px;
+  height: 240px;
   background-color: #ccc;
   padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   overflow-y: hidden !important;
-  overflow-x: auto;
+  overflow-x: scroll;
+  white-space: nowrap;
+  box-sizing: border-box;
 
    > ul {
     list-style: none;
@@ -16,6 +16,7 @@
     padding: 0;
     -webkit-padding-start: 0;
     font-size: 0;
+    width: 100%;
 
     li {
       display: inline-block;
@@ -26,14 +27,14 @@
       overflow: hidden;
       margin-right: 20px;
       font-size: 0;
-    }
 
-    &:first-of-type {
-      margin-left: 0 !important;
-    }
+      &:first-of-type {
+        margin-left: 0 !important;
+      }
 
-    &:last-of-type {
-      margin-right: 0 !important;
+      &:last-of-type {
+        margin-right: 20px !important;
+      }
     }
   }
 }
@@ -41,7 +42,7 @@ body.isWindows .horizontal-scroll-panel {
   background-color: #333;
 }
 [dir=rtl] .horizontal-scroll-panel {
-  margin-right: -20px;
+  margin-right: 0;
   padding-right: 20px;
 }
 [dir=rtl] .horizontal-scroll-panel li {
@@ -51,10 +52,12 @@ body.isWindows .horizontal-scroll-panel {
 
   &:first-of-type {
     margin-right: 0 !important;
+    margin-left: 20px !important;
   }
 
   &:last-of-type {
-    margin-left: 0 !important;
+    margin-left: 20px !important;
+    margin-right: 0 !important;
   }
 }
 [dir=rtl] body.isWindows .horizontal-scroll-panel li {
@@ -63,11 +66,11 @@ body.isWindows .horizontal-scroll-panel {
 
 @media only screen and (max-device-width: 480px) {
   .horizontal-scroll-panel {
-    height: 125px;
+    height: 125px !important;
     padding: 10px;
   }
   .horizontal-scroll-panel li {
-    height: 125px;
-    width: 125px;
+    height: 125px !important;
+    width: 125px !important;
   }
 }

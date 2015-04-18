@@ -1,25 +1,6 @@
 /* ==============================
    Buttons                
    =========================== */
-
-@iconColor: contrast(@navBkgnd);
-@backButtonArrow: escape('<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="BackButton" stroke-linecap="square" stroke="@{iconColor}" stroke-width="8"><g id="Line-2-+-Line-+-Line" transform="translate(15.000000, 22.000000)"><path d="M0.62909796,38.5 L37.1384668,76.3699524" id="Line-2"></path><path d="M89.3478261,39 L3.2313744,39" id="Line"></path><path d="M0.62909796,38.5 L37.1384668,0.63004759" id="Line"></path></g></g></g></svg>');
-@backButtonArrowHover: escape('<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="BackButton" stroke-linecap="square" stroke="#ffffff" stroke-width="8"><g id="Line-2-+-Line-+-Line" transform="translate(15.000000, 22.000000)"><path d="M0.62909796,38.5 L37.1384668,76.3699524" id="Line-2"></path><path d="M89.3478261,39 L3.2313744,39" id="Line"></path><path d="M0.62909796,38.5 L37.1384668,0.63004759" id="Line"></path></g></g></g></svg>');
-@buttonHighlightColor: rgba(255,255,255,.55);
-
-@-webkit-keyframes animate-icon {
-  0%   { box-shadow: inset 0 0 0 0 rgba(red(contrast(@primaryColor)), green(contrast(@primaryColor)), blue(contrast(@primaryColor)), 0.25); }
-  65%  { box-shadow: inset 0 0 5px 30px rgba(red(contrast(@primaryColor)), green(contrast(@primaryColor)), blue(contrast(@primaryColor)), 0.25); }
-  100%  { box-shadow: inset 0 0 0 0 rgba(red(contrast(@primaryColor)), green(contrast(@primaryColor)), blue(contrast(@primaryColor)), 0.25); }
-}
-@-webkit-keyframes focused {
-  0% {
-    background-size: 0% 0%;
-  }
-  100% {
-    background-size: 300% 200%;
-  }
-}
 .align-flush { 
   position: absolute; 
   top: auto;
@@ -31,6 +12,14 @@ body.isNativeAndroidBrowser .align-flush {
   float: right;
 }
 button {
+  text-transform: uppercase !important;
+
+  &:focus {
+    outline: none;
+  }
+}
+button:not(.segment), button:not(.back), button:not(.backTo) {
+  -webkit-appearance: none;
   box-shadow: none; 
   border: none;
   color: @textColor;
@@ -67,11 +56,6 @@ button {
   background-repeat: no-repeat;
   background-position: center center;
   -webkit-animation-fill-mode: forwards;
-    
-  &:hover {
-    -webkit-animation-name: focused;
-    animation-name: focused;
-  }
 
   &:focus {
     outline: none !important;
@@ -80,66 +64,110 @@ button {
   &.no-border {
     border: none !important;
   }
+}
+button.action {
+  color: @textColor;
+  background-color: @actionButtonColor;
+  margin: 0 auto;
+  .size(auto, 40px);
+  min-width: 200px;
+  max-width: 300px;
+  margin: 20px auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
 
-  &.action {
-    color: @textColor;
-    background-color: @actionButtonColor;
-    margin: 0 auto;
-    .size(auto, 40px);
-    min-width: 200px;
-    max-width: 300px;
-    box-shadow: 0 1px 4px @boxShadow;
+  section > &.action {
     margin: 20px auto;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-
-    section > &.action {
-      margin: 20px auto;
-    }
-    .isDesktop &:hover {
-      box-shadow: 0 3px 7px @boxShadow;
-      background-color: @actionButtonHoverColor;
-    }
   }
-
-  &.back, &.backTo {
-    text-align: left;
-    padding: 0 12px 0 12px !important;
-    margin: 0 0 0 0;
-    line-height: 28px;
-    color: @navBkgnd;
-    font-size: 0;
-    border: none;
-    background-color: transparent;
-    border-radius: 50%;
-    .size(40px, 40px);
-    .transition(all .5s ease-out);
-    -webkit-animation-delay: .5s;
-  }
-
-  &.back::after, &.backTo::after {
-    content: '';
-    display: block;
-    .size(40px, 40px);
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-image: url("@{imageMaskRoot}@{backButtonArrow}");
-    background-position: 50% 50%;
-    background-size: 90% 90%;
-    background-repeat: no-repeat;
-  }
-
-
-  .isDesktop &.back:hover, .isDesktop &.backTo:hover {
-    background-color: rgba(red(@iconColor), green(@iconColor), blue(@iconColor), 0.35) !important;
-    -webkit-animation: animate-icon .5s none;
-    &::after {
-      background-image: url("@{imageMaskRoot}@{backButtonArrowHover}") !important;
-    }
+  .isDesktop &:hover {
+    box-shadow: 0 3px 7px @boxShadow;
+    box-shadow: 0 5px 8px 2px rgba(0,0,0,0.25);
   }
 }
+
+button:not(.back),
+button:not(.backTo) {
+  background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.025) 10%);
+  background-size: 1000% 1000%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 1px 4px #666666;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  &.selected {
+    animation-name: tapRipple;
+    box-shadow: 0 5px 8px 2px rgba(0,0,0,0.25);
+  }
+}
+nav > &.back, nav > &.backTo {
+  padding: 10px;
+  text-align: left;
+  background-color: transparent;
+  background-image: none;
+  background-image: -webkit-linear-gradient(left, black, black);
+  background-image: linear-gradient(left, black, black);
+  background-size: 19px 2px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  position: relative;
+  overflow: visible;
+  box-shadow: none;
+  margin: 0 0 0 0;
+  border: none;
+  border-radius: 50%;
+  .size(35px, 35px);
+  .transition(all .4s ease-out);
+  font-size: 0 !important;
+  -webkit-animation-name: '';
+  top: 0;
+
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-duration: .5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+
+  &:hover {
+    -webkit-animation-name: backButtonRipple;
+    animation-name: backButtonRipple;
+    background-color: transparent !important;
+  }
+
+  &::before {
+    display: block;
+    content: '';
+    -webkit-mask-image: none !important;
+    background-color: black;
+    height: 2px;
+    width: 14px;
+    position: absolute;
+    top: 12px;
+    left: 6px;
+    transition: all .25s ease-out;
+    -webkit-transform: rotate(-45deg);
+  }
+
+  &::after {
+    display: block;
+    content: '';
+    -webkit-mask-image: none !important;
+    background-color: black;
+    height: 2px;
+    width: 14px;
+    position: absolute;
+    top: 22px !important;
+    left: 6px;
+    -webkit-transform: rotate(45deg);
+  }
+}
+
 body {
 
   &.isChrome {
@@ -151,21 +179,33 @@ body {
 
   &.isNativeAndroidBrowser {
 
-    button.back, button.backTo {
-      top: 0;
-       bottom: 0;
+    &  button.back, & button.backTo {
+      top: -4px;
+      bottom: 0;
 
        &::after {
-        top: -2px;
+        top: 2px;
        }
     }
-    button.backTo::after {
-      top: 2px;
-    }
     button.back::before {
-      top: 8px;
+      top: 12px;
     }
   }    
+}
+nav > button,
+nav > div > button,
+.toolbar > button {
+  -webkit-appearance: none;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 12px 20px 10px;
+  margin: 5px;
+}
+nav > button:not(.back):hover,
+nav > button:not(.backTo):hover,
+.toolbar > button:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 html[dir=rtl] button {
   line-height: 12pt;

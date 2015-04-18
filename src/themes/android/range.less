@@ -1,18 +1,18 @@
 /* ==============================
    Range Control
-   =========================== */
-@rangeThumb: escape('<svg width="102px" height="102px" viewBox="0 0 102 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="range-thumb" transform="translate(1.000000, 1.000000)"><circle id="Oval-1" stroke="@{secondaryColor}" stroke-width="2" cx="50" cy="50" r="50"></circle><circle id="Oval-2" fill-opacity="0.598698103" fill="@{secondaryColor}" cx="49.5" cy="49.5" r="32.5"></circle><circle id="Oval-3" fill="@{secondaryColor}" cx="49.5" cy="49.5" r="13.5"></circle></g></g></svg>');   
+   =========================== */  
 input[type="range"] {
   -webkit-appearance: none !important;  
   outline: none;
   display: block;
   margin-top: 20px;
   margin-bottom: 20px;
-  .size(auto, 2px);
+  .size(auto, 4px);
   border-radius: 2px;
-  background-color: @inputColor;
-  background-image: -webkit-linear-gradient(top, @secondaryColor, @secondaryColor);
-  background-size: 0px 2px;
+  background-color: transparent;
+  background-image: -webkit-linear-gradient(top, @secondaryColor, @secondaryColor),
+  -webkit-linear-gradient(top, @inputColor, @inputColor);
+  background-size: 0px 3px, 0 2px;
   background-position: left center;
   background-repeat: no-repeat;
   padding: 0;
@@ -20,26 +20,22 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   display: block;
-  .size(18px, 18px);
-  border-radius: 20px;  
+  .size(16px, 16px);
+  border-radius: 18px;  
   margin: 0;
   background-color: @secondaryColor;
   border: solid 1px transparent;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15);
+  .transition(all .5s ease-in-out);
 }
 
 input[type="range"]:focus::-webkit-slider-thumb, .isDesktop input[type="range"]::-webkit-slider-thumb:hover {
-  .size(40px, 40px);
-  background-color: transparent;
-  background-image: url("@{imageMaskRoot}@{rangeThumb}");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%;
+  box-shadow: 0 0 0 2px @secondaryColor, 0 0 0 11px rgba(0, 0, 0, 0.08);
 }
 
 .isDesktop input[type="range"]::-webkit-slider-thumb:hover::before {
   content: '';
   display: block;
-  .size(40px, 40px);
   background-color: @secondaryColor;
   border-radius: 50%;
   position: absolute;
@@ -56,7 +52,7 @@ input[type="range"]:focus::-webkit-slider-thumb, .isDesktop input[type="range"]:
     .size(auto, 2px);
     border-radius: 2px;
     background-color: @inputColor;
-    background-image: -webkit-linear-gradient(top, saturate(darken(@primaryColor, 10%), 10%), saturate(darken(@primaryColor, 10%), 10%));
+    background-image: -webkit-linear-gradient(top, @secondaryColor, @secondaryColor);
     background-size: 0px 2px;
     background-position: left center;
     background-repeat: no-repeat;
@@ -65,17 +61,6 @@ input[type="range"]:focus::-webkit-slider-thumb, .isDesktop input[type="range"]:
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     display: block;
-    .size(30px, 30px);
-    border-radius: 20px;  
-    margin: 0;
-    background-color: transparent;
-    background-image: 
-      -webkit-radial-gradient(darken(@primaryColor,16%) 4px, rgba(red(darken(@primaryColor, 8%)), green(darken(@primaryColor, 8%)), blue(darken(@primaryColor, 8%)),.8) 4px);
-    border: solid 1px darken(@primaryColor,16%);
-  }
-  input[type="range"]:focus::-webkit-slider-thumb, .isDesktop input[type="range"]::-webkit-slider-thumb:hover {
-    background-image:
-    -webkit-radial-gradient(darken(@primaryColor,16%) 4px, rgba(red(@primaryColor),green(@primaryColor),blue(@primaryColor),.5) 4px);
   }
 }
 html[dir=rtl] {

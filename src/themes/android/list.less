@@ -1,6 +1,18 @@
 /* ==============================
    Lists                 
    =========================== */
+
+@-webkit-keyframes listRipple {
+  0% {
+    background-size: 0% 100%;
+  }
+  50% {
+    background-size: 50% 100%;
+  }
+  100% {
+    background-size: 500% 500%;
+  }
+}
 .list {
   list-style: none;
   margin: 16px 0 0;
@@ -16,11 +28,30 @@
     font-size: 12pt;
     border-bottom: solid 1px @listBorderColor;
 
+    &[data-goto],
+    &[data-show-article] {
+      background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.065) 20%);
+      background-size: 1000% 1000%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      -webkit-animation-timing-function: ease-out;
+      animation-timing-function: ease-out;
+      -webkit-animation-duration: .2s;
+      animation-duration: .2s;
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+
+      &.selected {
+        -webkit-animation-name: listRipple;
+        animation-name: listRipple;
+      }
+    }
+    
     &.nav::after {
       .pseudo-block('');
       .size(7px, 7px);
-      border-right: solid 3px @listNavIndicator;
-      border-top: solid 3px @listNavIndicator;
+      border-right: solid 2px @listNavIndicator;
+      border-top: solid 2px @listNavIndicator;
       .transform(rotate(45deg));
       float: right;
       position: absolute;
@@ -36,7 +67,7 @@
       border-radius: 20px;
       border: solid 1px @secondaryColor;
       color: @secondaryColor;
-      font: bold 14px/0 Roboto, SegoeWP, HelveticaNeue, Sans-serif;
+      font: bold 14px/.23 Roboto, Sans-serif;
       .box-sizing(border-box);
       padding: 10px 8px;
       position: absolute;
@@ -72,25 +103,11 @@ p {
 .isDesktop .list > li[data-goto]:hover, 
 .list > li[data-goto].touched,
 .isDesktop li[data-show-article]:hover,
-li[data-show-article].touched,
-.isDesktop .list.select > li:hover {
+li[data-show-article].touched {
   cursor: pointer;
-  background-color: @primaryColor;
-
-  h3, h4, h5, p, div, span {
-    color: contrast(@primaryColor);
-  }
-  .nav::after {
-    border-color: contrast(@primaryColor);
-  }
 }
 .isDesktop .list > li[data-goto].nav:hover::after {
   border-color: contrast(@primaryColor);
-}
-.isDesktop .list > li[data-goto].show-detail:hover::after,
-.isDesktop .list > li[data-goto]:hover .show-detail::after {
-  border: solid 1px contrast(@primaryColor);
-  color: contrast(@primaryColor);
 }
 
 /* ==============================
@@ -197,8 +214,8 @@ html[dir=rtl] {
     right: auto;
     left: 16px;
     border: none;
-    border-left: solid 3px @listNavIndicator;
-    border-bottom: solid 3px @listNavIndicator;
+    border-left: solid 2px @listNavIndicator;
+    border-bottom: solid 2px @listNavIndicator;
   }
   li.show-detail::after { 
     left: 16px;

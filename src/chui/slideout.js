@@ -41,23 +41,49 @@
       $('#global-nav').append(slideoutButton);
       $('.slide-out-button').on($.eventStart, function() {
         $('.slide-out').toggleClass('open');
+        $(this).toggleClass('focused');
       });
       if (!dynamic) {
         $('.slide-out').on('singletap', 'li', function() {
+          var $this = $(this);
+          $this.addClass('selected');
+          setTimeout(function() {
+            $this.removeClass('selected');
+          }, 500);
           var whichArticle = '#' + $(this).attr('data-show-article');
           $.UINavigationHistory[0] = whichArticle;
           $.UISetHashOnUrl(whichArticle);
           $.publish('chui/navigate/leave', $('article.show')[0].id);
           $.publish('chui/navigate/enter', whichArticle);
-          $('.slide-out').removeClass('open');
-          $('article').removeClass('show');
-          $('article').prev().removeClass('show');
-          $(whichArticle).addClass('show');
-          $(whichArticle).prev().addClass('show');
+          if ($.isAndroid || $.isChrome) {
+            setTimeout(function() {
+            $('.slide-out').removeClass('open');
+            $('article').removeClass('show');
+            $('article').prev().removeClass('show');
+            $(whichArticle).addClass('show');
+            $(whichArticle).prev().addClass('show');
+            $('.slide-out-button').removeClass('focused');
+            }, 400);
+          } else {
+            $('.slide-out').removeClass('open');
+            $('article').removeClass('show');
+            $('article').prev().removeClass('show');
+            $(whichArticle).addClass('show');
+            $(whichArticle).prev().addClass('show');
+            $('.slide-out-button').removeClass('focused');
+          }
         });
       } else {
         $('.slide-out').on('singletap', 'li', function() {
-          callback(this);
+          if ($.isAndroid || $.isChrome) {
+            setTimeout(function() {
+              callback(this);
+              $('.slide-out-button').removeClass('focused');
+            }, 400);
+          } else {
+            callback(this);
+            $('.slide-out-button').removeClass('focused');
+          }
         });
       }
     }

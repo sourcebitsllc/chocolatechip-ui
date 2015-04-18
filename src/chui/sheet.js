@@ -20,12 +20,21 @@
       settings.id = $.Uuid();
       settings.listClass = '';
       settings.background = '';
-      settings.handle = '<div class="handle"></div>';
+      settings.handle = '<div class="handle"><span></span></div>';
       if (options) $.extend(settings, options);
       var sheet = $.concat('<div id="', settings.id, '" class="sheet', settings.listClass, '"', settings.background, '>', settings.handle, '<section class="scroller-vertical"></section></div>');
       $('body').append(sheet);
       $('.sheet .handle').on($.eventStart, function() {
-        $.UIHideSheet();
+        var $this = $(this);
+        if ($.isAndroid || $.isChrome) {
+          $this.addClass('selected');
+          setTimeout(function() {
+            $this.removeClass('selected');
+            $.UIHideSheet();
+          }, 500);
+        } else {
+          $.UIHideSheet();
+        }
       });
     },
     UIShowSheet : function ( id ) {

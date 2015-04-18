@@ -9,6 +9,7 @@
   .box-sizing(border-box);
   margin: 0px 10px;
   #flex > .flex(1) !important;
+  height: 44px;
 
   &.align-flush{
     position: absolute;
@@ -16,40 +17,50 @@
     top: 4px;
   }
 
-  > button {
+  > button.segment {
+    -webkit-appearance: none !important;
+    background-color: transparent !important;
+    background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.025) 10%);
+    background-size: 1000% 1000%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-shadow: 0 1px 4px #666666;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
     #flex > .display(flex);
     #flex > .flex-direction(column);
     #flex > .justify-content(center);
     #flex > .align-items(center);
     border: solid 1px @switchBorder;
     text-align: center !important;
-    border-left: none;
-    border-right: solid 1px @switchBorder;
-    box-shadow: none;
+    padding: 10px 10px 4px;
+    border: none;
+    border-bottom: solid 1px @tabbarColor;
+    box-shadow: none !important;
     font-size: 13px;
     .box-sizing(border-box);
     height: 30px;
     cursor: pointer;
     margin: 0px !important;
-    padding: 6px 10px 0px !important;
+    padding: 6px 20px 0px !important;
     border-radius: 0;
 
-    &:first-of-type {
-      border-left: solid 1px @switchBorder;
-      border-top-left-radius: 2px;
-      border-bottom-left-radius: 2px
-    }
-
-    &:last-of-type {
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px
+    &:focus {
+      outline: none !important;
     }
 
     .isDesktop &:hover, &.selected {
-      background-color: @primaryColor;
       opacity: 1 !important;
       box-shadow: none;    
-      color: contrast(@primaryColor); 
+      border-bottom: solid 3px @primaryColor;
+      padding: 11px 10px 3px;
+    }
+    &.selected {
+      animation-name: tapRipple;
     }
   }
 }
@@ -65,20 +76,5 @@ html[dir=rtl] {
   .segmented.align-flush {
     left: 15px;
     right: auto;
-  }
-  .segmented:not(.paging) > button {
-    border-radius: 0px;
-
-    &:first-child {
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
-      border-left: none;
-    }
-
-    &:last-child {
-      border-top-left-radius: 2px;
-      border-bottom-left-radius: 2px;
-      border-left: solid 1px @switchBorder;
-    }
   }
 }

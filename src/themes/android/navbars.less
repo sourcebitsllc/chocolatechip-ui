@@ -4,10 +4,11 @@
 #global-nav {
   background-color: @navBkgnd;
   overflow: hidden;
-  box-shadow: 0 1px 2px @boxShadow;
   padding: 0 5px;
+  z-index: 1111111111;
 }
 nav {
+  background-color: @navBkgnd;
   height: 50px;
   .box-sizing(border-box);
   #flex > .display(flex);
@@ -20,18 +21,28 @@ nav {
   top: 0;
   left: 0;
   right: 0;
-  .transition(opacity .5s ease-in);
+  .transition(all .45s ease-out);
   padding: 0 10px;
   vertical-align: middle;
+  z-index: 1111111111;
+  .transform(translate3d(0,0,0));
+
+  &.current {
+    box-shadow: 0 3px 10px 2px rgba(0, 0, 0, 0.2);
+  }
 
   > button:first-child {
     margin-left: 0;
   }
 
+  > button:last-child {
+    margin-right: 0 !important;
+  }
+
   > h1 {
     text-align: left;
     display: inline-block;
-    margin: 0 16px 0 8px;
+    margin: 0 16px 0 0;
     #flex > .flex(1) !important;
     font: 100 14pt/30pt Roboto, SegoeWP, HelveticaNeue, Sans-serif !important;
     position: relative;
@@ -51,17 +62,11 @@ nav {
   > button, > div > button {
     position: relative;
     color: contrast(@navBkgnd) !important;
-
-    &:hover {
-      background-color: rgba(red(contrast(@navBkgnd)), green(contrast(@navBkgnd)), blue(contrast(@navBkgnd)), 25%) !important;
-      color: contrast(@navBkgnd) !important;
-    }
   }
-}
-.isDesktop nav .back:hover, .isDesktop  nav .backTo:hover {
-  background-color: contrast(@navBkgnd) !important;
-  -webkit-animation: animate-icon .5s none;
-  color: contrast(@navBkgnd)
+  .hasTabBar & {
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.05);
+    border-bottom: solid 1px rgba(0, 0, 0, 0.09);
+  }
 }
 html[dir=rtl] nav > h1 {
   text-align: right;

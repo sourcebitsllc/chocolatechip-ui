@@ -20,11 +20,17 @@
   box-shadow: 0 0 6px 4px @boxShadowColor;
   border-radius: 3px;
   min-height: 100px;
+  z-index: 11111111111;
+  .transition(all .25s ease-in-out);
+  opacity: 0;
+  transform: scale(0);
+
   
   &.opened {
     display: block;
     opacity: 1;
-    .transition(all 0.5s ease-in-out);
+
+    transform: scale(1);
   }
 }
 
@@ -48,6 +54,8 @@
       margin: 0 15px;
       line-height: 32pt;
       font-weight: bold;
+      font-size: 16pt;
+      color: @textColor;
     }
   }
 
@@ -64,19 +72,22 @@
       height: 100%;
       line-height: 30pt;
       background-color: @popupBkgnd;
-      color: @buttonTextColor;
+      color: @textColor;
       font-size: 12pt;
-      padding-top: 4px;
+      padding: 4px 20px !important;
       max-width: 320px !important;
       margin: 0 !important;
+      border: none;
+      box-shadow: none !important;
 
-      + button {
-        border-left: solid 1px @buttonBorderColor;
-      }
       .isDesktop &:hover {
         box-shadow: none;
-        background-color: @popoverHighlight;
-        color: contrast(@primaryColor);
+        background-color: rgba(0, 0, 0, 0.025);
+      }
+
+      &.selected {
+        -webkit-animation-name: tapRipple;
+        animation-name: tapRipple;
       }
     }
   }
@@ -87,21 +98,7 @@
   }
 
   button {
-    border-top: solid 1px @buttonBorderColor;
     box-shadow: none;
-  }
-}
-
-html[dir=rtl] {
-  .popup > footer button {
-    border-top: solid 1px @buttonBorderColor;
-
-    &:first-child {
-      border-left: solid 1px @buttonBorderColor;
-
-      & + button {
-        border-left: none;
-      }
-    }
+    border: none;
   }
 }

@@ -2,7 +2,7 @@
   "name": "chui",
   "title": "ChocolateChip-UI",
   "description": "JavaScript framework for mobile Web apps",
-  "version": "3.8.1",
+  "version": "3.8.5",
   "homepage": "http://chocolatechip-ui.com",
   "author": {
     "name": "Sourcebits Inc. and other contributors"
@@ -18,7 +18,7 @@
     }
   ],
   "devDependencies": {
-    "gulp": "~3.8.8",
+    "gulp": "~3.8.11",
     "gulp-less": "1.1.10",
     "gulp-concat": "~2.1.7",
     "gulp-rename": "~0.2.1",
@@ -33,5 +33,6 @@
   "jquery": {
     "url": "http://code.jquery.com/jquery-2.1.1.min.js"
   },
+  "chocolatechipJSVersion": "3.8.6",
   "projectPath": ""
 }

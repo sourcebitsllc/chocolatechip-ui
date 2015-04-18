@@ -11,7 +11,7 @@ ChocolateChip-UI
 ChUI-Win.css
 Copyright 2015 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.8.1
+Version: 3.8.5
 */
 /*
   To create a custom theme, adjust the color for @primaryColor. If you want a secondary color, say on the background of your lists, adjust the color of @listBkColor to the color you want.
@@ -27,6 +27,9 @@ Version: 3.8.1
   #flex > .align-content(flex-start | flex-end | center | space-between | space-around | stretch);
   #fkex > .flex(none | [ <flex-grow> <flex-shrink> | <flex-basis> ]);
 */
+.cloak > * {
+  display: none;
+}
 /* ==============================
    Body
    =========================== */
@@ -1410,7 +1413,7 @@ li.selected > .deletion-indicator::before {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.button.delete {
+button.delete {
   float: right;
   color: #ffffff;
   text-align: center;
@@ -1437,13 +1440,13 @@ li.selected > .deletion-indicator::before {
   padding: 0;
   overflow: hidden;
 }
-.button.delete:hover {
+button.delete:hover {
   border-color: #ffffff !important;
 }
-.button.delete:hover::before {
+button.delete:hover::before {
   color: #ffffff;
 }
-.button.delete::before {
+button.delete::before {
   font-family: "Segoe UI Symbol";
   font-weight: normal;
   content: "\E107";
@@ -1455,7 +1458,7 @@ li.selected > .deletion-indicator::before {
   text-align: center;
   margin-top: 8px;
 }
-li.selected > .button.delete {
+li.selected > button.delete {
   transform: translate3d(0, 0, 0);
 }
 html[dir=rtl] .deletion-indicator {
@@ -1469,7 +1472,7 @@ html[dir=rtl] .list.showIndicators li {
   padding-left: 0;
   padding-right: 34px;
 }
-html[dir=rtl] .button.delete {
+html[dir=rtl] button.delete {
   float: left;
 }
 html[dir=rtl] .list.editable > li > .deletion-indicator,
@@ -1479,8 +1482,8 @@ html[dir=rtl] .list.deletable > li > .deletion-indicator {
   margin-left: -20px;
   right: -40px;
 }
-html[dir=rtl] .list.editable > li > .button.delete,
-html[dir=rtl] .list.deletable > li > .button.delete {
+html[dir=rtl] .list.editable > li > button.delete,
+html[dir=rtl] .list.deletable > li > button.delete {
   transform: translate3d(-80px, 0, 0);
   left: 0;
   right: auto;
@@ -1514,7 +1517,7 @@ html[dir=rtl] .list.showIndicators > li.selected {
   margin-right: 0;
   padding-left: 45px;
 }
-html[dir=rtl] .list.showIndicators > li.selected > .button.delete {
+html[dir=rtl] .list.showIndicators > li.selected > button.delete {
   transform: translate3d(6px, 0, 0);
 }
 /* ==============================
@@ -2353,15 +2356,15 @@ html[dir=rtl] .pagination > li:last-of-type {
 }
 .horizontal-scroll-panel {
   width: 100%;
-  height: 200px;
+  height: 240px;
   background-color: #ccc;
   padding: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   overflow-y: hidden !important;
-  overflow-x: auto;
+  overflow-x: scroll;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 .horizontal-scroll-panel > ul {
   list-style: none;
@@ -2369,6 +2372,7 @@ html[dir=rtl] .pagination > li:last-of-type {
   padding: 0;
   -webkit-padding-start: 0;
   font-size: 0;
+  width: 100%;
 }
 .horizontal-scroll-panel > ul li {
   display: inline-block;
@@ -2380,17 +2384,17 @@ html[dir=rtl] .pagination > li:last-of-type {
   margin-right: 20px;
   font-size: 0;
 }
-.horizontal-scroll-panel > ul:first-of-type {
+.horizontal-scroll-panel > ul li:first-of-type {
   margin-left: 0 !important;
 }
-.horizontal-scroll-panel > ul:last-of-type {
-  margin-right: 0 !important;
+.horizontal-scroll-panel > ul li:last-of-type {
+  margin-right: 20px !important;
 }
 body.isWindows .horizontal-scroll-panel {
   background-color: #333;
 }
 [dir=rtl] .horizontal-scroll-panel {
-  margin-right: -20px;
+  margin-right: 0;
   padding-right: 20px;
 }
 [dir=rtl] .horizontal-scroll-panel li {
@@ -2400,20 +2404,22 @@ body.isWindows .horizontal-scroll-panel {
 }
 [dir=rtl] .horizontal-scroll-panel li:first-of-type {
   margin-right: 0 !important;
+  margin-left: 20px !important;
 }
 [dir=rtl] .horizontal-scroll-panel li:last-of-type {
-  margin-left: 0 !important;
+  margin-left: 20px !important;
+  margin-right: 0 !important;
 }
 [dir=rtl] body.isWindows .horizontal-scroll-panel li {
   float: right;
 }
 @media only screen and (max-device-width: 480px) {
   .horizontal-scroll-panel {
-    height: 125px;
+    height: 125px !important;
     padding: 10px;
   }
   .horizontal-scroll-panel li {
-    height: 125px;
-    width: 125px;
+    height: 125px !important;
+    width: 125px !important;
   }
 }

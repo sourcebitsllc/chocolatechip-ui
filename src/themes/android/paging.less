@@ -6,15 +6,22 @@
 }
 .segmented.paging {
   > button {
-    top: 4px;
+    top: 10px;
     background: none !important;
+    border-radius: 50%;
+    padding: 10px;
   }
 
   &.horizontal > button {
     border: none !important;
     background-color: none !important;
     margin: 0 !important;
-    .size(30px, 40px) !important;
+    .size(30px, 30px) !important;
+
+    &:hover, &.selected {
+      box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.07)!important;
+      background-color: rgba(0, 0, 0, 0.07) !important;
+    }
 
     &:first-of-type::before,
     html[dir=rtl] &:last-of-type::before {
@@ -25,8 +32,8 @@
       border-top: solid 3px contrast(@navBkgnd);
       .transform(rotate(-45deg));
       position: absolute;
-      top: 10px;
-      left: 14px;
+      top: 5px;
+      left: 8px;
     }
 
     &:last-of-type::before,
@@ -39,8 +46,8 @@
       border-bottom: solid 3px contrast(@navBkgnd);
       .transform(rotate(-45deg));
       position: absolute;
-      top: 10px;
-      right: 16px;
+      top: 5px;
+      right: 8px;
     }
     html[dir=rtl] &:last-of-type::before {
       border-right: none;
@@ -60,6 +67,12 @@
     > button {
       margin: 0 !important;
       background-color: none !important;
+      .size(30px, 30px) !important;
+
+      &:hover, &.selected {
+        box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.07)!important;
+        background-color: rgba(0, 0, 0, 0.07) !important;
+      }
 
       &:first-of-type::before {
         content: '';
@@ -69,8 +82,8 @@
         border-bottom: solid 3px contrast(@navBkgnd);
         .transform(rotate(45deg));
         position: absolute;
-        top: 6px;
-        left: 10px;
+        top: 2px;
+        left: 5px;
       }
 
       &:last-of-type::before {
@@ -81,8 +94,8 @@
         border-top: solid 3px contrast(@navBkgnd);
         .transform(rotate(-45deg));
         position: absolute;
-        top: 17px;
-        left: 10px;
+        top: 12px;
+        left: 6px;
       }
     }
   }

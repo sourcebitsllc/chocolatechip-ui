@@ -9,8 +9,17 @@
   height: 250px;
   max-height: 300px;
   position: absolute;
-  z-index: 111111;
+  z-index: 11111111111;
   margin-top: 10px;
+  transform: scaleY(0);
+  transform-origin: top center;
+  opacity: 0;
+  transition: all .25s ease-in-out;
+
+  &.opened {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 
   header {
     display: none;
@@ -28,14 +37,20 @@
   }
 
   .list > li {
+    background-image: -webkit-radial-gradient(circle, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.065) 20%);
+    background-size: 1000% 1000%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: .2s;
+    animation-duration: .2s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 
-    .isDesktop &:hover, .isDesktop &.selected {
-      background-color: @primaryColor !important;
-      color: contrast(@primaryColor) !important;
-
-      h3, h4 {
-        color: contrast(@primaryColor) !important;
-      }
+    &.selected {
+      -webkit-animation-name: listRipple;
+      animation-name: listRipple;
     }
   }
 }
@@ -44,7 +59,7 @@ button.show-popover {
   position: relative;
   background-color: transparent !important;
   border: none !important;
-  padding: 6px 20px 2px 20px !important;
+  padding: 6px 22px 2px 20px !important;
   margin: 0 10px 0 0 !important;
   box-shadow: none !important;
   font-size: 13px !important;
@@ -66,18 +81,19 @@ button.show-popover::after {
   content: '';
   display: block;
   position: absolute;
-  right: 2px;
-  bottom: 2px;
+  right: 6px;
+  bottom: 18px;
   .size(0px, 0px);
-  border-right: solid 6px contrast(@navBkgnd);
-  border-bottom: solid 6px contrast(@navBkgnd);
-  border-top: solid 6px transparent;
-  border-left: solid 6px transparent;
+  border-right: solid 4px contrast(@navBkgnd);
+  border-bottom: solid 4px contrast(@navBkgnd);
+  border-top: solid 4px transparent;
+  border-left: solid 4px transparent;
+  .transform(rotate(45deg));
 }
 
 nav > button.show-popover::after {
-  border-right: solid 6px contrast(@navBkgnd);
-  border-bottom: solid 6px contrast(@navBkgnd);
+  border-right: solid 4px contrast(@navBkgnd);
+  border-bottom: solid 4px contrast(@navBkgnd);
 }
 nav > h1 + button.show-popover.align-flush {
   margin: 8px 0 0 0 !important;

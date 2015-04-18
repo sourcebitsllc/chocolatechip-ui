@@ -91,8 +91,8 @@ li.comp {
       &::after {
         .pseudo-block('');
         .size(7px,7px);
-        border-right: solid 3px @listNavIndicator;
-        border-top: solid 3px @listNavIndicator;
+        border-right: solid 2px @listNavIndicator;
+        border-top: solid 2px @listNavIndicator;
         .transform(rotate(45deg) translate3d(2px,-2px,0));
       }
     }
@@ -108,7 +108,7 @@ li.comp {
         border-radius: 20px;
         border: solid 1px @secondaryColor;
         color: @secondaryColor;
-        font: bold 14px/0 Roboto, Times, serif;
+        font: bold 14px/.23 Roboto, sans-serif;
         .box-sizing(border-box);
         padding: 10px 8px;
         float: right;
@@ -152,8 +152,8 @@ html[dir=rtl] {
     right: auto;
       left: 16px;
       border: none;
-      border-left: solid 3px @listNavIndicator;
-      border-bottom: solid 3px @listNavIndicator;
+      border-left: solid 2px @listNavIndicator;
+      border-bottom: solid 2px @listNavIndicator;
     }
     aside > h4 {
       margin-left: 5px;
@@ -175,13 +175,12 @@ html[dir=rtl] {
 }
 @media only screen and (max-width: 480px) and (orientation : portrait) {
   li.comp > div:first-child + aside > h4:nth-child(1) {
-    max-width: 45% !important;
     flex: 1;
   }
   li.comp > div:first-child + aside {
     -webkit-box-pack: end;
     -webkit-justify-content: end;
     justify-content: flex-end;
-    
+    display: flex;
   }
 }

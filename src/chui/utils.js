@@ -104,6 +104,19 @@
         return this.is(selector);
       }
     },
+    ////////////////////////////////
+    // Return array of unique items:
+    ////////////////////////////////
+    unique : function() {
+      var ret = [];
+      var sort = this.sort();
+      sort.forEach(function(ctx, idx) {
+        if (ret.indexOf(ctx) === -1) {
+          ret.push(ctx);
+        }
+      });
+      return ret.length ? ret : [];
+    },
     //////////////////////////////
     // Return element that doesn't 
     // match selector:
@@ -123,7 +136,6 @@
     haz : function ( selector ) {
       return this.has(selector);
     },
- 
     ///////////////////////////////////
     // Return element whose descendants 
     // don't match selector:

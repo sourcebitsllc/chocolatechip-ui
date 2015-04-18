@@ -15,7 +15,8 @@
       var callback = (options && options.callback) ? options.callback : $.noop;
       var selected = (options && options.selected > 0) ? options.selected : 0;
       this.find('button').forEach(function(ctx, idx) {
-        $(ctx).find('button').attr('role','radio');
+        $(ctx).attr('role','radio');
+        $(ctx).addClass('segment');
         if (idx === selected) {
           ctx.setAttribute('aria-checked', 'true');
           ctx.classList.add('selected');
@@ -54,7 +55,7 @@
       if (className) _segmented.push(' ' + className);
       _segmented.push('">');
       labels.forEach(function(ctx, idx) {
-        _segmented.push('<button role="radio"');
+        _segmented.push('<button role="radio" class="segment"');
         _segmented.push('"');
         _segmented.push('>');
         _segmented.push(ctx);

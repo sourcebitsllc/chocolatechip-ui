@@ -16,7 +16,8 @@
       } else { 
         newPlace = width * newPoint + offset; offset -= newPoint; 
       }
-      input.css({'background-size': Math.round(newPlace) + 'px 10px'});         
+      if ($.isAndroid || $.isChrome) input.css({'background-size': Math.round(newPlace) + 'px 3px, 100% 2px'});
+      else input.css({'background-size': Math.round(newPlace) + 'px 10px'});         
     }
   });
   $(function() {

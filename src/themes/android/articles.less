@@ -8,13 +8,17 @@ article {
   bottom: 0; 
   left: 0;
   padding-top: 1px;
-  .transition(all .15s ease-out);
+  .transition(all .45s ease-out);
   .overflow-y-scroll;
   -webkit-overflow-scrolling: touch;
   #flex > .display(flex);
   #flex > .flex-direction(column);
   #flex > .justify-content(center);
   #flex > .align-items(flex-start);
+  z-index: 1111111;
+  > section {
+    background-color: @appBkColor;
+  }
 }
 .hide-navbars article {
   top: 0;
@@ -31,7 +35,7 @@ article {
   visibility: hidden;
 }
 .previous {
-  .transform(translate3d(-100%,0,0));
+  .transform(translate3d(0,0,0));
   visibility: hidden;
 }
 html[dir=rtl] {
